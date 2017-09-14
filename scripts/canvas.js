@@ -126,7 +126,7 @@ function setup() {
 	// find more info here: http://pixijs.download/release/docs/PIXI.Text.html
 	var message = new Text(
 		"Hello Pixi!",
-		{ fontFamily: "Arial", fontSize: 32, fill: "white", wordWrap: true, wordWrapWidth: 100, align: center }
+		{ fontFamily: "Arial", fontSize: 32, fill: "white", wordWrap: true, wordWrapWidth: 100, align: "center" }
 	);
 	message.position.set(54,96);
 	stage.addChild(message);

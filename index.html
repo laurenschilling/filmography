@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+	<!-- Page Info
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<meta charset="utf-8">
+	<title>Filmography</title>
+	<meta name="description" content="An interactive film database that  visualises the past 100 years of film. Created for Major Creative Project 8145">
+	<meta name="author" content="Grace Searson, Stephanie Brink and Lauren Schilling">
+	
+	<!-- Mobile Specific Metas
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- CSS
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/styles.css">
+
+	<!-- Typekit
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<script src="https://use.typekit.net/zze6urx.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+</head>
+
+<body>
+	
+	<!-- Scripts
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="scripts/angular.js"></script>
+	<script src="scripts/pixi.min.js"></script>
+	<script src="scripts/scaleToWindow.js"></script>
+	<script src="scripts/script.js"></script>
+
+
+	<!-- Content
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->	
+	<header>
+		<h1 id="logo"><a href="index.html">Filmography</a></h1>
+	</header>
+	
+	<main>		
+		<div id="splash">
+			<p>Welcome to</p>
+			<img src="">
+			
+			<!-- intro description and instructions go here -->
+			<p>Every square is a film...</p>
+			<a data-link="timeline">Let's go!</a>
+		</div>
+		
+		<div class="sidebar">
+			<ul id="genres">
+				<li>Action</li>
+				<li>Adventure</li>
+				<li>Animation</li>
+				<li>Comedy</li>
+				<li>Crime</li>
+				<li>Documentary</li>
+				<li>Drama</li>
+				<li>Family</li>
+				<li>Fantasy</li>
+				<li>History</li>
+				<li>Music</li>
+				<li>Mystery</li>
+				<li>Romance</li>
+				<li>Sci-fi</li>
+				<li>Thriller</li>
+				<li>TV Movie</li>
+				<li>War</li>
+				<li>Western</li>
+			</ul>
+		</div>
+		
+		<div>
+			<!-- position canvas element here -->
+				<script src="scripts/canvas.js"></script>
+		</div>
+		
+		<div class="baseline-bar">
+			<ul id="decades">
+				<li>1930s</li>
+				<li>1940s</li>
+				<li>1950s</li>
+				<li>1960s</li>
+				<li>1970s</li>
+				<li>1980s</li>
+				<li>1990s</li>
+				<li>2000s</li>
+				<li>2010s</li>
+			</ul>
+		</div>
+	</main>
+	
+	<footer>
+		<div class="slider">
+			<!-- set up slider here -->
+		</div>
+	</footer>
+	
+</body>
+</html>

@@ -1,0 +1,84 @@
+/* CSS Styles for Filmography
+	
+Table of Contents:
+
+01. Base Styles
+02. Typography
+03. Layout
+04. Lists
+
+*/
+
+/* Base Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+html { 
+	min-height: 100%;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+   	background: -webkit-linear-gradient(#092335 60%, #0e3549 100%);
+    background: -moz-linear-gradient(#092335 60%, #0e3549 100%);
+    background: -ms-linear-gradient(#092335 60%, #0e3549 100%);
+    background: -o-linear-gradient(#092335 60%, #0e3549 100%);
+    background: linear-gradient(#092335 60%, #0e3549 100%);
+    background-size: cover;
+    background-repeat:no-repeat; }
+
+body {
+	font-family: 'futura-pt', Helvetica, sans-serif;
+	font-weight: 300;
+	font-size: 16px;
+	color: #fff; }
+
+body, input, textarea, button {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.container {
+	margin: 0 auto;
+	display: block;
+	clear: both; 
+	text-align: center; }	
+	
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+	
+/* Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#logo {
+	margin: 0 auto; }
+	
+	#logo a {
+		text-indent: -9999px;
+		font-size: 0;
+		display: inline-block;
+		width: 150px;
+		height: 30px;
+		background: url(../images/logo.jpg) no-repeat center top;
+		background-size: 100%; }
+
+	
+/* Splash Page
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#splash {
+	display: none; }
+
+
+/* Lists	
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+	
+#decades {
+	text-align: right; }
+		
+	#decades li {
+		display: inline-block;
+		text-align: center; }	
+		
+		

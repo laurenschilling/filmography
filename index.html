@@ -1,12 +1,13 @@
 <!doctype html>
-<html lang="en">
+<!-- Define this as an AngularJS app -->
+<html lang="en" ng-app>
+    
 <head>
-
 	<!-- Page Info
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<meta charset="utf-8">
 	<title>Filmography</title>
-	<meta name="description" content="An interactive film database that  visualises the past 100 years of film. Created for Major Creative Project 8145">
+	<meta name="description" content="An interactive film database that visualises the past 100 years of film. Created for Major Creative Project 8145">
 	<meta name="author" content="Grace Searson, Stephanie Brink and Lauren Schilling">
 	
 	<!-- Mobile Specific Metas
@@ -22,28 +23,33 @@
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<script src="https://use.typekit.net/zze6urx.js"></script>
 	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+    
+    <!-- Scripts
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="scripts/angular.min.js" defer></script>
+	<script src="scripts/pixi.min.js" defer></script>
+	<script src="scripts/scaleToWindow.js" defer></script>
+    <script src="scripts/all-moviedata.json" defer></script>
+    <script src="scripts/app.js" defer></script> <!-- Angular -->
+	<script src="scripts/script.js" defer></script>
+    <script src="scripts/canvas.js" defer></script>
 
 </head>
 
 <body>
-	
-	<!-- Scripts
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<script src="scripts/angular.min.js"></script>
-	<script src="scripts/pixi.min.js"></script>
-	<script src="scripts/scaleToWindow.js"></script>
-	<script src="scripts/script.js"></script>
 
 
 	<!-- Content
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="container">
 		<header>
-			<h1 id="logo"><a href="index.html">Filmography</a></h1>
+			<h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
 		</header>
 		
-		<main>		
+		<main>	
+            
+            <!-- splash page -->
 			<div id="splash">
 				<p>Welcome to</p>
 				<img src=""> <!-- filmography logo type to go here -->
@@ -53,6 +59,7 @@
 				<a data-link="timeline">Let's go!</a>
 			</div>
 			
+            <!-- sidebar -->
 			<div class="sidebar">
 				<ul id="genres">
 					<li><span class="line"></span>Action</li>
@@ -76,9 +83,33 @@
 				</ul>
 			</div>
 			
+            
 			<div>
 				<!-- position canvas element here -->
-					<script src="scripts/canvas.js"></script>
+                
+                <!-- Link this DOM object to the movieController in app.js -->
+                <div ng-controller="movieController">
+
+                    <div class="col list">
+                        <p>Select a movie:</p>
+                        <ul>
+                        <!-- Iterate through all movies in the dataset and display title with a click function -->
+                            <li ng-repeat="movie in movies">
+                                <a href ng-click='movieClick(movie)'>{{ movie.title }}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- This section will automatically display detail when selectedArtist is updated -->
+                    <div class="col detail">
+                        <h2>{{ selectedMovie.title }}</h2>
+                        <div class="detailimagewrapper">
+                            <img class="detailimage" src="{{selectedMovieImage}}" >
+                        </div>
+                        <p>{{selectedMovie.overview}}</p>
+                    </div>
+
+                </div>
 			</div>
 			
 			<div class="baseline-bar">
@@ -101,6 +132,7 @@
 				<!-- set up slider here -->
 			</div>
 		</footer>
+        
 	</div> <!-- end .container -->
 	
 </body>

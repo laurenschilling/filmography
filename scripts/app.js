@@ -8,7 +8,7 @@ function movieController($scope, $http) {
 //    $scope.selectedArtist = "";
 //    $scope.selectedArtistImage = IMAGE_ROOT + DEFAULT_IMAGE;
     
-    $http.get('all-moviedata.json').success(function(data) {
+    $http.get('scripts/all-moviedata.json').success(function(data) {
         $scope.movies = data;
         console.log(data);
     });

@@ -1,30 +1,25 @@
 $(document).ready(function() {
 	
-	// custom filmography scripts to go in here
-	
-	
 	// ---- GENRE FILTER ANIMATIONS: WIP ----
 	
-	var li = $('#genre li');
-// 	var line = li.find('span.line');
-	
-	// when mouse enters genre list item (hover start)
-	// show span line
-	li.mouseover(function() {
-		console.log(this);
-		$(this).find('span.line').css({
-			transform: "translateX(25px)",
-			transition: "all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950)" 
-		})
-	});
+	var li = $('#genres li');
 
-	// when mouse exits genre list item (hover end)
-	// hide span line	
-	li.mouseleave(function() {	
-		$(this).find('span.line').css({
-			transform: "translateX(-25px)",
-			transition: "all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950)"
-		})
-	});
+	genreFilter();
+	function genreFilter() {
+		var line;
+		var active;
+		
+		// genre list item : enter hover
+		// show span line
+		li.bind('mouseover', function() {
+			line = $(this).find('span');
+			line.removeClass('move-line-back').addClass('move-line');
+		});
 	
+		// genre list item : exit hover
+		// hide span line	
+		li.bind('mouseleave', function() {	
+			line.addClass('move-line-back').removeClass('move-line');
+		});
+	};
 });

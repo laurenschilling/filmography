@@ -25,9 +25,9 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
 	<script src="scripts/pixi.min.js" defer></script>
 	<script src="scripts/scaleToWindow.js" defer></script>
-    <script src="scripts/app.js" defer></script> <!-- Angular -->
+	<script src="scripts/app.js" defer></script> <!-- Angular --> 
 	<script src="scripts/script.js" defer></script>
-    <script src="scripts/canvas2.js" defer></script>
+    <script src="scripts/canvas.js" defer></script>
 
 	<!-- CSS
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -42,8 +42,31 @@
 	<!-- Content
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->	
 	<div class="container">
-		<header>
-			<h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
+		<header>		
+		    <!-- sidebar -->
+			<div class="sidebar">
+				<h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
+				<ul id="genres">
+					<li data-link="action"><span class="line"></span>Action</li>
+					<li data-link="adventure"><span class="line"></span>Adventure</li>
+					<li data-link="animation"><span class="line"></span>Animation</li>
+					<li data-link="comedy"><span class="line"></span>Comedy</li>
+					<li data-link="crime"><span class="line"></span>Crime</li>
+					<li data-link="doc"><span class="line"></span>Documentary</li>
+					<li data-link="drama"><span class="line"></span>Drama</li>
+					<li data-link="family"><span class="line"></span>Family</li>
+					<li data-link="fantasy"><span class="line"></span>Fantasy</li>
+					<li data-link="history"><span class="line"></span>History</li>
+					<li data-link="music"><span class="line"></span>Music</li>
+					<li data-link="mystery"><span class="line"></span>Mystery</li>
+					<li data-link="romance"><span class="line"></span>Romance</li>
+					<li data-link="scifi"><span class="line"></span>Sci-fi</li>
+					<li data-link="thriller"><span class="line"></span>Thriller</li>
+					<li data-link="tv"><span class="line"></span>TV Movie</li>
+					<li data-link="war"><span class="line"></span>War</li>
+					<li data-link="western"><span class="line"></span>Western</li>
+				</ul>
+			</div>
 		</header>
 		
 		<main>	
@@ -57,31 +80,7 @@
 				<p>Every square is a film...</p>
 				<a data-link="timeline">Let's go!</a>
 			</div>
-			
-            <!-- sidebar -->
-			<div class="sidebar">
-				<ul id="genres">
-					<li><span class="line"></span>Action</li>
-					<li><span class="line"></span>Adventure</li>
-					<li><span class="line"></span>Animation</li>
-					<li><span class="line"></span>Comedy</li>
-					<li><span class="line"></span>Crime</li>
-					<li><span class="line"></span>Documentary</li>
-					<li><span class="line"></span>Drama</li>
-					<li><span class="line"></span>Family</li>
-					<li><span class="line"></span>Fantasy</li>
-					<li><span class="line"></span>History</li>
-					<li><span class="line"></span>Music</li>
-					<li><span class="line"></span>Mystery</li>
-					<li><span class="line"></span>Romance</li>
-					<li><span class="line"></span>Sci-fi</li>
-					<li><span class="line"></span>Thriller</li>
-					<li><span class="line"></span>TV Movie</li>
-					<li><span class="line"></span>War</li>
-					<li><span class="line"></span>Western</li>
-				</ul>
-			</div>
-			
+						
             <!-- main content -->
 			<div class="content">
 				<div id="canvas">
@@ -93,37 +92,40 @@
 
                     <div class="col list">
                         <p>Select a movie:</p>
-                        <ul>
+                        <ul class="films">
                         <!-- Iterate through all movies in the dataset and display title with a click function -->
-                            <li ng-repeat="movie in movies">
+                           <li ng-repeat="movie in movies">
                                 <a href ng-click='movieClick(movie)'>{{ movie.title }}</a>
                             </li>
                         </ul>
                     </div>
 
                     <!-- This section will automatically display detail when selectedArtist is updated -->
-                    <div class="col detail">
-                        <h2>{{ selectedMovie.title }}</h2>
-                        <div class="detailimagewrapper">
-                            <img class="detailimage" src="{{selectedMovieImage}}" >
+					<div class="col detail">
+                        <div class="detailImageWrapper">
+                            <img class="detailImage" src="{{selectedMovieImage}}" >
+                        </div>
+                        <div class="detailTitleWrapper">
+	                        <h2>{{ selectedMovie.title }}</h2>
+							<p class="yr">{{selectedMovie.release_date}}</p>
                         </div>
                         <p>{{selectedMovie.overview}}</p>
-                    </div>
 
+                    </div>
                 </div>
 			</div>
 			
 			<div class="baseline-bar">
 				<ul id="decades">
-					<li>1930s</li>
-					<li>1940s</li>
-					<li>1950s</li>
-					<li>1960s</li>
-					<li>1970s</li>
-					<li>1980s</li>
-					<li>1990s</li>
-					<li>2000s</li>
-					<li>2010s</li>
+					<li data-link="1930">1930s</li>
+					<li data-link="1940">1940s</li>
+					<li data-link="1950">1950s</li>
+					<li data-link="1960">1960s</li>
+					<li data-link="1970">1970s</li>
+					<li data-link="1980">1980s</li>
+					<li data-link="1990">1990s</li>
+					<li data-link="2000">2000s</li>
+					<li data-link="2010">2010s</li>
 				</ul>
 			</div>
 		</main>

@@ -10,18 +10,25 @@ function movieController($scope, $http) {
     
     $http.get('scripts/all-moviedata.json').success(function(data) {
         $scope.movies = data;
-        console.log(data);
+//         console.log(data);
     });
 
     //what happens when you click the ng-click in the movie list
     $scope.movieClick = function(movie) {
         $scope.selectedMovie = movie;
-        
+        console.log(movie);
+
         //if there is an image then add the filepath to the string 
         if( movie.poster_path ) {
           $scope.selectedMovieImage = imageBase + imageSize + movie.poster_path;
         } else {
           $scope.selectedMovieImage = imageBase + defaultImg;
+        }
+        
+        // if there is a release date, only show release year
+        if ( movie.release_date ) {
+	        var yr = movie.release_date.substring(0, 4);
+	        movie.release_date = yr;
         }
     };
 

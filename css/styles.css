@@ -36,11 +36,23 @@ html {
     background: -o-linear-gradient(#092335 60%, #0e3549 100%);
     background: linear-gradient(#092335 60%, #0e3549 100%);
     background-size: cover;
-    background-repeat:no-repeat; }
+    background-repeat: no-repeat; }
+
+	html::after {
+		content: "";
+		background: url(../images/film_texture.png);
+		background-size: cover;
+		opacity: 0.2;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		position: absolute;
+		z-index: -1;  }
 
 body {
 	font-family: 'futura-pt', Helvetica, sans-serif;
-	font-weight: 300;
+	font-weight: 500;
 	font-size: 16px;
 	color: #fff; }
 
@@ -58,7 +70,7 @@ body, input, textarea, button {
 /* --- had to add !important for the canvas styles to show
 	not sure where they're being overrided --- */
 #canvas {
-	position: absolute !important;
+	position: fixed !important;
 	top: 0;
 	right: 0;
 	width: 81% !important; 
@@ -78,25 +90,58 @@ canvas {
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+h2 {
+	text-transform: uppercase;
+	letter-spacing: 0.02em; }
+	
 	
 /* Layout
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 #logo {
-	margin: 0 auto; }
+	margin: 0 auto;
+	margin-top: 5px; }
 	
 	#logo a {
 		text-indent: -9999px;
 		font-size: 0;
 		display: inline-block;
-		width: 250px;
+		width: 215px;
 		height: 100px;
 		background: url(../images/Logo.svg) no-repeat center top;
 		background-size: 100%; }
 
+/* --- filters -- */
 .sidebar {
-	width: 15%; }
+	width: 15%;
+   	background: -webkit-linear-gradient(#092335 50%, #0e3549 100%);
+    background: -moz-linear-gradient(#092335 50%, #0e3549 100%);
+    background: -ms-linear-gradient(#092335 50%, #0e3549 100%);
+    background: -o-linear-gradient(#092335 50%, #0e3549 100%);
+    background: linear-gradient(#092335 50%, #0e3549 100%); }	
+    
+.baseline-bar {
+	background: #0e3549; }
+
+/* --- pop up -- */	
+.detail {
+	height: 100%;
+	width: 300px;
+	padding: 5px;
+	color: #0e3549; }
+
+.detailImageWrapper	{
+	height: 300px;
+	overflow: hidden; }
 	
+.detailTitleWrapper h2,
+.detailTitleWrapper p {
+	display: inline-block; 
+	padding: 8px 2px 20px 2px; }
+
+	.yr {
+		float: right; }	
+		
 	
 /* Splash Page
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -110,24 +155,51 @@ canvas {
 
 ul li {
 	letter-spacing: 0.06em;
-	line-height: 2em;
+	line-height: 2.2em;
 	cursor: pointer; }		
 
+
+/* Genre Filter List
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 #genres {
-	padding: 30px; 
+	padding: 10px 30px 30px 30px; 
 	display: inline-block; }
 	
 	#genres li {
 		font-size: .9em;
 		text-transform: uppercase;
-		-webkit-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-		-moz-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-	    -o-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-	    transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); }
-	    		
+		-webkit-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
+		-moz-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
+	    -o-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
+	    transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; }	 
+	       		
 		#genres li:hover {
-			transform: translateX(20px); }
+			transform: translateX(20px);
+			color: #f7b7c7; }
+		
+.line {
+	display: block;
+	border-top: 1px solid #f7b7c7;
+	width: 50%;
+	position: relative;
+	left: -90px;
+	top: 15px;
+	margin: 0;
+	padding: 0; }
+
+	.move-line {
+		left: -70px;
+		transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); }
 	
+	.move-line-back {
+		left: -90px;
+		transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); }
+
+
+/* Decade Filter List
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 #decades {
 	text-align: right;
 	padding: 15px 30px; }
@@ -137,32 +209,9 @@ ul li {
 		display: inline-block;
 		text-align: center;
 		padding: 0 20px; }	
-		
-.line {
-	display: block;
-	border-top: 1px solid #ccc;
-	width: 50%;
-	position: relative;
-	left: -90px;
-	top: 15px;
-	margin: 0;
-	padding: 0; }
 
-/* GENRE FILTER ANIMATIONS: WIP
-.show-line {
-	display: block;
-	transform: translate(-40px, 17px);
-	-webkit-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-	-moz-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-    -o-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-    transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950);
-	cursor: pointer; } 
-	
-.hide-line {
-	transform: translate(-120px, 17px);
-	-webkit-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-	-moz-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-    -o-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
-    transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950);	}	  		
-*/
 
+
+.films a {
+	color: #fff;
+}

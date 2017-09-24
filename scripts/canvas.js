@@ -28,12 +28,11 @@ var Container = PIXI.Container,
 // create a pixi stage and renderer
 // add renderer.view to the DOM
 var stage = new Container();
-var renderer = autoDetectRenderer(690, 690);
+var renderer = autoDetectRenderer(1000, 61000, {transparent: true});
 document.getElementById("canvas").appendChild(renderer.view);
 
 // renderer/canvas styles
 renderer.view.style.border = "none";
-renderer.backgroundColor = "transparent";
 
 // resize renderer to fill window
 renderer.view.style.position = "absolute";
@@ -86,16 +85,27 @@ function setup() {
 	// create an alias for the texture atlas frame ids
 // 	id = loader.resources["images/animals.json"].textures;
 	
-	// create background sprite
-	bg = new Sprite(loader.resources["images/film_texture_blue.png"].texture);
-	bg.position.set(0,0);
-	bg.overflow = "hidden";
-
-	stage.addChild(bg);
-		
-/*
 	// create sprites
-	cat = new Sprite(id["cat.png"]);
+	var yrMarker = new Graphics();
+	yrMarker.lineStyle(2,0Xf7b7c7,1);
+	yrMarker.moveTo(0,0);
+	yrMarker.lineTo(0, 1000);
+	yrMarker.x = 32;
+	yrMarker.y = 32;
+	stage.addChild(yrMarker);
+
+	var yr = new Graphics();
+/*
+	yrMarker.lineStyle(2,0Xf7b7c7,1);
+	yrMarker.moveTo(0,0);
+	yrMarker.lineTo(0, 1000);
+	yrMarker.x = 32;
+	yrMarker.y = 32;
+*/
+// 	stage.addChild(yrMarker);
+	
+		
+	/*cat = new Sprite(id["cat.png"]);
 	cat.position.set(16,16);
 	cat.width = 80;
 	cat.height = 120;

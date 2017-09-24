@@ -28,12 +28,12 @@ var Container = PIXI.Container,
 // create a pixi stage and renderer
 // add renderer.view to the DOM
 var stage = new Container();
-var renderer = autoDetectRenderer(512, 512);
-document.body.appendChild(renderer.view);
+var renderer = autoDetectRenderer(690, 690);
+document.getElementById("canvas").appendChild(renderer.view);
 
 // renderer/canvas styles
-renderer.view.style.border = "1px dashed black";
-renderer.backgroundColor = 0x061639;
+renderer.view.style.border = "none";
+renderer.backgroundColor = "transparent";
 
 // resize renderer to fill window
 renderer.view.style.position = "absolute";
@@ -61,7 +61,7 @@ window.addEventListener("resize", function(event){
 // load textures
 // run setup function when loaded
 loader
-	.add("images/animals.json")
+	.add("images/film_texture_blue.png")
 	.on("progress", loadProgressHandler)
 	.load(setup);
 	
@@ -76,8 +76,7 @@ function loadProgressHandler(loader, resource) {
 }
 
 // define global variables
-var state, explorer, treasure, blobs, chimes, exit, player, dungeon,
-    door, healthBar, message, gameScene, gameOverScene, enemies, id;
+var bg, id, car, hedgehog, tiger;
 
 
 // ----- FUNCTION SET UP ----- 
@@ -85,8 +84,16 @@ var state, explorer, treasure, blobs, chimes, exit, player, dungeon,
 function setup() {
 	
 	// create an alias for the texture atlas frame ids
-	id = PIXI.loader.resources["images/animals.json"].textures;
+// 	id = loader.resources["images/animals.json"].textures;
+	
+	// create background sprite
+	bg = new Sprite(loader.resources["images/film_texture_blue.png"].texture);
+	bg.position.set(0,0);
+	bg.overflow = "hidden";
 
+	stage.addChild(bg);
+		
+/*
 	// create sprites
 	cat = new Sprite(id["cat.png"]);
 	cat.position.set(16,16);
@@ -121,6 +128,7 @@ function setup() {
 	superFastSprites.addChild(tiger);
 	superFastSprites.position.set(64,64);
 	stage.addChild(superFastSprites);
+*/
 	
 	// text elements
 	// find more info here: http://pixijs.download/release/docs/PIXI.Text.html
@@ -159,12 +167,14 @@ function gameLoop() {
 
 function play() {			
 	
+/*
 	// apply the velocity values to the cat's position to make it move
 	cat.x += cat.vx;
 	cat.y += cat.vy;
 
 	// contain the cat inside the area of the dungeon
 	contain(cat, {x: 28, y: 10, width: 488, height: 480});
+*/
 }
 
 

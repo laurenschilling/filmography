@@ -14,11 +14,6 @@
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<!-- CSS
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/styles.css">
-
 	<!-- Typekit
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<script src="https://use.typekit.net/zze6urx.js"></script>
@@ -32,7 +27,12 @@
 	<script src="scripts/scaleToWindow.js" defer></script>
     <script src="scripts/app.js" defer></script> <!-- Angular -->
 	<script src="scripts/script.js" defer></script>
-    <script src="scripts/canvas.js" defer></script>
+    <script src="scripts/canvas2.js" defer></script>
+
+	<!-- CSS
+	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/styles.css">
 
 </head>
 
@@ -82,9 +82,11 @@
 				</ul>
 			</div>
 			
-            
-			<div>
-				<!-- position canvas element here -->
+            <!-- main content -->
+			<div class="content">
+				<div id="canvas">
+					<!-- canvas element appends here -->
+				</div>
                 
                 <!-- Link this DOM object to the movieController in app.js -->
                 <div ng-controller="movieController">

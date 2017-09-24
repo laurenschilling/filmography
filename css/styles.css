@@ -13,12 +13,13 @@ Table of Contents:
 /* Ben's styles to test Angular - will delete */
 .col {
     float: left;
-    width: 45%;
+    width: 35%;
     margin-right: 2%;
 }
 
 .detail {
     background: #f4f4f4;
+    height: 2px;
 }
 
 /* Base Styles
@@ -53,8 +54,27 @@ body, input, textarea, button {
 	margin: 0 auto;
 	display: block;
 	clear: both; }	
-	
 
+/* --- had to add !important for the canvas styles to show
+	not sure where they're being overrided --- */
+#canvas {
+	position: absolute !important;
+	top: 0;
+	right: 0;
+	width: 81% !important; 
+	height: 100% !important; }
+
+canvas {
+	border: none !important;
+	background-color: transparent !important;
+	position: absolute !important;
+	top: 0;
+	right: 0;
+	width: 100% !important;
+	height: auto !important;
+	display: inline-block !important; }
+	
+	
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -69,11 +89,14 @@ body, input, textarea, button {
 		text-indent: -9999px;
 		font-size: 0;
 		display: inline-block;
-		width: 270px;
-		height: 106px;
+		width: 250px;
+		height: 100px;
 		background: url(../images/Logo.svg) no-repeat center top;
 		background-size: 100%; }
 
+.sidebar {
+	width: 15%; }
+	
 	
 /* Splash Page
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -142,3 +165,4 @@ ul li {
     -o-transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950); 
     transition: all 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950);	}	  		
 */
+

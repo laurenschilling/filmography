@@ -73,15 +73,16 @@ function movieController($scope, $http) {
 			console.log('current genres are: ' + currGenres);
 
 			// append genre names to page
-			if ( currGenres.length === 1 ) {
+			var numOfGenres = currGenres.length;
+			if ( numOfGenres === 1 ) {
 				$('.genre-ids').empty().append(currGenres[0]);
-			} else if ( currGenres.length === 2 ) {
+			} else if ( numOfGenres === 2 ) {
 				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
-			} else if ( currGenres.length === 3 ) {
+			} else if ( numOfGenres === 3 ) {
 				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
-			} else if ( currGenres.length === 4 ) {
+			} else if ( numOfGenres === 4 ) {
 				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
-			} else if ( currGenres.length === 5 ) {
+			} else if ( numOfGenres === 5 ) {
 				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
 			} else {
 					$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');

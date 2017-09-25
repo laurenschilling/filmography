@@ -94,23 +94,24 @@ function setup() {
 	yrMarker.y = 32;
 	stage.addChild(yrMarker);
 
-	var yr = new Graphics();
-	yr.lineStyle(2,0Xf7b7c7,1);
-	yr.beginFill(0Xf7b7c7);
-	yr.drawRoundedRect(0,0,84,36,10);
-	yr.endFill();
-	yr.x = 48;
-	yr.y = 190;
-	stage.addChild(yr);
-/*
-	yrMarker.lineStyle(2,0Xf7b7c7,1);
-	yrMarker.moveTo(0,0);
-	yrMarker.lineTo(0, 1000);
-	yrMarker.x = 32;
-	yrMarker.y = 32;
-*/
-// 	stage.addChild(yrMarker);
-	
+	var yrGrp = new Container();
+		
+		var yrBg = new Graphics();
+		yrBg.lineStyle(2,0Xf7b7c7,1);
+		yrBg.beginFill(0Xf7b7c7);
+		yrBg.drawRoundedRect(0,0,60,24,8);
+		yrBg.endFill();
+		yrBg.x = 32;
+		yrBg.y = 50;
+		yrGrp.addChild(yrBg);
+		
+		var yr = new Text(
+			"1970",
+			{ fontFamily: "futura-pt", fontWeight: 700, fontSize: 16, fill: "#092335", wordWrap: true, wordWrapWidth: 60, align: "center", width: 60, letterSpacing: .25 });
+		yr.position.set(41,52);
+		yrGrp.addChild(yr);
+		
+		stage.addChild(yrGrp);	
 		
 	/*cat = new Sprite(id["cat.png"]);
 	cat.position.set(16,16);
@@ -140,15 +141,6 @@ function setup() {
 	superFastSprites.position.set(64,64);
 	stage.addChild(superFastSprites);
 */
-	
-	// text elements
-	// find more info here: http://pixijs.download/release/docs/PIXI.Text.html
-	var message = new Text(
-		"Hello Pixi!",
-		{ fontFamily: "Arial", fontSize: 32, fill: "white", wordWrap: true, wordWrapWidth: 100, align: "center" }
-	);
-	message.position.set(54,96);
-	stage.addChild(message);
 	
 	// set the game state
 	state = play;

@@ -28,14 +28,14 @@ function movieController($scope, $http) {
         // if there is a release date, only show release year
         if ( movie.release_date ) {
 	        var yr = movie.release_date.substring(0, 4);
-			$('.yr').append(yr);
+			$('.yr').empty().append(yr);
         }
         
         // if there is a genre id, find the genre name
         if ( movie.genre_ids ) {
-	
-			var ids = movie.genre_ids;
-			
+
+			var currGenres = [];
+			var ids = movie.genre_ids;			
 			var genres = [
 				{ id: 28, name: 'Action' },
 				{ id: 12, name: 'Adventure' },
@@ -56,7 +56,7 @@ function movieController($scope, $http) {
 				{ id: 53, name: 'Thriller' },
 				{ id: 10752, name: 'War' },
 				{ id: 37, name: 'Western' }
-			]
+			]			
 			
 			// match the movie ids with the genre names
 			for (var j = 0; j < genres.length; j++) {
@@ -64,16 +64,28 @@ function movieController($scope, $http) {
 				for (var i = 0; i < ids.length; i++) {
 					if ( ids[i] == genres[j].id) {
 						console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
-						
-						var currGenres = [];
-						currGenres = [(genres[j].name)];
-						console.log(currGenres);
-						
-						// ** need to fix how this is appended
-						$('.genre-ids').append(currGenres);
+						currGenres.push(genres[j].name);
 					}
 				}
-	    	};
+			}
+			
+			// log current genre names to console
+			console.log('current genres are: ' + currGenres);
+
+			// append genre names to page
+			if ( currGenres.length === 1 ) {
+				$('.genre-ids').empty().append(currGenres[0]);
+			} else if ( currGenres.length === 2 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
+			} else if ( currGenres.length === 3 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
+			} else if ( currGenres.length === 4 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
+			} else if ( currGenres.length === 5 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
+			} else {
+					$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
+			}
 		}
 	}
 }

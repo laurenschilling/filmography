@@ -95,6 +95,13 @@ function setup() {
 	stage.addChild(yrMarker);
 
 	var yr = new Graphics();
+	yr.lineStyle(2,0Xf7b7c7,1);
+	yr.beginFill(0Xf7b7c7);
+	yr.drawRoundedRect(0,0,84,36,10);
+	yr.endFill();
+	yr.x = 48;
+	yr.y = 190;
+	stage.addChild(yr);
 /*
 	yrMarker.lineStyle(2,0Xf7b7c7,1);
 	yrMarker.moveTo(0,0);
@@ -117,12 +124,6 @@ function setup() {
 		// scale the sprite's size proportionally
 		cat.scale.set(0.5,0.5);
 		
-	hedgehog = new Sprite(id["hedgehog.png"]);
-	hedgehog.position.set(32,32);
-	
-	tiger = new Sprite(id["tiger.png"]);
-	tiger.position.set(64,64);
-	
 	// create animals container to group sprites together
 	var animals = new Container();
 	animals.addChild(cat);

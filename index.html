@@ -41,103 +41,102 @@
 
 	<!-- Content
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-	<div class="container">
-		<header>		
-		    <!-- sidebar -->
-			<div class="sidebar">
-				<h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
-				<ul id="genres">
-					<li data-link="action"><span class="line"></span>Action</li>
-					<li data-link="adventure"><span class="line"></span>Adventure</li>
-					<li data-link="animation"><span class="line"></span>Animation</li>
-					<li data-link="comedy"><span class="line"></span>Comedy</li>
-					<li data-link="crime"><span class="line"></span>Crime</li>
-					<li data-link="doc"><span class="line"></span>Documentary</li>
-					<li data-link="drama"><span class="line"></span>Drama</li>
-					<li data-link="family"><span class="line"></span>Family</li>
-					<li data-link="fantasy"><span class="line"></span>Fantasy</li>
-					<li data-link="history"><span class="line"></span>History</li>
-					<li data-link="music"><span class="line"></span>Music</li>
-					<li data-link="mystery"><span class="line"></span>Mystery</li>
-					<li data-link="romance"><span class="line"></span>Romance</li>
-					<li data-link="scifi"><span class="line"></span>Sci-fi</li>
-					<li data-link="thriller"><span class="line"></span>Thriller</li>
-					<li data-link="tv"><span class="line"></span>TV Movie</li>
-					<li data-link="war"><span class="line"></span>War</li>
-					<li data-link="western"><span class="line"></span>Western</li>
-				</ul>
-			</div>
-		</header>
-		
-		<main>	
-            
-            <!-- splash page -->
-			<div id="splash">
-				<p>Welcome to</p>
-				<img src=""> <!-- filmography logo type to go here -->
+    
+    <!-- splash page -->
+    <div id="splash">
+        <p>Welcome to</p>
+        <img src=""> <!-- filmography logo type to go here -->
 				
-				<!-- intro description and instructions go here -->
-				<p>Every square is a film...</p>
-				<a data-link="timeline">Let's go!</a>
-			</div>
+        <!-- intro description and instructions go here -->
+        <p>Every square is a film...</p>
+        <a data-link="timeline">Let's go!</a>
+    </div>
+    
+	<!-- sidebar -->
+    <div class="sidebar">
+        <h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
+        <div id="genres">
+            <ul id="genres">
+                <li data-link="action"><span class="line"></span>Action</li>
+                <li data-link="adventure"><span class="line"></span>Adventure</li>
+                <li data-link="animation"><span class="line"></span>Animation</li>
+                <li data-link="comedy"><span class="line"></span>Comedy</li>
+                <li data-link="crime"><span class="line"></span>Crime</li>
+                <li data-link="doc"><span class="line"></span>Documentary</li>
+                <li data-link="drama"><span class="line"></span>Drama</li>
+                <li data-link="family"><span class="line"></span>Family</li>
+                <li data-link="fantasy"><span class="line"></span>Fantasy</li>
+                <li data-link="history"><span class="line"></span>History</li>
+                <li data-link="music"><span class="line"></span>Music</li>
+                <li data-link="mystery"><span class="line"></span>Mystery</li>
+                <li data-link="romance"><span class="line"></span>Romance</li>
+                <li data-link="scifi"><span class="line"></span>Sci-fi</li>
+                <li data-link="thriller"><span class="line"></span>Thriller</li>
+                <li data-link="tv"><span class="line"></span>TV Movie</li>
+                <li data-link="war"><span class="line"></span>War</li>
+                <li data-link="western"><span class="line"></span>Western</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- WIP for year marker over canvas -->
+    <div id="mouse-move">
+        <div id="current-year"></div>
+        <div id="line"></div>
+        <div id="cursor"></div>
+    </div>
+    
+    <!-- Link this DOM object to the movieController in app.js -->
+    <div ng-controller="movieController" style="display:none">
+
+        <div class="col list">
+            <p>Select a movie:</p>
+            <ul class="films">
+            <!-- Iterate through all movies in the dataset and display title with a click function -->
+                <li ng-repeat="movie in movies">
+                    <a href ng-click='movieClick(movie)'>{{ movie.title }}</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- This section will automatically display detail when selectedArtist is updated -->
+        <div class="col detail">
+            <div class="detailImageWrapper">
+                <img class="detailImage" src="{{selectedMovieImage}}" >
+            </div>
+            <div class="detailTitleWrapper">
+                <h2>{{ selectedMovie.title }}</h2>
+                <p class="yr"></p>
+            </div>
+            <p class="genre-ids"></p>
+            <p>{{selectedMovie.overview}}</p>
+
+        </div>
+    </div>
+    
+    <div id="data-background"></div>
 						
-            <!-- main content -->
-			<div class="content">
-				<div id="canvas">
-					<!-- canvas element appends here -->
-				</div>
-                
-                <!-- Link this DOM object to the movieController in app.js -->
-                <div ng-controller="movieController">
-
-                    <div class="col list">
-                        <p>Select a movie:</p>
-                        <ul class="films">
-                        <!-- Iterate through all movies in the dataset and display title with a click function -->
-                           <li ng-repeat="movie in movies">
-                                <a href ng-click='movieClick(movie)'>{{ movie.title }}</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- This section will automatically display detail when selectedArtist is updated -->
-					<div class="col detail">
-                        <div class="detailImageWrapper">
-                            <img class="detailImage" src="{{selectedMovieImage}}" >
-                        </div>
-                        <div class="detailTitleWrapper">
-	                        <h2>{{ selectedMovie.title }}</h2>
-							<p class="yr"></p>
-                        </div>
-                        <p class="genre-ids"></p>
-                        <p>{{selectedMovie.overview}}</p>
-
-                    </div>
-                </div>
-			</div>
+    <canvas id="canvas"></canvas>
 			
-			<div class="baseline-bar">
-				<ul id="decades">
-					<li data-link="1930">1930s</li>
-					<li data-link="1940">1940s</li>
-					<li data-link="1950">1950s</li>
-					<li data-link="1960">1960s</li>
-					<li data-link="1970">1970s</li>
-					<li data-link="1980">1980s</li>
-					<li data-link="1990">1990s</li>
-					<li data-link="2000">2000s</li>
-					<li data-link="2010">2010s</li>
-				</ul>
-			</div>
-		</main>
-		
-		<footer>
-			<div class="slider">
-				<!-- set up slider here -->
-			</div>
-		</footer>
+    <footer>
+        <div class="baseline-bar">
+            <ul id="decades">
+				<li data-link="1930">1930s</li>
+				<li data-link="1940">1940s</li>
+				<li data-link="1950">1950s</li>
+				<li data-link="1960">1960s</li>
+				<li data-link="1970">1970s</li>
+				<li data-link="1980">1980s</li>
+				<li data-link="1990">1990s</li>
+				<li data-link="2000">2000s</li>
+				<li data-link="2010">2010s</li>
+            </ul>
+        </div>
         
-	</div> <!-- end .container -->
+        <div class="slider">
+        </div>
+    </footer>
+        
 	
 </body>
 </html>

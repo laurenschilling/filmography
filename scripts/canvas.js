@@ -14,8 +14,8 @@ var Container = PIXI.Container,
 	Texture = PIXI.Texture,
 	Sprite = PIXI.Sprite,
 	Rectangle = PIXI.Rectangle,
-	ParticleContainer = PIXI.particles.ParticleContainer;
-	Graphics = PIXI.Graphics;
+	ParticleContainer = PIXI.particles.ParticleContainer,
+	Graphics = PIXI.Graphics,
 	Text = PIXI.Text;
 
 // change the texture a sprite is displaying
@@ -25,24 +25,27 @@ var Container = PIXI.Container,
 
 // ----- SET UP THE CANVAS ----- 
 
-// create a pixi stage and renderer
-// add renderer.view to the DOM
-var stage = new Container();
-var renderer = autoDetectRenderer(1000, 61000, {transparent: true});
-document.getElementById("canvas").appendChild(renderer.view);
+var canvasSize = {
+    height: window.innerHeight - 60, /* subtract the height of the footer 60px */
+    width: window.innerWidth - 220 /* subtract the width of left sidebar 220px */
+}
 
-// renderer/canvas styles
-renderer.view.style.border = "none";
+var resizableDataArea = {
+    mouse_move: $('#mouse-move'), // WIP
+    current_year: $('#current-year'), // WIP
+    canvas: document.getElementById('canvas'), // can't use jQuery for this it doesn't work
+    //footer: $('footer')
+    // a few other elements will go in here, year marker, mousemove etc
+}
 
-// resize renderer to fill window
-renderer.view.style.position = "absolute";
-renderer.view.style.display = "block";
-renderer.autoResize = true;
-renderer.resize(window.innerWidth, window.innerHeight);
+var renderCanvas = new PIXI.WebGLRenderer(canvasSize.width, canvasSize.height, {
+    transparent: !0,
+    view: resizableDataArea.canvas
+}, resizableDataArea.canvas, !1, !0);
 
-window.addEventListener("resize", function(event){ 
-	scaleToWindow(renderer.view);
-});
+document.body.appendChild(renderCanvas.view);
+
+
 
 
 // ----- OPTIONAL ELEMENTS -----

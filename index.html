@@ -56,7 +56,7 @@
     <div class="sidebar">
         <h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
         <div id="genres">
-            <ul id="genres">
+            <ul>
                 <li data-link="action"><span class="line"></span>Action</li>
                 <li data-link="adventure"><span class="line"></span>Adventure</li>
                 <li data-link="animation"><span class="line"></span>Animation</li>
@@ -79,7 +79,7 @@
         </div>
     </div>
     
-    <!-- WIP for year marker over canvas -->
+    <!-- year marker over canvas -->
     <div id="mouse-move">
         <div id="current-year"></div>
         <div id="line"></div>
@@ -101,15 +101,15 @@
 
         <!-- This section will automatically display detail when selectedArtist is updated -->
         <div class="col detail">
-            <div class="detailImageWrapper">
-                <img class="detailImage" src="{{selectedMovieImage}}" >
+            <div class="detail-image-wrapper">
+                <img class="detail-image" src="{{selectedMovieImage}}" >
             </div>
-            <div class="detailTitleWrapper">
+            <div class="detail-title-wrapper">
                 <h2>{{ selectedMovie.title }}</h2>
                 <p class="yr"></p>
             </div>
             <p class="genre-ids"></p>
-            <p>{{selectedMovie.overview}}</p>
+            <p>{{ selectedMovie.overview }}</p>
 
         </div>
     </div>
@@ -135,8 +135,7 @@
         
         <div class="slider">
         </div>
-    </footer>
-        
+    </footer>   
 	
 </body>
 </html>

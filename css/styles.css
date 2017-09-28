@@ -32,7 +32,6 @@ body {
 	font-weight: 500;
 	font-size: 16px;
 	color: #fff;
-    /*background: #092335;*/
     overflow: hidden; }
 
 body, input, textarea, button {
@@ -79,7 +78,7 @@ canvas {
 	position: absolute !important;
     top: 0;
     z-index: 2;
-    cursor: none; }
+    cursor: none !important; }
 
 footer {
     position: absolute;
@@ -102,7 +101,7 @@ h2 {
 
 #logo {
 	margin: 0 auto;
-    padding-top: 2.5em; }
+    padding-top: 1.3em; }
 	
 	#logo a {
 		text-indent: -9999px;
@@ -126,25 +125,46 @@ h2 {
 .baseline-bar {
 	background: #0e3549; }
 
-/* --- WIP mousemove/year marker -- */
-div#mouse-move,
-div#line {
+
+/* --- mousemove/year marker -- */
+#mouse-move,
+#line {
     height: 100%;
     position: absolute; }
 
-div#mouse-move {
+#mouse-move {
     cursor: none;
     z-index: 15;
     transform: none;
     backface-visibility: hidden;
     transform-origin: 50% 50% 0px;
-    display: block; }
-
-div#line {
-    width: 1px;
+    display: block;
     top: 0;
-    color: #f7b7c7; }
+    left: 300px; /* starting position */ }
 
+	#line {
+	    width: 1px;
+	    top: 0;
+	    background-color: #f7b7c7; }
+	
+	#cursor {
+		width: 8px;
+		height: 8px;
+		border-radius: 20%;
+		background-color: #f7b7c7;
+		position: relative;
+		top: 30px;
+		left: -4px;
+		cursor: none; }
+	
+	#current-year {
+		width: 45px;
+		height: 20px;
+		background-color: #f7b7c7;
+		position: relative;
+		top: 20px; }
+	
+	
 /* --- pop up -- */	
 .detail {
 	height: 100%;
@@ -152,17 +172,17 @@ div#line {
 	padding: 5px;
 	color: #0e3549; }
 
-.detailImageWrapper	{
-	height: 300px;
-	overflow: hidden; }
+	.detail-image-wrapper	{
+		height: 300px;
+		overflow: hidden; }
+		
+	.detail-title-wrapper h2,
+	.detail-title-wrapper p {
+		display: inline-block; 
+		padding: 8px 2px 20px 2px; }
 	
-.detailTitleWrapper h2,
-.detailTitleWrapper p {
-	display: inline-block; 
-	padding: 8px 2px 20px 2px; }
-
-	.yr {
-		float: right; }	
+		.yr {
+			float: right; }	
 		
 	
 /* Splash Page
@@ -180,34 +200,37 @@ ul li {
 	line-height: 2.2em;
 	cursor: pointer; }		
 
+.films a {
+	color: #690a98;
+}
 
 /* Genre Filter List
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-div#genres {
+#genres {
 	width: 220px; /* same width as .sidebar */
     height: 100%;
     overflow-x: scroll; }
 
-div#genres ul {
-    display: inline-block;
-    padding: 2em 0 0 2em;}
+	#genres ul {
+	    display: inline-block;
+	    padding: 1.2em 0 0 2em;}
+		
+		#genres ul li {
+			font-size: .9em;
+			text-transform: uppercase;
+			-webkit-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
+			-moz-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
+		    -o-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
+		    transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms;
+	        padding-bottom: 0.5em; }	 
+		       		
+			div#genres ul li:hover {
+				transform: translateX(20px);
+				color: #f7b7c7; }
 	
-	div#genres ul li {
-		font-size: .9em;
-		text-transform: uppercase;
-		-webkit-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
-		-moz-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
-	    -o-transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms; 
-	    transition: transform 500ms cubic-bezier(0.445, 0.050, 0.550, 0.950), color 200ms;
-        padding-bottom: 0.5em; }	 
-	       		
-		div#genres ul li:hover {
-			transform: translateX(20px);
-			color: #f7b7c7; }
-
-        div#genres ul li:last-child {
-            padding-bottom: 12em; }
+	        div#genres ul li:last-child {
+	            padding-bottom: 12em; }
 		
 .line {
 	display: block;
@@ -240,7 +263,3 @@ ul#decades {
 		display: inline-block;
 		text-align: center;
 		padding: 0 20px; }	
-
-.films a {
-	color: #fff;
-}

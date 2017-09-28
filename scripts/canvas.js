@@ -38,14 +38,13 @@ var resizableDataArea = {
     // a few other elements will go in here, year marker, mousemove etc
 }
 
-var renderCanvas = new PIXI.WebGLRenderer(canvasSize.width, canvasSize.height, {
+var stage = new Container();
+var renderer = new PIXI.WebGLRenderer(canvasSize.width, canvasSize.height, {
     transparent: !0,
     view: resizableDataArea.canvas
 }, resizableDataArea.canvas, !1, !0);
 
-document.body.appendChild(renderCanvas.view);
-
-
+document.body.appendChild(renderer.view);
 
 
 // ----- OPTIONAL ELEMENTS -----
@@ -63,7 +62,7 @@ document.body.appendChild(renderCanvas.view);
 // load textures
 // run setup function when loaded
 loader
-	.add("images/film_texture_blue.png")
+	.add("images/dots.svg")
 	.on("progress", loadProgressHandler)
 	.load(setup);
 	
@@ -78,7 +77,7 @@ function loadProgressHandler(loader, resource) {
 }
 
 // define global variables
-var bg, id, car, hedgehog, tiger;
+var texture, dot;
 
 
 // ----- FUNCTION SET UP ----- 
@@ -86,36 +85,19 @@ var bg, id, car, hedgehog, tiger;
 function setup() {
 	
 	// create an alias for the texture atlas frame ids
-// 	id = loader.resources["images/animals.json"].textures;
+	// 	id = loader.resources["images/animals.json"].textures;
 	
-	// create sprites
-	var yrMarker = new Graphics();
-	yrMarker.lineStyle(2,0Xf7b7c7,1);
-	yrMarker.moveTo(0,0);
-	yrMarker.lineTo(0, 1000);
-	yrMarker.x = 32;
-	yrMarker.y = 32;
-	stage.addChild(yrMarker);
-
-	var yrGrp = new Container();
-		
-		var yrBg = new Graphics();
-		yrBg.lineStyle(2,0Xf7b7c7,1);
-		yrBg.beginFill(0Xf7b7c7);
-		yrBg.drawRoundedRect(0,0,60,24,8);
-		yrBg.endFill();
-		yrBg.x = 32;
-		yrBg.y = 50;
-		yrGrp.addChild(yrBg);
-		
-		var yr = new Text(
-			"1970",
-			{ fontFamily: "futura-pt", fontWeight: 700, fontSize: 16, fill: "#092335", wordWrap: true, wordWrapWidth: 60, align: "center", width: 60, letterSpacing: .25 });
-		yr.position.set(41,52);
-		yrGrp.addChild(yr);
-		
-		stage.addChild(yrGrp);	
-		
+	// attempted to loop through data to create dot sprites 
+	// couldn't access variable from other script file
+	for (var i = 0; i < 5; i++) {
+		texture = Texture.fromImage("images/dots.svg");
+		dot = new Sprite(texture);
+		dot.width = 60;
+		dot.height = 60;
+		dot.position.set(i * 10, 0);
+		stage.addChild(dot);		
+	}
+	
 	/*cat = new Sprite(id["cat.png"]);
 	cat.position.set(16,16);
 	cat.width = 80;
@@ -127,14 +109,6 @@ function setup() {
 		
 		// scale the sprite's size proportionally
 		cat.scale.set(0.5,0.5);
-		
-	// create animals container to group sprites together
-	var animals = new Container();
-	animals.addChild(cat);
-	animals.addChild(hedgehog);
-	animals.addChild(tiger);
-	animals.position.set(64,64);
-	stage.addChild(animals);
 
 	// create superFastSprites container to create OP sprites
 	var superFastSprites = new ParticleContainer();
@@ -172,7 +146,23 @@ function gameLoop() {
 // all of the animations and changes to the canvas elements go here
 
 function play() {			
+
+	PIXI.INTERACTION_FREQUENCY = 60;
 	
+	// year marker moves with cursor within canvas
+	$(canvas).on('mousemove', function(e) {
+		
+		var mouseMove = document.getElementById('mouse-move');
+		var cursor = document.getElementById('cursor');
+		var offset = 20;
+		var x = e.pageX;
+		var y = e.pageY;
+		
+		mouseMove.style.left = x + 'px';
+		cursor.style.top = y + 'px';
+		
+	});	
+
 /*
 	// apply the velocity values to the cat's position to make it move
 	cat.x += cat.vx;

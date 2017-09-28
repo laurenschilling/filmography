@@ -2,7 +2,7 @@ $(document).ready(function() {
 	
 	// ---- GENRE FILTER ANIMATIONS: WIP ----
 	
-	var li = $('#genres li');
+	var li = $('#genres ul li');
 
 	genreFilter();
 	function genreFilter() {

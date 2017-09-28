@@ -7,19 +7,32 @@ function movieController($scope, $http) {
     
 //    $scope.selectedArtist = "";
 //    $scope.selectedArtistImage = IMAGE_ROOT + DEFAULT_IMAGE;
-    
+
     $http.get('scripts/all-moviedata.json').success(function(data) {
         $scope.movies = data;
 //         console.log(data);
     });
 
+	// when genre filter is clicked, only show movies with that genre
+	$('#genres ul li').on('click', function() {
+		console.log('a genre filter has been clicked');
+		var currGenreFilter = $(this).attr('data-link');
+		console.log('current filter selected: ' + currGenreFilter);
+/*
+		
+		$scope.selectedGenre = currGenreFilter;
+		var ngRepeat = $('.films li').attr('ng-repeat');
+		ngRepeat.empty().append("movie in selectedGenre");
+*/
+	})
+    
     //what happens when you click the ng-click in the movie list
     $scope.movieClick = function(movie) {
         $scope.selectedMovie = movie;
         console.log(movie);
 
         //if there is an image then add the filepath to the string 
-        if( movie.poster_path ) {
+        if ( movie.poster_path ) {
           $scope.selectedMovieImage = imageBase + imageSize + movie.poster_path;
         } else {
           $scope.selectedMovieImage = imageBase + defaultImg;

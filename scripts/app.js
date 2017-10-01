@@ -135,19 +135,19 @@ function movieController($scope, $http) {
 	    width: window.innerWidth - 220 /* subtract the width of left sidebar 220px */
 	}
 	
-	var resizableDataArea = {
-	    mouse_move: $('#mouse-move'), // WIP
+	var dataElements = {
+	    mouse_move: $('#mouse-move'),
 	    current_year: $('#current-year'), // WIP
 	    canvas: document.getElementById('canvas'), // can't use jQuery for this it doesn't work
 	    //footer: $('footer')
-	    // a few other elements will go in here, year marker, mousemove etc
+	    // a few other elements will go in here
 	}
 	
 	var stage = new Container();
 	var renderer = new PIXI.WebGLRenderer(canvasSize.width, canvasSize.height, {
 	    transparent: !0,
-	    view: resizableDataArea.canvas
-	}, resizableDataArea.canvas, !1, !0);
+	    view: dataElements.canvas
+	}, dataElements.canvas, !1, !0);
 	
 	document.body.appendChild(renderer.view);
 	
@@ -189,27 +189,27 @@ function movieController($scope, $http) {
 	
 	function setup() {
 		
-		// create an alias for the texture atlas frame ids
-		// 	id = loader.resources["images/animals.json"].textures;
-		
-		// create new particle container to hold dots
-		dotContainer = new ParticleContainer();
+		texture = Texture.fromImage("images/dots.svg");
+        dot = []; // array for the 5600+ dots (sprites)
+        dotContainer = new ParticleContainer(); // create new particle container to hold dots
 				
 		// loop through movie data to create dot sprites 
-		for (var d = 0; d <  $scope.movies.length; d++) {
+		for (var d = 0; d < $scope.movies.length; d++) {
 			
 			// create a dot sprite for the number of movies
-			texture = Texture.fromImage("images/dots.svg");
-			dot = new Sprite(texture);
-			dot.interactive = true;
-			dot.width = 60;
-			dot.height = 60;
-			dot.position.set(d * 10, 0);
-			contain(dot, {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
+			dot[d] = new Sprite(texture);
+			dot[d].interactive = true;
+			dot[d].width = 60;
+			dot[d].height = 60;
+			dot[d].position.set(d * 10, 0);
+			contain(dot[d], {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
+            dot[d].year = $scope.movies[d].release_date.substring(0, 4); // add movie release year to sprite - need to test this
 
 			// add dot sprites to particle container
-			dotContainer.addChild(dot);
+			dotContainer.addChild(dot[d]);
 		}
+        
+        console.log(dot[5].year); // to test to see if the year for the 6th film in the loop pops up, it does!
 	
 		// when loop is finished, add particle container to stage
 		stage.addChild(dotContainer);
@@ -256,19 +256,6 @@ function movieController($scope, $http) {
 	
 		// meant to help with lagging frame rate
 		PIXI.INTERACTION_FREQUENCY = 60;
-		
-		// year marker moves with cursor within canvas
-		$(canvas).on('mousemove', function(e) {
-			
-			var mouseMove = document.getElementById('mouse-move');
-			var cursor = document.getElementById('cursor');
-			var offset = 20;
-			var x = e.pageX;
-			var y = e.pageY;
-			
-			mouseMove.style.left = x + 'px';
-			cursor.style.top = y + 'px';			
-		});	
 	
 	/*
 		// apply the velocity values to the cat's position to make it move
@@ -276,6 +263,24 @@ function movieController($scope, $http) {
 		cat.y += cat.vy; */
 		
 	}
+    
+    // year marker moves with cursor within canvas - outside of play() function it seems a bit less laggy or am I imagining it? 
+    $(canvas).on('mousemove', function(e) {
+			
+        var mouseMove = document.getElementById('mouse-move');
+        var cursor = document.getElementById('cursor');
+        var offset = 20;
+        var x = e.pageX;
+        var y = e.pageY;
+			
+        mouseMove.style.left = x + 'px';
+        cursor.style.top = y + 'px';			
+    });
+    
+    // testing the canvas click event - don't put in play() function as it doesn't work as intended
+    dataElements.mouse_move.click(function() {
+        console.log('you clicked the canvas');
+    });
 	
 	
 	// ----- FUNCTION END -----

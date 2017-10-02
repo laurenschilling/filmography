@@ -204,12 +204,14 @@ function movieController($scope, $http) {
 			dot[d].position.set(d * 10, 0);
 			contain(dot[d], {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
             dot[d].year = $scope.movies[d].release_date.substring(0, 4); // add movie release year to sprite - need to test this
+            dot[d].genre = $scope.movies[d].genre_ids;
 
 			// add dot sprites to particle container
 			dotContainer.addChild(dot[d]);
 		}
         
         console.log(dot[5].year); // to test to see if the year for the 6th film in the loop pops up, it does!
+        console.log(dot[76].genre); 
 	
 		// when loop is finished, add particle container to stage
 		stage.addChild(dotContainer);

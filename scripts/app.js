@@ -182,6 +182,17 @@ function movieController($scope, $http) {
 		
 		var texture = Texture.fromImage("images/dots-15.svg");
 		var length = $scope.movies.length;
+        
+        var distanceFromRight,
+            columnsFromRight,
+            spriteWidth = 15,
+            spriteHeight = 15, 
+            resetSpriteHeight1 = 15, // in case the canvas height means the data for a year spills to 2 columns
+            resetSpriteHeight2 = 15, // in case the canvas height means the data for a year spills to 3 columns
+            resetSpriteHeight3 = 15, // in case the canvas height means the data for a year spills to 4 columns
+            resetSpriteHeight4 = 15, // in case the canvas height means the data for a year spills to 5 columns
+            resetSpriteHeight5 = 15; // in case the canvas height means the data for a year spills to 6 columns
+            // I'm thinking if a dataset needs more than 6 columns perhaps we should have a screen pop up telling the user their browser window is too small anyway? Not ideal, but for the time constraints on this assignment, it might be okay
 		
 		// loop through movie data to create dot sprites 
 		for (var d = 0; d < length; d++) {
@@ -199,7 +210,9 @@ function movieController($scope, $http) {
 			// dot properties
 			dot.width = 12.5;
 			dot.height = 12.5;
-			dot.position.set(d * 12.5, canvasSize.height/2);
+            dot.anchor.set = (0.5, 0.5);
+			//dot.position.set(d * 12.5, canvasSize.height/2);
+            
 			dot.year = parseInt($scope.movies[d].release_date.substring(0, 4)); 
 			dot.genre = $scope.movies[d].genre_ids;
 			dot.title = currentMovie.title;
@@ -217,14 +230,67 @@ function movieController($scope, $http) {
 
 			// add dot sprites to stage						
 			stage.addChild(dot);
-		}
+            
+            if (dot.year === 2017) { // this loops through 2017 data, I'm sure we could create a function for this, I'm just terrible at functions - Steph
+                // initially positon first sprite bottom right
+                dot.x = canvasSize.width - spriteWidth;
+                dot.y = canvasSize.height - spriteHeight;
+                spriteHeight += 15; // ensures next sprite sits 'above'
+                distanceFromRight = canvasSize.width - dot.x; // calculates how far in px the sprite is from right
+            
+                if (dot.y < 0) { // within 2017 loop - if sprites proceed past top of y axis
+                    dot.x = canvasSize.width - (spriteWidth*2); // 2nd column
+                    dot.y = canvasSize.height - resetSpriteHeight1;
+                    resetSpriteHeight1 += 15;
+                    distanceFromRight = canvasSize.width - dot.x;
+                    
+                    if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                        dot.x = canvasSize.width - (spriteWidth*3); // 3rd column
+                        dot.y = canvasSize.height - resetSpriteHeight2;
+                        resetSpriteHeight2 += 15;
+                        distanceFromRight = canvasSize.width - dot.x;
+                        
+                        if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                            dot.x = canvasSize.width - (spriteWidth*4); // 4th column
+                            dot.y = canvasSize.height - resetSpriteHeight3;
+                            resetSpriteHeight3 += 15;
+                            distanceFromRight = canvasSize.width - dot.x;
+                            
+                            if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                                dot.x = canvasSize.width - (spriteWidth*5); // 5th column
+                                dot.y = canvasSize.height - resetSpriteHeight4;
+                                resetSpriteHeight4 += 15;
+                                distanceFromRight = canvasSize.width - dot.x;
+                                
+                                if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                                    dot.x = canvasSize.width - (spriteWidth*6); // 5th column
+                                    dot.y = canvasSize.height - resetSpriteHeight5;
+                                    resetSpriteHeight5 += 15;
+                                    distanceFromRight = canvasSize.width - dot.x;
+                                }
+                            }
+                        }
+                    }
+                }
+            } // close 2017 loop
+            
+            columnsFromRight = distanceFromRight / 15;
+            // this currently evaluates as a number, which I want to use to position 2016 sprites on the x axis, but as soon as I add data to 2016 my variables change as it loops through 2016 before 2017 at the same time. I don't want to have to assign a new spriteHeight variable for each year, but am thinking perhaps we need the data to loop through the other way? So it hits the 2017 data first so we can position it first?
+            
+            if (dot.year === 2016) {
+                //dot.x = canvasSize.width - spriteWidth*(5);
+                //this currently doesn't work and we can't use a number as we won't 'know' what that number is, so need a variable fed from 2017 aka year proceeding
+                
+                //dot.y = canvasSize.height - spriteHeight;
+                // accessing the spriteHeight variable messes with 2017
+                //spriteHeight += 15;
+                // accessing the spriteHeight variable messes with 2017
+            
+            } // close 2016 loop
+            
+            
+		} // close data/sprite loop
 		
-        // ---- TESTING ----
-/*
-	        console.log(dot[5]);
-	        console.log(dot[5].year); // to test to see if the year for the 6th film in the loop pops up, it does!
-	        console.log(dot[76].genre); 
-*/
 			
 			// initialise the cat's velocity variables
 			//cat.vx = 0;

@@ -278,8 +278,8 @@ function movieController($scope, $http) {
             // this currently evaluates as a number, which I want to use to position 2016 sprites on the x axis, but as soon as I add data to 2016 my variables change as it loops through 2016 before 2017 at the same time. I don't want to have to assign a new spriteHeight variable for each year, but am thinking perhaps we need the data to loop through the other way? So it hits the 2017 data first so we can position it first?
             
             if (dot.year === 2016) {
-                //dot.x = canvasSize.width - spriteWidth*(5);
-                //this currently doesn't work and we can't use a number as we won't 'know' what that number is, so need a variable fed from 2017 aka year proceeding
+                //dot.x = canvasSize.width - spriteWidth*(columnsFromRight + 1);
+                //this currently doesn't work and we can't use a flat number as we won't 'know' what that number is, so need a variable fed from 2017 aka year proceeding, which is what columnsFromRight was designed for
                 
                 //dot.y = canvasSize.height - spriteHeight;
                 // accessing the spriteHeight variable messes with 2017

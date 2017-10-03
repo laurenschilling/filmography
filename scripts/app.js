@@ -137,6 +137,7 @@ function movieController($scope, $http) {
 	}
 	
 	var stage = new Container();
+	stage.interactive = false;
 	var renderer = new PIXI.WebGLRenderer(canvasSize.width, canvasSize.height, {
 	    transparent: !0,
 	    view: dataElements.canvas
@@ -184,28 +185,35 @@ function movieController($scope, $http) {
 		
 		// loop through movie data to create dot sprites 
 		for (var d = 0; d < length; d++) {
-
+		
+			// variable for current movie
+			var currentMovie = $scope.movies[d];
+			
 			// create a dot sprite for the number of movies
 			var dot = new Sprite(texture);
+			
+			// make the dot interactive
+			dot.buttonMode = true;
 			dot.interactive = true;
+			
+			// dot properties
 			dot.width = 12.5;
 			dot.height = 12.5;
 			dot.position.set(d * 12.5, canvasSize.height/2);
 			dot.year = parseInt($scope.movies[d].release_date.substring(0, 4)); 
 			dot.genre = $scope.movies[d].genre_ids;
-            
+			dot.title = currentMovie.title;
+			
+			// this seems to be a lifesaver! -ben
+			dot.hitArea = new Rectangle(-150, -150, 300, 300);
+			
             // contain the sprites ** not working **
 			// contain(dot, {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
-
-			// set the mouseover callback
-			dot.mouseover = function(data){
-				mouseHoverState(data);
-			}
 			
-			// set the click event callback (i.e. pop up) 
-			dot.click = function(data){
-				mouseClickState(data);
-			}
+			// set the mouseover and click states
+            //listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
+            dot.on('mouseover', dotHover);
+            dot.on('click', dotClick);
 
 			// add dot sprites to stage						
 			stage.addChild(dot);
@@ -327,16 +335,15 @@ function movieController($scope, $http) {
 	}
 	
 	// mouse hover
-	function mouseHoverState(hoverData) {
-		//console.log('in hover');
-		//console.log(hoverData.target.year);
-		$('#dot-year').html(hoverData.target.year);
+	function dotHover() {
+		console.log('hovering over: ' + this.year + ': ' + this.title);
+		$('#dot-year').html(this.year);
 	}
 	
 	// put dot click events in here
-	function mouseClickState(clickData) {
-		console.log('you clicked the canvas');
-        console.log(this);
+	function dotClick() {
+		console.log('clicked');
+        console.log('clicked on: ' + this.year);	
 	}
 	
 } // close movieController();

@@ -263,7 +263,7 @@ function movieController($scope, $http) {
                                 distanceFromRight = canvasSize.width - dot.x;
                                 
                                 if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                                    dot.x = canvasSize.width - (spriteWidth*6); // 5th column
+                                    dot.x = canvasSize.width - (spriteWidth*6); // 6th column
                                     dot.y = canvasSize.height - resetSpriteHeight5;
                                     resetSpriteHeight5 += 15;
                                     distanceFromRight = canvasSize.width - dot.x;

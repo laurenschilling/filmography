@@ -163,6 +163,15 @@ h2 {
 		background-color: #f7b7c7;
 		position: relative;
 		top: 20px; }
+		
+		#dot-year {
+			color: #0e3549;
+			position: relative;
+			text-align: center;
+			top: 2px;
+			letter-spacing: 0.01em;
+			font-weight: 600;
+			font-size: 0.9em; }
 	
 	
 /* --- pop up -- */	

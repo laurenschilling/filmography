@@ -17,12 +17,6 @@ function movieController($scope, $http) {
 		console.log('a genre filter has been clicked');
 		var currGenreFilter = $(this).attr('data-link');
 		console.log('current filter selected: ' + currGenreFilter);
-/*
-		
-		$scope.selectedGenre = currGenreFilter;
-		var ngRepeat = $('.films li').attr('ng-repeat');
-		ngRepeat.empty().append("movie in selectedGenre");
-*/
 	})
     
     //what happens when you click the ng-click in the movie list
@@ -137,7 +131,6 @@ function movieController($scope, $http) {
 	
 	var dataElements = {
 	    mouse_move: $('#mouse-move'),
-	    current_year: $('#current-year'), // WIP
 	    canvas: document.getElementById('canvas'), // can't use jQuery for this it doesn't work
 	    //footer: $('footer')
 	    // a few other elements will go in here
@@ -181,52 +174,56 @@ function movieController($scope, $http) {
 		console.log("progress: " + loader.progress + "%");
 	}
 	
-	// define global variables
-	var texture, dot, dotContainer;
-	
-	
+ 
 	// ----- FUNCTION SET UP ----- 
 	
 	function setup() {
 		
-		texture = Texture.fromImage("images/dots.svg");
-        dot = []; // array for the 5600+ dots (sprites)
-        dotContainer = new ParticleContainer(); // create new particle container to hold dots
-				
-		// loop through movie data to create dot sprites 
-		for (var d = 0; d < $scope.movies.length; d++) {
-			
-			// create a dot sprite for the number of movies
-			dot[d] = new Sprite(texture);
-			dot[d].interactive = true;
-			dot[d].width = 60;
-			dot[d].height = 60;
-			dot[d].position.set(d * 10, 0);
-			contain(dot[d], {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
-            dot[d].year = $scope.movies[d].release_date.substring(0, 4); // add movie release year to sprite - need to test this
-            dot[d].genre = $scope.movies[d].genre_ids;
-
-			// add dot sprites to particle container
-			dotContainer.addChild(dot[d]);
-		}
-        
-        console.log(dot[5].year); // to test to see if the year for the 6th film in the loop pops up, it does!
-        console.log(dot[76].genre); 
-	
-		// when loop is finished, add particle container to stage
-		stage.addChild(dotContainer);
-
-		/*cat = new Sprite(id["cat.png"]);
-		cat.position.set(16,16);
-		cat.width = 80;
-		cat.height = 120;
+		var texture = Texture.fromImage("images/dots-15.svg");
+		var length = $scope.movies.length;
 		
+		// loop through movie data to create dot sprites 
+		for (var d = 0; d < length; d++) {
+
+			// create a dot sprite for the number of movies
+			var dot = new Sprite(texture);
+			dot.interactive = true;
+			dot.width = 12.5;
+			dot.height = 12.5;
+			dot.position.set(d * 12.5, canvasSize.height/2);
+			dot.year = parseInt($scope.movies[d].release_date.substring(0, 4)); 
+			dot.genre = $scope.movies[d].genre_ids;
+            
+            // contain the sprites ** not working **
+			// contain(dot, {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
+
+			// set the mouseover callback
+			dot.mouseover = function(data){
+				mouseHoverState(data);
+			}
+			
+			// set the click event callback (i.e. pop up) 
+			dot.click = function(data){
+				mouseClickState(data);
+			}
+
+			// add dot sprites to stage						
+			stage.addChild(dot);
+		}
+		
+        // ---- TESTING ----
+/*
+	        console.log(dot[5]);
+	        console.log(dot[5].year); // to test to see if the year for the 6th film in the loop pops up, it does!
+	        console.log(dot[76].genre); 
+*/
+			
 			// initialise the cat's velocity variables
-			cat.vx = 0;
-			cat.vy = 0;
+			//cat.vx = 0;
+			//cat.vy = 0;
 			
 			// scale the sprite's size proportionally
-			cat.scale.set(0.5,0.5); */
+			//cat.scale.set(0.5,0.5); */
 		
 		// set the game state
 		state = play;
@@ -257,34 +254,29 @@ function movieController($scope, $http) {
 	function play() {			
 	
 		// meant to help with lagging frame rate
-		PIXI.INTERACTION_FREQUENCY = 60;
+		// it's probably not meant to be this high, but thought I'd try it 
+		PIXI.INTERACTION_FREQUENCY = 600;
 	
+		// year marker moves with cursor within canvas
+		$(canvas).on('mousemove', function(e) {
+
+	        var mouseMove = document.getElementById('mouse-move');
+	        var cursor = document.getElementById('cursor');
+	        var offset = 20;
+	        var x = e.pageX;
+	        var y = e.pageY;
+				
+	        mouseMove.style.left = x + 'px';
+	        cursor.style.top = y + 'px';			
+	    });
+    
 	/*
 		// apply the velocity values to the cat's position to make it move
 		cat.x += cat.vx;
 		cat.y += cat.vy; */
-		
 	}
     
-    // year marker moves with cursor within canvas - outside of play() function it seems a bit less laggy or am I imagining it? 
-    $(canvas).on('mousemove', function(e) {
-			
-        var mouseMove = document.getElementById('mouse-move');
-        var cursor = document.getElementById('cursor');
-        var offset = 20;
-        var x = e.pageX;
-        var y = e.pageY;
-			
-        mouseMove.style.left = x + 'px';
-        cursor.style.top = y + 'px';			
-    });
     
-    // testing the canvas click event - don't put in play() function as it doesn't work as intended
-    dataElements.mouse_move.click(function() {
-        console.log('you clicked the canvas');
-    });
-	
-	
 	// ----- FUNCTION END -----
 	// will we have a function end?
 	
@@ -332,6 +324,19 @@ function movieController($scope, $http) {
 	// get a random integer
 	function randomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	
+	// mouse hover
+	function mouseHoverState(hoverData) {
+		//console.log('in hover');
+		//console.log(hoverData.target.year);
+		$('#dot-year').html(hoverData.target.year);
+	}
+	
+	// put dot click events in here
+	function mouseClickState(clickData) {
+		console.log('you clicked the canvas');
+        console.log(this);
 	}
 	
 } // close movieController();

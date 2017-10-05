@@ -182,6 +182,120 @@ function movieController($scope, $http) {
 		
 		var texture = Texture.fromImage("images/dots-15.svg");
 		var length = $scope.movies.length;
+        var yr2017 = [],
+            yr2016 = [],
+            yr2015 = [],
+            yr2014 = [],
+            yr2013 = [],
+            yr2012 = [],
+            yr2011 = [],                                                                               yr2010 = [],
+            yr2009 = [],
+            yr2008 = [],
+            yr2007 = [],
+            yr2006 = [],
+            yr2005 = [],
+            yr2004 = [],
+            yr2003 = [],
+            yr2002 = [],
+            yr2001 = [],                                                                               yr2000 = [],
+            yr1999 = [],
+            yr1998 = [],
+            yr1997 = [],
+            yr1996 = [],
+            yr1995 = [],
+            yr1994 = [],
+            yr1993 = [],
+            yr1992 = [],
+            yr1991 = [],
+            yr1990 = [],
+            yr1989 = [],
+            yr1988 = [],
+            yr1987 = [],
+            yr1986 = [],
+            yr1985 = [],
+            yr1984 = [],
+            yr1983 = [],
+            yr1982 = [],
+            yr1981 = [],
+            yr1980 = [],
+            yr1979 = [],
+            yr1978 = [],
+            yr1977 = [],
+            yr1976 = [],
+            yr1975 = [],
+            yr1974 = [],
+            yr1973 = [],
+            yr1972 = [],
+            yr1971 = [],
+            yr1970 = [],
+            yr1969 = [],
+            yr1968 = [],
+            yr1967 = [],
+            yr1966 = [],
+            yr1965 = [],
+            yr1964 = [],
+            yr1963 = [],
+            yr1962 = [],
+            yr1961 = [],
+            yr1960 = [],
+            yr1959 = [],
+            yr1958 = [],
+            yr1957 = [],
+            yr1956 = [],
+            yr1955 = [],
+            yr1954 = [],
+            yr1953 = [],
+            yr1952 = [],
+            yr1951 = [],
+            yr1950 = [],
+            yr1949 = [],
+            yr1948 = [],
+            yr1947 = [],
+            yr1946 = [],
+            yr1945 = [],
+            yr1944 = [],
+            yr1943 = [],
+            yr1942 = [],
+            yr1941 = [],
+            yr1940 = [],
+            yr1939 = [],
+            yr1938 = [],
+            yr1937 = [],
+            yr1936 = [],
+            yr1935 = [],
+            yr1934 = [],
+            yr1933 = [],
+            yr1932 = [],
+            yr1931 = [],
+            yr1930 = [],
+            yr1929 = [],
+            yr1928 = [],
+            yr1927 = [],
+            yr1926 = [],
+            yr1925 = [],
+            yr1924 = [],
+            yr1923 = [],
+            yr1922 = [],
+            yr1921 = [],
+            yr1920 = [],
+            yr1919 = [],
+            yr1918 = [],
+            yr1917 = [],
+            yr1916 = [],
+            yr1915 = [],
+            yr1914 = [],
+            yr1913 = [],
+            yr1912 = [],
+            yr1911 = [],
+            yr1910 = [],
+            yr1909 = [],
+            yr1908 = [],
+            yr1907 = [],
+            yr1906 = [],
+            yr1905 = [],
+            yr1904 = [],
+            yr1903 = [],
+            yr1902 = [];
         
         var distanceFromRight,
             columnsFromRight,
@@ -211,6 +325,8 @@ function movieController($scope, $http) {
 			dot.width = 12.5;
 			dot.height = 12.5;
             dot.anchor.set = (0.5, 0.5);
+            dot.x = 0;
+            dot.y = 0;
 			//dot.position.set(d * 12.5, canvasSize.height/2);
             
 			dot.year = parseInt($scope.movies[d].release_date.substring(0, 4)); 
@@ -223,6 +339,128 @@ function movieController($scope, $http) {
             // contain the sprites ** not working **
 			// contain(dot, {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
 			
+            switch (dot.year) {
+                case 2017: yr2017.push(dot); break;
+                case 2016: yr2016.push(dot); break;
+                case 2015: yr2015.push(dot); break;
+                case 2014: yr2014.push(dot); break;
+                case 2013: yr2013.push(dot); break;
+                case 2012: yr2012.push(dot); break;
+                case 2011: yr2011.push(dot); break;
+                case 2010: yr2010.push(dot); break;
+                case 2009: yr2009.push(dot); break;
+                case 2008: yr2008.push(dot); break;
+                case 2007: yr2007.push(dot); break;
+                case 2006: yr2006.push(dot); break;
+                case 2005: yr2005.push(dot); break;
+                case 2004: yr2004.push(dot); break;
+                case 2003: yr2003.push(dot); break;
+                case 2002: yr2002.push(dot); break;
+                case 2001: yr2001.push(dot); break;
+                case 2000: yr2000.push(dot); break;
+                case 1999: yr1999.push(dot); break;
+                case 1998: yr1998.push(dot); break;
+                case 1997: yr1997.push(dot); break;
+                case 1996: yr1996.push(dot); break;
+                case 1995: yr1995.push(dot); break;
+                case 1994: yr1994.push(dot); break;
+                case 1993: yr1993.push(dot); break;
+                case 1992: yr1992.push(dot); break;
+                case 1991: yr1991.push(dot); break;
+                case 1990: yr1990.push(dot); break;
+                case 1989: yr1989.push(dot); break;
+                case 1988: yr1988.push(dot); break;
+                case 1987: yr1987.push(dot); break;
+                case 1986: yr1986.push(dot); break;
+                case 1985: yr1985.push(dot); break;
+                case 1984: yr1984.push(dot); break;
+                case 1983: yr1983.push(dot); break;
+                case 1982: yr1982.push(dot); break;
+                case 1981: yr1981.push(dot); break;
+                case 1980: yr1980.push(dot); break;
+                case 1979: yr1979.push(dot); break;
+                case 1978: yr1978.push(dot); break;
+                case 1977: yr1977.push(dot); break;
+                case 1976: yr1976.push(dot); break;
+                case 1975: yr1975.push(dot); break;
+                case 1974: yr1974.push(dot); break;
+                case 1973: yr1973.push(dot); break;
+                case 1972: yr1972.push(dot); break;
+                case 1971: yr1971.push(dot); break;
+                case 1970: yr1970.push(dot); break;
+                case 1969: yr1969.push(dot); break;
+                case 1968: yr1968.push(dot); break;
+                case 1967: yr1967.push(dot); break;
+                case 1966: yr1966.push(dot); break;
+                case 1965: yr1965.push(dot); break;
+                case 1964: yr1964.push(dot); break;
+                case 1963: yr1963.push(dot); break;
+                case 1962: yr1962.push(dot); break;
+                case 1961: yr1961.push(dot); break;
+                case 1960: yr1960.push(dot); break;
+                case 1959: yr1959.push(dot); break;
+                case 1958: yr1958.push(dot); break;
+                case 1957: yr1957.push(dot); break;
+                case 1956: yr1956.push(dot); break;
+                case 1955: yr1955.push(dot); break;
+                case 1954: yr1954.push(dot); break;
+                case 1953: yr1953.push(dot); break;
+                case 1952: yr1952.push(dot); break;
+                case 1951: yr1951.push(dot); break;
+                case 1950: yr1950.push(dot); break;
+                case 1949: yr1949.push(dot); break;
+                case 1948: yr1948.push(dot); break;
+                case 1947: yr1947.push(dot); break;
+                case 1946: yr1946.push(dot); break;
+                case 1945: yr1945.push(dot); break;
+                case 1944: yr1944.push(dot); break;
+                case 1943: yr1943.push(dot); break;
+                case 1942: yr1942.push(dot); break;
+                case 1941: yr1941.push(dot); break;
+                case 1940: yr1940.push(dot); break;
+                case 1939: yr1939.push(dot); break;
+                case 1938: yr1938.push(dot); break;
+                case 1937: yr1937.push(dot); break;
+                case 1936: yr1936.push(dot); break;
+                case 1935: yr1935.push(dot); break;
+                case 1934: yr1934.push(dot); break;
+                case 1933: yr1933.push(dot); break;
+                case 1932: yr1932.push(dot); break;
+                case 1931: yr1931.push(dot); break;
+                case 1930: yr1930.push(dot); break;
+                case 1929: yr1929.push(dot); break;
+                case 1928: yr1928.push(dot); break;
+                case 1927: yr1927.push(dot); break;
+                case 1926: yr1926.push(dot); break;
+                case 1925: yr1925.push(dot); break;
+                case 1924: yr1924.push(dot); break;
+                case 1923: yr1923.push(dot); break;
+                case 1922: yr1922.push(dot); break;
+                case 1921: yr1921.push(dot); break;
+                case 1920: yr1920.push(dot); break;
+                case 1919: yr1919.push(dot); break;
+                case 1918: yr1918.push(dot); break;
+                case 1917: yr1917.push(dot); break;
+                case 1916: yr1916.push(dot); break;
+                case 1915: yr1915.push(dot); break;
+                case 1914: yr1914.push(dot); break;
+                case 1913: yr1913.push(dot); break;
+                case 1912: yr1912.push(dot); break;
+                case 1911: yr1911.push(dot); break;
+                case 1910: yr1910.push(dot); break;
+                case 1909: yr1909.push(dot); break;
+                case 1908: yr1908.push(dot); break;
+                case 1907: yr1907.push(dot); break;
+                case 1906: yr1906.push(dot); break;
+                case 1905: yr1905.push(dot); break;
+                case 1904: yr1904.push(dot); break;
+                case 1903: yr1903.push(dot); break;
+                case 1902: yr1902.push(dot); break;
+                case 1901: yr1901.push(dot); break;
+                case 1900: yr1900.push(dot); break;
+                default: break;
+            }
+            
 			// set the mouseover and click states
             //listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
             dot.on('mouseover', dotHover);
@@ -231,66 +469,75 @@ function movieController($scope, $http) {
 			// add dot sprites to stage						
 			stage.addChild(dot);
             
-            if (dot.year === 2017) { // this loops through 2017 data, I'm sure we could create a function for this, I'm just terrible at functions - Steph
-                // initially positon first sprite bottom right
-                dot.x = canvasSize.width - spriteWidth;
-                dot.y = canvasSize.height - spriteHeight;
-                spriteHeight += 15; // ensures next sprite sits 'above'
-                distanceFromRight = canvasSize.width - dot.x; // calculates how far in px the sprite is from right
             
-                if (dot.y < 0) { // within 2017 loop - if sprites proceed past top of y axis
-                    dot.x = canvasSize.width - (spriteWidth*2); // 2nd column
-                    dot.y = canvasSize.height - resetSpriteHeight1;
-                    resetSpriteHeight1 += 15;
-                    distanceFromRight = canvasSize.width - dot.x;
-                    
-                    if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                        dot.x = canvasSize.width - (spriteWidth*3); // 3rd column
-                        dot.y = canvasSize.height - resetSpriteHeight2;
-                        resetSpriteHeight2 += 15;
-                        distanceFromRight = canvasSize.width - dot.x;
-                        
-                        if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                            dot.x = canvasSize.width - (spriteWidth*4); // 4th column
-                            dot.y = canvasSize.height - resetSpriteHeight3;
-                            resetSpriteHeight3 += 15;
-                            distanceFromRight = canvasSize.width - dot.x;
-                            
-                            if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                                dot.x = canvasSize.width - (spriteWidth*5); // 5th column
-                                dot.y = canvasSize.height - resetSpriteHeight4;
-                                resetSpriteHeight4 += 15;
-                                distanceFromRight = canvasSize.width - dot.x;
-                                
-                                if (dot.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                                    dot.x = canvasSize.width - (spriteWidth*6); // 6th column
-                                    dot.y = canvasSize.height - resetSpriteHeight5;
-                                    resetSpriteHeight5 += 15;
-                                    distanceFromRight = canvasSize.width - dot.x;
-                                }
+		} // close data/sprite loop
+		
+        // this loops through 2017 data, I'm sure we could create a function for this, I'm just terrible at functions - Steph
+        for (y = 0; y < yr2017.length; y++) {
+            
+            // initially positon first sprite bottom right
+            dot[y].transform.position.x = canvasSize.width - spriteWidth;
+            dot[y].transform.position.y = canvasSize.height - spriteHeight;
+            spriteHeight += 15; // ensures next sprite sits 'above'
+            distanceFromRight = canvasSize.width - dot[y].transform.position.x; // calculates how far in px the sprite is from right
+            
+            if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites proceed past top of y axis
+                dot[y].transform.position.x = canvasSize.width - (spriteWidth*2); // 2nd column
+                dot[y].transform.position.y = canvasSize.height - resetSpriteHeight1;
+                resetSpriteHeight1 += 15;
+                distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+
+                if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                    dot[y].transform.position.x = canvasSize.width - (spriteWidth*3); // 3rd column
+                    dot[y].transform.position.y = canvasSize.height - resetSpriteHeight2;
+                    resetSpriteHeight2 += 15;
+                    distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+
+                    if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                        dot[y].transform.position.x = canvasSize.width - (spriteWidth*4); // 4th column
+                        dot[y].transform.position.y = canvasSize.height - resetSpriteHeight3;
+                        resetSpriteHeight3 += 15;
+                        distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+
+                        if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                            dot[y].transform.position.x = canvasSize.width - (spriteWidth*5); // 5th column
+                            dot[y].transform.position.y = canvasSize.height - resetSpriteHeight4;
+                            resetSpriteHeight4 += 15;
+                            distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+
+                            if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                                dot[y].transform.position.x = canvasSize.width - (spriteWidth*6); // 6th column
+                                dot[y].transform.position.y = canvasSize.height - resetSpriteHeight5;
+                                resetSpriteHeight5 += 15;
+                                distanceFromRight = canvasSize.width - dot[y].transform.position.x;
                             }
                         }
                     }
                 }
-            } // close 2017 loop
+            }
+        }
+              
+        columnsFromRight = distanceFromRight / 15;
+        
+        console.log(columnsFromRight);
             
-            columnsFromRight = distanceFromRight / 15;
-            // this currently evaluates as a number, which I want to use to position 2016 sprites on the x axis, but as soon as I add data to 2016 my variables change as it loops through 2016 before 2017 at the same time. I don't want to have to assign a new spriteHeight variable for each year, but am thinking perhaps we need the data to loop through the other way? So it hits the 2017 data first so we can position it first?
-            
-            if (dot.year === 2016) {
-                //dot.x = canvasSize.width - spriteWidth*(columnsFromRight + 1);
-                //this currently doesn't work and we can't use a flat number as we won't 'know' what that number is, so need a variable fed from 2017 aka year proceeding, which is what columnsFromRight was designed for
-                
-                //dot.y = canvasSize.height - spriteHeight;
-                // accessing the spriteHeight variable messes with 2017
-                //spriteHeight += 15;
-                // accessing the spriteHeight variable messes with 2017
-            
-            } // close 2016 loop
-            
-            
-		} // close data/sprite loop
-		
+        /*spriteHeight = 15, 
+        resetSpriteHeight1 = 15,
+        resetSpriteHeight2 = 15,
+        resetSpriteHeight3 = 15,
+        resetSpriteHeight4 = 15,
+        resetSpriteHeight5 = 15;*/
+
+       /* if (dot.year === 2016) {
+            dot.x = canvasSize.width - spriteWidth*(columnsFromRight + 1);
+            //this currently doesn't work and we can't use a number as we won't 'know' what that number is, so need a variable fed from 2017 aka year proceeding
+
+            dot.y = canvasSize.height - spriteHeight;
+            // accessing the spriteHeight variable messes with 2017
+            spriteHeight += 15;
+            // accessing the spriteHeight variable messes with 2017
+
+        } // close 2016 loop*/
 			
 			// initialise the cat's velocity variables
 			//cat.vx = 0;
@@ -299,7 +546,9 @@ function movieController($scope, $http) {
 			// scale the sprite's size proportionally
 			//cat.scale.set(0.5,0.5); */
 		
-		// set the game state
+		
+        
+        // set the game state
 		state = play;
 	 
 		// start the game loop

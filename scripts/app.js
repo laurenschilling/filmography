@@ -182,120 +182,7 @@ function movieController($scope, $http) {
 		
 		var texture = Texture.fromImage("images/dots-15.svg");
 		var length = $scope.movies.length;
-        var yr2017 = [],
-            yr2016 = [],
-            yr2015 = [],
-            yr2014 = [],
-            yr2013 = [],
-            yr2012 = [],
-            yr2011 = [],                                                                               yr2010 = [],
-            yr2009 = [],
-            yr2008 = [],
-            yr2007 = [],
-            yr2006 = [],
-            yr2005 = [],
-            yr2004 = [],
-            yr2003 = [],
-            yr2002 = [],
-            yr2001 = [],                                                                               yr2000 = [],
-            yr1999 = [],
-            yr1998 = [],
-            yr1997 = [],
-            yr1996 = [],
-            yr1995 = [],
-            yr1994 = [],
-            yr1993 = [],
-            yr1992 = [],
-            yr1991 = [],
-            yr1990 = [],
-            yr1989 = [],
-            yr1988 = [],
-            yr1987 = [],
-            yr1986 = [],
-            yr1985 = [],
-            yr1984 = [],
-            yr1983 = [],
-            yr1982 = [],
-            yr1981 = [],
-            yr1980 = [],
-            yr1979 = [],
-            yr1978 = [],
-            yr1977 = [],
-            yr1976 = [],
-            yr1975 = [],
-            yr1974 = [],
-            yr1973 = [],
-            yr1972 = [],
-            yr1971 = [],
-            yr1970 = [],
-            yr1969 = [],
-            yr1968 = [],
-            yr1967 = [],
-            yr1966 = [],
-            yr1965 = [],
-            yr1964 = [],
-            yr1963 = [],
-            yr1962 = [],
-            yr1961 = [],
-            yr1960 = [],
-            yr1959 = [],
-            yr1958 = [],
-            yr1957 = [],
-            yr1956 = [],
-            yr1955 = [],
-            yr1954 = [],
-            yr1953 = [],
-            yr1952 = [],
-            yr1951 = [],
-            yr1950 = [],
-            yr1949 = [],
-            yr1948 = [],
-            yr1947 = [],
-            yr1946 = [],
-            yr1945 = [],
-            yr1944 = [],
-            yr1943 = [],
-            yr1942 = [],
-            yr1941 = [],
-            yr1940 = [],
-            yr1939 = [],
-            yr1938 = [],
-            yr1937 = [],
-            yr1936 = [],
-            yr1935 = [],
-            yr1934 = [],
-            yr1933 = [],
-            yr1932 = [],
-            yr1931 = [],
-            yr1930 = [],
-            yr1929 = [],
-            yr1928 = [],
-            yr1927 = [],
-            yr1926 = [],
-            yr1925 = [],
-            yr1924 = [],
-            yr1923 = [],
-            yr1922 = [],
-            yr1921 = [],
-            yr1920 = [],
-            yr1919 = [],
-            yr1918 = [],
-            yr1917 = [],
-            yr1916 = [],
-            yr1915 = [],
-            yr1914 = [],
-            yr1913 = [],
-            yr1912 = [],
-            yr1911 = [],
-            yr1910 = [],
-            yr1909 = [],
-            yr1908 = [],
-            yr1907 = [],
-            yr1906 = [],
-            yr1905 = [],
-            yr1904 = [],
-            yr1903 = [],
-            yr1902 = [];
+        var yr2017 = [], yr2016 = [], yr2015 = [], yr2014 = [], yr2013 = [], yr2012 = [], yr2011 = [], yr2010 = [], yr2009 = [], yr2008 = [], yr2007 = [], yr2006 = [], yr2005 = [], yr2004 = [], yr2003 = [], yr2002 = [], yr2001 = [], yr2000 = [], yr1999 = [], yr1998 = [], yr1997 = [], yr1996 = [], yr1995 = [], yr1994 = [], yr1993 = [], yr1992 = [], yr1991 = [], yr1990 = [], yr1989 = [], yr1988 = [], yr1987 = [], yr1986 = [], yr1985 = [], yr1984 = [], yr1983 = [], yr1982 = [], yr1981 = [], yr1980 = [], yr1979 = [], yr1978 = [], yr1977 = [], yr1976 = [], yr1975 = [], yr1974 = [], yr1973 = [], yr1972 = [], yr1971 = [], yr1970 = [], yr1969 = [], yr1968 = [], yr1967 = [], yr1966 = [], yr1965 = [], yr1964 = [], yr1963 = [], yr1962 = [], yr1961 = [], yr1960 = [], yr1959 = [], yr1958 = [], yr1957 = [], yr1956 = [], yr1955 = [], yr1954 = [], yr1953 = [], yr1952 = [], yr1951 = [], yr1950 = [], yr1949 = [], yr1948 = [], yr1947 = [], yr1946 = [], yr1945 = [], yr1944 = [], yr1943 = [], yr1942 = [], yr1941 = [], yr1940 = [], yr1939 = [], yr1938 = [], yr1937 = [], yr1936 = [], yr1935 = [], yr1934 = [], yr1933 = [], yr1932 = [], yr1931 = [], yr1930 = [], yr1929 = [], yr1928 = [], yr1927 = [], yr1926 = [], yr1925 = [], yr1924 = [], yr1923 = [], yr1922 = [], yr1921 = [], yr1920 = [], yr1919 = [], yr1918 = [], yr1917 = [], yr1916 = [], yr1915 = [], yr1914 = [], yr1913 = [], yr1912 = [], yr1911 = [], yr1910 = [], yr1909 = [], yr1908 = [], yr1907 = [], yr1906 = [], yr1905 = [], yr1904 = [], yr1903 = [], yr1902 = [];
         
         var distanceFromRight,
             columnsFromRight,
@@ -456,71 +343,72 @@ function movieController($scope, $http) {
                 case 1904: yr1904.push(dot); break;
                 case 1903: yr1903.push(dot); break;
                 case 1902: yr1902.push(dot); break;
-                case 1901: yr1901.push(dot); break;
-                case 1900: yr1900.push(dot); break;
                 default: break;
             }
             
 			// set the mouseover and click states
-            //listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
+            // listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
             dot.on('mouseover', dotHover);
-            dot.on('click', dotClick);
-
-			// add dot sprites to stage						
-			stage.addChild(dot);
-            
+            dot.on('click', dotClick);            
             
 		} // close data/sprite loop
-		
+				
         // this loops through 2017 data, I'm sure we could create a function for this, I'm just terrible at functions - Steph
         for (y = 0; y < yr2017.length; y++) {
             
-            // initially positon first sprite bottom right
-            dot[y].transform.position.x = canvasSize.width - spriteWidth;
-            dot[y].transform.position.y = canvasSize.height - spriteHeight;
-            spriteHeight += 15; // ensures next sprite sits 'above'
-            distanceFromRight = canvasSize.width - dot[y].transform.position.x; // calculates how far in px the sprite is from right
+            console.log(yr2017[y]);
             
-            if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites proceed past top of y axis
-                dot[y].transform.position.x = canvasSize.width - (spriteWidth*2); // 2nd column
-                dot[y].transform.position.y = canvasSize.height - resetSpriteHeight1;
+            // initially positon first sprite bottom right
+            yr2017[y].transform.position.x = canvasSize.width - spriteWidth;
+            yr2017[y].transform.position.y = canvasSize.height - spriteHeight;
+            spriteHeight += 15; // ensures next sprite sits 'above'
+            distanceFromRight = canvasSize.width - yr2017[y].transform.position.x; // calculates how far in px the sprite is from right
+            
+            if (yr2017[y].transform.position.y < 0) { // within 2017 loop - if sprites proceed past top of y axis
+                yr2017[y].transform.position.x = canvasSize.width - (spriteWidth*2); // 2nd column
+                yr2017[y].transform.position.y = canvasSize.height - resetSpriteHeight1;
                 resetSpriteHeight1 += 15;
-                distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+                distanceFromRight = canvasSize.width - yr2017[y].transform.position.x;
 
-                if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                    dot[y].transform.position.x = canvasSize.width - (spriteWidth*3); // 3rd column
-                    dot[y].transform.position.y = canvasSize.height - resetSpriteHeight2;
+                if (yr2017[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                    yr2017[y].transform.position.x = canvasSize.width - (spriteWidth*3); // 3rd column
+                    yr2017[y].transform.position.y = canvasSize.height - resetSpriteHeight2;
                     resetSpriteHeight2 += 15;
-                    distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+                    distanceFromRight = canvasSize.width - yr2017[y].transform.position.x;
 
-                    if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                        dot[y].transform.position.x = canvasSize.width - (spriteWidth*4); // 4th column
-                        dot[y].transform.position.y = canvasSize.height - resetSpriteHeight3;
+                    if (yr2017[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                        yr2017[y].transform.position.x = canvasSize.width - (spriteWidth*4); // 4th column
+                        yr2017[y].transform.position.y = canvasSize.height - resetSpriteHeight3;
                         resetSpriteHeight3 += 15;
-                        distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+                        distanceFromRight = canvasSize.width - yr2017[y].transform.position.x;
 
-                        if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                            dot[y].transform.position.x = canvasSize.width - (spriteWidth*5); // 5th column
-                            dot[y].transform.position.y = canvasSize.height - resetSpriteHeight4;
+                        if (yr2017[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                            yr2017[y].transform.position.x = canvasSize.width - (spriteWidth*5); // 5th column
+                            yr2017[y].transform.position.y = canvasSize.height - resetSpriteHeight4;
                             resetSpriteHeight4 += 15;
-                            distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+                            distanceFromRight = canvasSize.width - yr2017[y].transform.position.x;
 
-                            if (dot[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                                dot[y].transform.position.x = canvasSize.width - (spriteWidth*6); // 6th column
-                                dot[y].transform.position.y = canvasSize.height - resetSpriteHeight5;
+                            if (yr2017[y].transform.position.y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
+                                yr2017[y].transform.position.x = canvasSize.width - (spriteWidth*6); // 6th column
+                                yr2017[y].transform.position.y = canvasSize.height - resetSpriteHeight5;
                                 resetSpriteHeight5 += 15;
-                                distanceFromRight = canvasSize.width - dot[y].transform.position.x;
+                                distanceFromRight = canvasSize.width - yr2017[y].transform.position.x;
                             }
                         }
                     }
                 }
             }
+        
+        // add dot sprites to stage						
+		stage.addChild(yr2017[y]);
+
         }
               
         columnsFromRight = distanceFromRight / 15;
         
         console.log(columnsFromRight);
-            
+           
+ 
         /*spriteHeight = 15, 
         resetSpriteHeight1 = 15,
         resetSpriteHeight2 = 15,

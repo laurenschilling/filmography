@@ -193,7 +193,360 @@ h2 {
 		.yr {
 			float: right; }	
 		
+
+/* Hover Event Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* --- basic styles --- */
+
+#hover-event {
+	pointer-events: none; }
+
+.event {
+	position: absolute;
+	width: 100px;
+	z-index: 17;
+	cursor: auto;
+}
+
+.event-image-wrapper {
+    width: 80px;
+    height: 80px;
+    box-shadow: 0 0 0 0 #fff;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    -webkit-transition: width .5s ease, height .5s ease, margin .5s ease, border-radius .5s ease;
+    -moz-transition: width .5s ease, height .5s ease, margin .5s ease, border-radius .5s ease;
+    transition: width .5s ease, height .5s ease, margin .5s ease, border-radius .5s ease;
+    -webkit-animation-delay: .3s;
+    -moz-animation-delay: .3s;
+    animation-delay: .3s;
+    -webkit-animation-duration: .5s;
+    -moz-animation-duration: .5s;
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    -webkit-animation-name: image_show;
+    -moz-animation-name: image_show;
+    animation-name: image_show;
+    margin-left: -40px;
+    margin-top: -40px;
+    cursor: pointer;
+    background-size: 70%;
+    background-repeat: no-repeat;	
+}
+
+.event-image-wrapper, .event-image {
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+}
+
+.round .event-image-wrapper, .round .event-image {
+    -webkit-animation-delay: .2s;
+    -moz-animation-delay: .2s;
+    animation-delay: .2s;
+}
+
+#hover_event.open .event-image-wrapper {
+    width: 200px;
+    height: 200px;
+    margin-left: -100px;
+    margin-top: -100px;
+    border-radius: 0;
+    box-shadow: 0 0 0 2pt #fff;
+    cursor: auto;
+}
+
+.big .event-image-wrapper, .medium .event-image-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+    margin-top: -50px
+}
+
+.round .event-image-wrapper {
+    width: 140px;
+    height: 140px;
+    margin-left: -70px;
+    margin-top: -70px;
+    cursor: pointer
+}
+
+
+@-webkit-keyframes image_show {
+    0% {
+        box-shadow: 0 0 0 0 #fff;
+        background: url(svg/none.gif) center center no-repeat
+    }
+
+    50% {
+        box-shadow: 0 0 0 3pt #fff;
+        background: url(svg/loader.gif) center center no-repeat #303438
+    }
+
+    100% {
+        box-shadow: 0 0 0 2pt #fff;
+        background: url(svg/loader.gif) center center no-repeat #303438
+    }
+}
+
+@-moz-keyframes image_show {
+    0% {
+        box-shadow: 0 0 0 0 #fff;
+        background: url(svg/none.gif) center center no-repeat
+    }
+
+    50% {
+        box-shadow: 0 0 0 3pt #fff;
+        background: url(svg/loader.gif) center center no-repeat #303438
+    }
+
+    100% {
+        box-shadow: 0 0 0 2pt #fff;
+        background: url(svg/loader.gif) center center no-repeat #303438
+    }
+}
+
+@keyframes image_show {
+    0% {
+        box-shadow: 0 0 0 0 #fff;
+        background: url(svg/none.gif) center center no-repeat
+    }
+
+    50% {
+        box-shadow: 0 0 0 3pt #fff;
+        background: url(svg/loader.gif) center center no-repeat #303438
+    }
+
+    100% {
+        box-shadow: 0 0 0 2pt #fff;
+        background: url(svg/loader.gif) center center no-repeat #303438
+    }
+}
+
+
+.event-image {
+	background: #000;
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-animation-duration: .3s;
+    -moz-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-delay: .3s;
+    -moz-animation-delay: .3s;
+    animation-delay: .3s;
+    animation-fill-mode: both;
+    -webkit-animation-name: content_show;
+    -moz-animation-name: content_show;
+    animation-name: content_show;
+    -webkit-transition: border-radius .3s ease;
+    -moz-transition: border-radius .3s ease;
+    transition: border-radius .3s ease;
+    border-radius: 50%;
+}
+
+
+@-webkit-keyframes content_show {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
+@-moz-keyframes content_show {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
+@keyframes content_show {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+.event-title-wrapper {
 	
+}
+
+.event-title {
+	    font-size: 10px;
+    font-weight: 700;
+    max-width: 110px;
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: titleWind;
+    -moz-animation-name: titleWind;
+    animation-name: titleWind;
+    line-height: 1.5;
+    background: #fff;
+    padding: 5px 7px;
+    display: inline-block;
+    margin-left: -50px;
+    margin-top: 10px;
+}
+
+/* --- hover event styles --- */
+
+#hover-event.open, .round #hover-event {
+	pointer-events: none; }
+	
+#hover-event.open .event-title {
+	display: none;
+	padding: 0;
+	overflow: hidden;
+	cursor: none; }
+
+#hover-event.open #event {
+    -webkit-transition: margin 1s ease;
+    -moz-transition: margin 1s ease;
+    transition: margin 1s ease;
+    -webkit-transition-delay: .3s;
+    -moz-transition-delay: .3s;
+    transition-delay: .3s;
+}		
+
+@-webkit-keyframes titleWind {
+    0% {
+        opacity: 0
+    }
+
+    5% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(-80deg)
+    }
+
+    30% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(30deg)
+    }
+
+    70% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(-20deg)
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(0)
+    }
+}
+
+@-moz-keyframes titleWind {
+    0% {
+        opacity: 0
+    }
+
+    5% {
+        opacity: 1;
+        -moz-transform-origin: 50% 0;
+        -moz-transform: perspective(800px) rotateX(-80deg)
+    }
+
+    30% {
+        opacity: 1;
+        -moz-transform-origin: 50% 0;
+        -moz-transform: perspective(800px) rotateX(30deg)
+    }
+
+    70% {
+        opacity: 1;
+        -moz-transform-origin: 50% 0;
+        -moz-transform: perspective(800px) rotateX(-20deg)
+    }
+
+    100% {
+        opacity: 1;
+        -moz-transform-origin: 50% 0;
+        -moz-transform: perspective(800px) rotateX(0)
+    }
+}
+
+@keyframes titleWind {
+    0% {
+        opacity: 0
+    }
+
+    5% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -moz-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        -o-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(-80deg);
+        -moz-transform: perspective(800px) rotateX(-80deg);
+        -ms-transform: perspective(800px) rotateX(-80deg);
+        -o-transform: perspective(800px) rotateX(-80deg);
+        transform: perspective(800px) rotateX(-80deg)
+    }
+
+    30% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -moz-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        -o-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(30deg);
+        -moz-transform: perspective(800px) rotateX(30deg);
+        -ms-transform: perspective(800px) rotateX(30deg);
+        -o-transform: perspective(800px) rotateX(30deg);
+        transform: perspective(800px) rotateX(30deg)
+    }
+
+    70% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -moz-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        -o-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(-20deg);
+        -moz-transform: perspective(800px) rotateX(-20deg);
+        -ms-transform: perspective(800px) rotateX(-20deg);
+        -o-transform: perspective(800px) rotateX(-20deg);
+        transform: perspective(800px) rotateX(-20deg)
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 0;
+        -moz-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        -o-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+        -webkit-transform: perspective(800px) rotateX(0);
+        -moz-transform: perspective(800px) rotateX(0);
+        -ms-transform: perspective(800px) rotateX(0);
+        -o-transform: perspective(800px) rotateX(0);
+        transform: perspective(800px) rotateX(0)
+    }
+}
+
+
+
+
 /* Splash Page
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 

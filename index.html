@@ -27,12 +27,12 @@
 	<script src="scripts/scaleToWindow.js" defer></script>
 	<script src="scripts/app.js" defer></script> <!-- Angular --> 
 	<script src="scripts/script.js" defer></script>
-<!--     <script src="scripts/canvas.js" defer></script> -->
 
 	<!-- CSS
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/nouislider.css">
 
 </head>
 
@@ -100,6 +100,18 @@
                 </li>
             </ul>
         </div>
+        
+        <!-- Event pop up on hover (image and title) -->
+		<div id="hover-event">
+			<div class="event">
+			    <div class="event-image-wrapper">
+				    <img class="event-image" src="{{ mouseoveredMovieImage }}">
+				</div>
+			    <div class="event-title-wrapper">
+	                <p class="event-title"></p>
+			    </div>
+		    </div>
+		</div>
 
         <!-- This section will automatically display detail when selectedArtist is updated -->
         <div class="col detail">
@@ -135,9 +147,10 @@
             </ul>
         </div>
         
-        <div class="slider">
-        </div>
+        <div class="slider"></div>
     </footer>   
 	
+	<script src="scripts/nouislider.min.js"></script>
+
 </body>
 </html>

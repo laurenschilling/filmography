@@ -184,7 +184,7 @@ function movieController($scope, $http) {
 		    length = $scope.movies.length,
             yr2017 = [], yr2016 = [], yr2015 = [], yr2014 = [], yr2013 = [], yr2012 = [], yr2011 = [], yr2010 = [], yr2009 = [], yr2008 = [], yr2007 = [], yr2006 = [], yr2005 = [], yr2004 = [], yr2003 = [], yr2002 = [], yr2001 = [], yr2000 = [], yr1999 = [], yr1998 = [], yr1997 = [], yr1996 = [], yr1995 = [], yr1994 = [], yr1993 = [], yr1992 = [], yr1991 = [], yr1990 = [], yr1989 = [], yr1988 = [], yr1987 = [], yr1986 = [], yr1985 = [], yr1984 = [], yr1983 = [], yr1982 = [], yr1981 = [], yr1980 = [], yr1979 = [], yr1978 = [], yr1977 = [], yr1976 = [], yr1975 = [], yr1974 = [], yr1973 = [], yr1972 = [], yr1971 = [], yr1970 = [], yr1969 = [], yr1968 = [], yr1967 = [], yr1966 = [], yr1965 = [], yr1964 = [], yr1963 = [], yr1962 = [], yr1961 = [], yr1960 = [], yr1959 = [], yr1958 = [], yr1957 = [], yr1956 = [], yr1955 = [], yr1954 = [], yr1953 = [], yr1952 = [], yr1951 = [], yr1950 = [], yr1949 = [], yr1948 = [], yr1947 = [], yr1946 = [], yr1945 = [], yr1944 = [], yr1943 = [], yr1942 = [], yr1941 = [], yr1940 = [], yr1939 = [], yr1938 = [], yr1937 = [], yr1936 = [], yr1935 = [], yr1934 = [], yr1933 = [], yr1932 = [], yr1931 = [], yr1930 = [], yr1929 = [], yr1928 = [], yr1927 = [], yr1926 = [], yr1925 = [], yr1924 = [], yr1923 = [], yr1922 = [], yr1921 = [], yr1920 = [], yr1919 = [], yr1918 = [], yr1917 = [], yr1916 = [], yr1915 = [], yr1914 = [], yr1913 = [], yr1912 = [], yr1911 = [], yr1910 = [], yr1909 = [], yr1908 = [], yr1907 = [], yr1906 = [], yr1905 = [], yr1904 = [], yr1903 = [], yr1902 = [], // for each year of data
             distanceFromRight, // for sprite px from right
-            columnsFromRight, // divide by sprite width to get 'columns' from right
+            columnsFromRight = 0, // divide by sprite width to get 'columns' from right, start at 0
             spriteWidth = 12, // including padding
             spriteHeight = 12, // including padding
             resetSpriteHeight = 12,
@@ -359,58 +359,10 @@ function movieController($scope, $http) {
         var allYears = [];
         allYears.push(yr2017, yr2016, yr2015, yr2014, yr2013, yr2012, yr2011, yr2010, yr2009, yr2008, yr2007, yr2006, yr2005, yr2004, yr2003, yr2002, yr2001, yr2000, yr1999, yr1998, yr1997, yr1996, yr1995, yr1994, yr1993, yr1992, yr1991, yr1990, yr1989, yr1988, yr1987, yr1986, yr1985, yr1984, yr1983, yr1982, yr1981, yr1980, yr1979, yr1978, yr1977, yr1976, yr1975, yr1974, yr1973, yr1972, yr1971, yr1970, yr1969, yr1968, yr1967, yr1966, yr1965, yr1964, yr1963, yr1962, yr1961, yr1960, yr1959, yr1958, yr1957, yr1956, yr1955, yr1954, yr1953, yr1952, yr1951, yr1950, yr1949, yr1948, yr1947, yr1946, yr1945, yr1944, yr1943, yr1942, yr1941, yr1940, yr1939, yr1938, yr1937, yr1936, yr1935, yr1934, yr1933, yr1932, yr1931, yr1930, yr1929, yr1928, yr1927, yr1926, yr1925, yr1924, yr1923, yr1922, yr1921, yr1920, yr1919, yr1918, yr1917, yr1916, yr1915, yr1914, yr1913, yr1912, yr1911, yr1910, yr1909, yr1908, yr1907, yr1906, yr1905, yr1904, yr1903, yr1902);
         
-        // need to run the first year (2017), in its own loop first since this sets up the initial positioning
-        for (s = 0; s < allYears[0].length; s++) {
-            // initially positon first sprite bottom right
-            allYears[0][s].x = canvasSize.width - spriteWidth;
-            allYears[0][s].y = canvasSize.height - resetSpriteHeight;
-            resetSpriteHeight += spriteHeight; // ensures next sprite sits 'above'
-            distanceFromRight = canvasSize.width - allYears[0][s].x; // calculates how far in px the sprite is from right
-
-                if (allYears[0][s].y < 0) {
-                    allYears[0][s].x = canvasSize.width - (spriteWidth*2); // if 2 columns
-                    allYears[0][s].y = canvasSize.height - resetSpriteHeight2;
-                    resetSpriteHeight2 += spriteHeight; 
-                    distanceFromRight = canvasSize.width - allYears[0][s].x;
-
-                    if (allYears[0][s].y < 0) {
-                        allYears[0][s].x = canvasSize.width - (spriteWidth*3); // if 3 columns
-                        allYears[0][s].y = canvasSize.height - resetSpriteHeight3;
-                        resetSpriteHeight3 += spriteHeight; 
-                        distanceFromRight = canvasSize.width - allYears[0][s].x;
-
-                        if (allYears[0][s].y < 0) {
-                            allYears[0][s].x = canvasSize.width - (spriteWidth*4); // if 4 columns
-                            allYears[0][s].y = canvasSize.height - resetSpriteHeight4;
-                            resetSpriteHeight4 += spriteHeight; 
-                            distanceFromRight = canvasSize.width - allYears[0][s].x;
-
-                            if (allYears[0][s].y < 0) {
-                                allYears[0][s].x = canvasSize.width - (spriteWidth*5); // if 5 columns
-                                allYears[0][s].y = canvasSize.height - resetSpriteHeight5;
-                                resetSpriteHeight5 += spriteHeight; 
-                                distanceFromRight = canvasSize.width - allYears[0][s].x;
-
-                                if (allYears[0][s].y < 0) {
-                                    allYears[0][s].x = canvasSize.width - (spriteWidth*6); // if 6 columns
-                                    allYears[0][s].y = canvasSize.height - resetSpriteHeight6;
-                                    resetSpriteHeight6 += spriteHeight; 
-                                    distanceFromRight = canvasSize.width - allYears[0][s].x;
-                                }
-                            }
-                        }
-                    }
-                }
-            stage.addChild(allYears[0][s]);
-        }
-        
-        columnCalc(); // check how many columns from right the year is - function
-        resetHeights(); // reset all of the sprite heights back to 15 - function
-        
-        // wider loop for all years, start from 1 to not include 0 within the array (aka 2017)
-        for (y = 1; y < allYears.length; y++) {
+        // wider loop for all years
+        for (y = 0; y < allYears.length; y++) {
             
-            for (r = 1; r < allYears[y].length; r++) {
+            for (r = 0; r < allYears[y].length; r++) { // loop through data within each year
                 
                 allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 1); // 1 column
                 allYears[y][r].y = canvasSize.height - resetSpriteHeight;

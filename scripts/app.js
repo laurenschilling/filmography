@@ -185,17 +185,21 @@ function movieController($scope, $http) {
             yr2017 = [], yr2016 = [], yr2015 = [], yr2014 = [], yr2013 = [], yr2012 = [], yr2011 = [], yr2010 = [], yr2009 = [], yr2008 = [], yr2007 = [], yr2006 = [], yr2005 = [], yr2004 = [], yr2003 = [], yr2002 = [], yr2001 = [], yr2000 = [], yr1999 = [], yr1998 = [], yr1997 = [], yr1996 = [], yr1995 = [], yr1994 = [], yr1993 = [], yr1992 = [], yr1991 = [], yr1990 = [], yr1989 = [], yr1988 = [], yr1987 = [], yr1986 = [], yr1985 = [], yr1984 = [], yr1983 = [], yr1982 = [], yr1981 = [], yr1980 = [], yr1979 = [], yr1978 = [], yr1977 = [], yr1976 = [], yr1975 = [], yr1974 = [], yr1973 = [], yr1972 = [], yr1971 = [], yr1970 = [], yr1969 = [], yr1968 = [], yr1967 = [], yr1966 = [], yr1965 = [], yr1964 = [], yr1963 = [], yr1962 = [], yr1961 = [], yr1960 = [], yr1959 = [], yr1958 = [], yr1957 = [], yr1956 = [], yr1955 = [], yr1954 = [], yr1953 = [], yr1952 = [], yr1951 = [], yr1950 = [], yr1949 = [], yr1948 = [], yr1947 = [], yr1946 = [], yr1945 = [], yr1944 = [], yr1943 = [], yr1942 = [], yr1941 = [], yr1940 = [], yr1939 = [], yr1938 = [], yr1937 = [], yr1936 = [], yr1935 = [], yr1934 = [], yr1933 = [], yr1932 = [], yr1931 = [], yr1930 = [], yr1929 = [], yr1928 = [], yr1927 = [], yr1926 = [], yr1925 = [], yr1924 = [], yr1923 = [], yr1922 = [], yr1921 = [], yr1920 = [], yr1919 = [], yr1918 = [], yr1917 = [], yr1916 = [], yr1915 = [], yr1914 = [], yr1913 = [], yr1912 = [], yr1911 = [], yr1910 = [], yr1909 = [], yr1908 = [], yr1907 = [], yr1906 = [], yr1905 = [], yr1904 = [], yr1903 = [], yr1902 = [], // for each year of data
             distanceFromRight, // for sprite px from right
             columnsFromRight, // divide by sprite width to get 'columns' from right
-            spriteWidth = 15,
-            spriteHeight = 15, 
-            resetSpriteHeight1 = 15, // in case canvas height means data spills to 2 columns
-            resetSpriteHeight2 = 15, // in case canvas height means data spills to 3 columns
-            resetSpriteHeight3 = 15, // in case canvas height means data spills to 4 columns
-            resetSpriteHeight4 = 15, // in case canvas height means data spills to 5 columns
-            resetSpriteHeight5 = 15, // in case canvas height means data spills to 6 columns
-            resetSpriteHeight6 = 15, // in case canvas height means data spills to 7 columns
-            resetSpriteHeight7 = 15, // in case canvas height means data spills to 8 columns
-            resetSpriteHeight8 = 15, // in case canvas height means data spills to 9 columns
-            resetSpriteHeight9 = 15; // in case canvas height means data spills to 10 columns
+            spriteWidth = 12, // including padding
+            spriteHeight = 12, // including padding
+            resetSpriteHeight = 12,
+            resetSpriteHeight1 = 12, // in case canvas height means data spills to 2 columns
+            resetSpriteHeight2 = 12, // in case canvas height means data spills to 3 columns
+            resetSpriteHeight3 = 12, // in case canvas height means data spills to 4 columns
+            resetSpriteHeight4 = 12, // in case canvas height means data spills to 5 columns
+            resetSpriteHeight5 = 12, // in case canvas height means data spills to 6 columns
+            resetSpriteHeight6 = 12, // in case canvas height means data spills to 7 columns
+            resetSpriteHeight7 = 12, // in case canvas height means data spills to 8 columns
+            resetSpriteHeight8 = 12, // in case canvas height means data spills to 9 columns
+            resetSpriteHeight9 = 12, // in case canvas height means data spills to 10 columns
+            resetSpriteHeight10 = 12, // in case canvas height means data spills to 11 columns
+            resetSpriteHeight11 = 12, // in case canvas height means data spills to 12 columns
+            resetSpriteHeight12 = 12; // in case canvas height means data spills to 13 columns
  
 		// loop through movie data to create dot sprites 
 		for (var d = 0; d < length; d++) {
@@ -211,8 +215,8 @@ function movieController($scope, $http) {
 			dot.interactive = true;
 			
 			// dot properties
-			dot.width = 12.5;
-			dot.height = 12.5;
+			dot.width = 8.5;
+			dot.height = 8.5;
             dot.anchor.set = (0.5, 0.5);
 			dot.x = 0;
             dot.y = 0;
@@ -351,123 +355,145 @@ function movieController($scope, $http) {
             dot.on('click', dotClick);
             
 		} // close data/sprite loop
-           
-        // this loops through 2017 data, I'm sure we could create a function for this, I'm just terrible at functions - Steph
-        for (y = 0; y < yr2017.length; y++) {
-            
+        
+        var allYears = [];
+        allYears.push(yr2017, yr2016, yr2015, yr2014, yr2013, yr2012, yr2011, yr2010, yr2009, yr2008, yr2007, yr2006, yr2005, yr2004, yr2003, yr2002, yr2001, yr2000, yr1999, yr1998, yr1997, yr1996, yr1995, yr1994, yr1993, yr1992, yr1991, yr1990, yr1989, yr1988, yr1987, yr1986, yr1985, yr1984, yr1983, yr1982, yr1981, yr1980, yr1979, yr1978, yr1977, yr1976, yr1975, yr1974, yr1973, yr1972, yr1971, yr1970, yr1969, yr1968, yr1967, yr1966, yr1965, yr1964, yr1963, yr1962, yr1961, yr1960, yr1959, yr1958, yr1957, yr1956, yr1955, yr1954, yr1953, yr1952, yr1951, yr1950, yr1949, yr1948, yr1947, yr1946, yr1945, yr1944, yr1943, yr1942, yr1941, yr1940, yr1939, yr1938, yr1937, yr1936, yr1935, yr1934, yr1933, yr1932, yr1931, yr1930, yr1929, yr1928, yr1927, yr1926, yr1925, yr1924, yr1923, yr1922, yr1921, yr1920, yr1919, yr1918, yr1917, yr1916, yr1915, yr1914, yr1913, yr1912, yr1911, yr1910, yr1909, yr1908, yr1907, yr1906, yr1905, yr1904, yr1903, yr1902);
+        
+        // need to run the first year (2017), in its own loop first since this sets up the initial positioning
+        for (s = 0; s < allYears[0].length; s++) {
             // initially positon first sprite bottom right
-            yr2017[y].x = canvasSize.width - spriteWidth;
-            yr2017[y].y = canvasSize.height - spriteHeight;
-            spriteHeight += 15; // ensures next sprite sits 'above'
-            distanceFromRight = canvasSize.width - yr2017[y].x; // calculates how far in px the sprite is from right
-            
-            if (yr2017[y].y < 0) { // within 2017 loop - if sprites proceed past top of y axis
-                yr2017[y].x = canvasSize.width - (spriteWidth*2); // 2nd column
-                yr2017[y].y = canvasSize.height - resetSpriteHeight1;
-                resetSpriteHeight1 += 15;
-                distanceFromRight = canvasSize.width - yr2017[y].x;
+            allYears[0][s].x = canvasSize.width - spriteWidth;
+            allYears[0][s].y = canvasSize.height - resetSpriteHeight;
+            resetSpriteHeight += spriteHeight; // ensures next sprite sits 'above'
+            distanceFromRight = canvasSize.width - allYears[0][s].x; // calculates how far in px the sprite is from right
 
-                if (yr2017[y].y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                    yr2017[y].x = canvasSize.width - (spriteWidth*3); // 3rd column
-                    yr2017[y].y = canvasSize.height - resetSpriteHeight2;
-                    resetSpriteHeight2 += 15;
-                    distanceFromRight = canvasSize.width - yr2017[y].x;
+                if (allYears[0][s].y < 0) {
+                    allYears[0][s].x = canvasSize.width - (spriteWidth*2); // if 2 columns
+                    allYears[0][s].y = canvasSize.height - resetSpriteHeight2;
+                    resetSpriteHeight2 += spriteHeight; 
+                    distanceFromRight = canvasSize.width - allYears[0][s].x;
 
-                    if (yr2017[y].y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                        yr2017[y].x = canvasSize.width - (spriteWidth*4); // 4th column
-                        yr2017[y].y = canvasSize.height - resetSpriteHeight3;
-                        resetSpriteHeight3 += 15;
-                        distanceFromRight = canvasSize.width - yr2017[y].x;
+                    if (allYears[0][s].y < 0) {
+                        allYears[0][s].x = canvasSize.width - (spriteWidth*3); // if 3 columns
+                        allYears[0][s].y = canvasSize.height - resetSpriteHeight3;
+                        resetSpriteHeight3 += spriteHeight; 
+                        distanceFromRight = canvasSize.width - allYears[0][s].x;
 
-                        if (yr2017[y].y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                            yr2017[y].x = canvasSize.width - (spriteWidth*5); // 5th column
-                            yr2017[y].y = canvasSize.height - resetSpriteHeight4;
-                            resetSpriteHeight4 += 15;
-                            distanceFromRight = canvasSize.width - yr2017[y].x;
+                        if (allYears[0][s].y < 0) {
+                            allYears[0][s].x = canvasSize.width - (spriteWidth*4); // if 4 columns
+                            allYears[0][s].y = canvasSize.height - resetSpriteHeight4;
+                            resetSpriteHeight4 += spriteHeight; 
+                            distanceFromRight = canvasSize.width - allYears[0][s].x;
 
-                            if (yr2017[y].y < 0) { // within 2017 loop - if sprites still proceed past top of y axis
-                                yr2017[y].x = canvasSize.width - (spriteWidth*6); // 6th column
-                                yr2017[y].y = canvasSize.height - resetSpriteHeight5;
-                                resetSpriteHeight5 += 15;
-                                distanceFromRight = canvasSize.width - yr2017[y].x;
+                            if (allYears[0][s].y < 0) {
+                                allYears[0][s].x = canvasSize.width - (spriteWidth*5); // if 5 columns
+                                allYears[0][s].y = canvasSize.height - resetSpriteHeight5;
+                                resetSpriteHeight5 += spriteHeight; 
+                                distanceFromRight = canvasSize.width - allYears[0][s].x;
+
+                                if (allYears[0][s].y < 0) {
+                                    allYears[0][s].x = canvasSize.width - (spriteWidth*6); // if 6 columns
+                                    allYears[0][s].y = canvasSize.height - resetSpriteHeight6;
+                                    resetSpriteHeight6 += spriteHeight; 
+                                    distanceFromRight = canvasSize.width - allYears[0][s].x;
+                                }
                             }
                         }
                     }
                 }
-            }
-            // add dot sprites to stage						
-			stage.addChild(yr2017[y]);
+            stage.addChild(allYears[0][s]);
         }
         
-        columnsFromRight = distanceFromRight / 15; // find out for preceeding year loop
-        // reset all these values for preceeding year loop
-        spriteHeight = 15, 
-        resetSpriteHeight1 = 15,
-        resetSpriteHeight2 = 15,
-        resetSpriteHeight3 = 15,
-        resetSpriteHeight4 = 15,
-        resetSpriteHeight5 = 15;
+        columnCalc(); // check how many columns from right the year is - function
+        resetHeights(); // reset all of the sprite heights back to 15 - function
         
-        for (y = 0; y < yr2016.length; y++) {
-            yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 1);
-            yr2016[y].y = canvasSize.height - spriteHeight;
-            spriteHeight += 15;
-            distanceFromRight = canvasSize.width - yr2016[y].x;
+        // wider loop for all years, start from 1 to not include 0 within the array (aka 2017)
+        for (y = 1; y < allYears.length; y++) {
             
-            if (yr2016[y].y < 0) {
-                yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 2); // 2nd column
-                yr2016[y].y = canvasSize.height - resetSpriteHeight1;
-                resetSpriteHeight1 += 15;
-                distanceFromRight = canvasSize.width - yr2016[y].x;
+            for (r = 1; r < allYears[y].length; r++) {
                 
-                if (yr2016[y].y < 0) {
-                    yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 3); // 3rd column
-                    yr2016[y].y = canvasSize.height - resetSpriteHeight2;
-                    resetSpriteHeight2 += 15;
-                    distanceFromRight = canvasSize.width - yr2016[y].x;
+                allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 1); // 1 column
+                allYears[y][r].y = canvasSize.height - resetSpriteHeight;
+                resetSpriteHeight += spriteHeight;
+                distanceFromRight = canvasSize.width - allYears[y][r].x;
+                
+                if (allYears[y][r].y < 0) {
+                    allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 2); // 2 columns
+                    allYears[y][r].y = canvasSize.height - resetSpriteHeight2;
+                    resetSpriteHeight2 += spriteHeight;
+                    distanceFromRight = canvasSize.width - allYears[y][r].x;
                     
-                    if (yr2016[y].y < 0) {
-                    yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 4); // 4th column
-                    yr2016[y].y = canvasSize.height - resetSpriteHeight3;
-                    resetSpriteHeight3 += 15;
-                    distanceFromRight = canvasSize.width - yr2016[y].x;
-                    
-                        if (yr2016[y].y < 0) {
-                            yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 5); // 5th column
-                            yr2016[y].y = canvasSize.height - resetSpriteHeight4;
-                            resetSpriteHeight4 += 15;
-                            distanceFromRight = canvasSize.width - yr2016[y].x;
+                    if (allYears[y][r].y < 0) {
+                        allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 3); // 3 columns
+                        allYears[y][r].y = canvasSize.height - resetSpriteHeight3;
+                        resetSpriteHeight3 += spriteHeight;
+                        distanceFromRight = canvasSize.width - allYears[y][r].x;
+                        
+                        if (allYears[y][r].y < 0) {
+                            allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 4); // 4 columns
+                            allYears[y][r].y = canvasSize.height - resetSpriteHeight4;
+                            resetSpriteHeight4 += spriteHeight;
+                            distanceFromRight = canvasSize.width - allYears[y][r].x;
                             
-                            if (yr2016[y].y < 0) {
-                            yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 6); // 6th column
-                            yr2016[y].y = canvasSize.height - resetSpriteHeight5;
-                            resetSpriteHeight5 += 15;
-                            distanceFromRight = canvasSize.width - yr2016[y].x;
+                            if (allYears[y][r].y < 0) {
+                                allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 5); // 5 columns
+                                allYears[y][r].y = canvasSize.height - resetSpriteHeight5;
+                                resetSpriteHeight5 += spriteHeight;
+                                distanceFromRight = canvasSize.width - allYears[y][r].x;
                                 
-                                if (yr2016[y].y < 0) {
-                                    yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 7); // 7th column
-                                    yr2016[y].y = canvasSize.height - resetSpriteHeight6;
-                                    resetSpriteHeight6 += 15;
-                                    distanceFromRight = canvasSize.width - yr2016[y].x;
+                                if (allYears[y][r].y < 0) {
+                                    allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 6); // 6 columns
+                                    allYears[y][r].y = canvasSize.height - resetSpriteHeight6;
+                                    resetSpriteHeight6 += spriteHeight;
+                                    distanceFromRight = canvasSize.width - allYears[y][r].x;
                                     
-                                    if (yr2016[y].y < 0) {
-                                        yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 8); // 8th column
-                                        yr2016[y].y = canvasSize.height - resetSpriteHeight7;
-                                        resetSpriteHeight7 += 15;
-                                        distanceFromRight = canvasSize.width - yr2016[y].x;
+                                    if (allYears[y][r].y < 0) {
+                                        allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 7); // 7 columns
+                                        allYears[y][r].y = canvasSize.height - resetSpriteHeight7;
+                                        resetSpriteHeight7 += spriteHeight;
+                                        distanceFromRight = canvasSize.width - allYears[y][r].x;
                                         
-                                        if (yr2016[y].y < 0) {
-                                            yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 9); // 9th column
-                                            yr2016[y].y = canvasSize.height - resetSpriteHeight8;
-                                            resetSpriteHeight8 += 15;
-                                            distanceFromRight = canvasSize.width - yr2016[y].x;
+                                        if (allYears[y][r].y < 0) {
+                                            allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 8); // 8 columns
+                                            allYears[y][r].y = canvasSize.height - resetSpriteHeight8;
+                                            resetSpriteHeight8 += spriteHeight;
+                                            distanceFromRight = canvasSize.width - allYears[y][r].x;
                                             
-                                            if (yr2016[y].y < 0) {
-                                                yr2016[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 10); // 10th column
-                                                yr2016[y].y = canvasSize.height - resetSpriteHeight9;
-                                                resetSpriteHeight9 += 15;
-                                                distanceFromRight = canvasSize.width - yr2016[y].x;
-                                            } 
+                                            if (allYears[y][r].y < 0) {
+                                                allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 9); // 9 columns
+                                                allYears[y][r].y = canvasSize.height - resetSpriteHeight9;
+                                                resetSpriteHeight9 += spriteHeight;
+                                                distanceFromRight = canvasSize.width - allYears[y][r].x;
+                                                
+                                                if (allYears[y][r].y < 0) {
+                                                    allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 10); // 10 columns
+                                                    allYears[y][r].y = canvasSize.height - resetSpriteHeight10;
+                                                    resetSpriteHeight10 += spriteHeight;
+                                                    distanceFromRight = canvasSize.width - allYears[y][r].x;
+                                                    
+                                                    if (allYears[y][r].y < 0) {
+                                                        allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 11); // 11 columns
+                                                        allYears[y][r].y = canvasSize.height - resetSpriteHeight11;
+                                                        resetSpriteHeight11 += spriteHeight;
+                                                        distanceFromRight = canvasSize.width - allYears[y][r].x;
+                                                        
+                                                        if (allYears[y][r].y < 0) {
+                                                            allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 12); // 12 columns
+                                                            allYears[y][r].y = canvasSize.height - resetSpriteHeight12;
+                                                            resetSpriteHeight12 += spriteHeight;
+                                                            distanceFromRight = canvasSize.width - allYears[y][r].x;
+                                                            
+                                                            if (allYears[y][r].y < 0) {
+                                                                allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 12); // 13 columns
+                                                                allYears[y][r].y = canvasSize.height - resetSpriteHeight13;
+                                                                resetSpriteHeight13 += spriteHeight;
+                                                                distanceFromRight = canvasSize.width - allYears[y][r].x;
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -475,93 +501,31 @@ function movieController($scope, $http) {
                         }
                     }
                 }
+                stage.addChild(allYears[y][r]);
             }
-            stage.addChild(yr2016[y]);
-        } // close 2016 loop
+            columnCalc();
+            resetHeights();
+        } // close for loop for allYears
         
-        columnsFromRight = distanceFromRight / 15; // find out for preceeding year loop
-        // reset all these values for preceeding year loop
-        spriteHeight = 15, 
-        resetSpriteHeight1 = 15,
-        resetSpriteHeight2 = 15,
-        resetSpriteHeight3 = 15,
-        resetSpriteHeight4 = 15,
-        resetSpriteHeight5 = 15,
-        resetSpriteHeight6 = 15,
-        resetSpriteHeight7 = 15,
-        resetSpriteHeight8 = 15,
-        resetSpriteHeight9 = 15;
+        function columnCalc() {
+            columnsFromRight = distanceFromRight / spriteWidth;
+        }
         
-        for (y = 0; y < yr2015.length; y++) {
-            yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 1);
-            yr2015[y].y = canvasSize.height - spriteHeight;
-            spriteHeight += 15;
-            distanceFromRight = canvasSize.width - yr2015[y].x;
-            
-            if (yr2015[y].y < 0) {
-                yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 2); // 2nd column
-                yr2015[y].y = canvasSize.height - resetSpriteHeight1;
-                resetSpriteHeight1 += 15;
-                distanceFromRight = canvasSize.width - yr2015[y].x;
-                
-                if (yr2015[y].y < 0) {
-                    yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 3); // 3rd column
-                    yr2015[y].y = canvasSize.height - resetSpriteHeight2;
-                    resetSpriteHeight2 += 15;
-                    distanceFromRight = canvasSize.width - yr2015[y].x;
-                    
-                    if (yr2015[y].y < 0) {
-                    yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 4); // 4th column
-                    yr2015[y].y = canvasSize.height - resetSpriteHeight3;
-                    resetSpriteHeight3 += 15;
-                    distanceFromRight = canvasSize.width - yr2015[y].x;
-                    
-                        if (yr2015[y].y < 0) {
-                            yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 5); // 5th column
-                            yr2015[y].y = canvasSize.height - resetSpriteHeight4;
-                            resetSpriteHeight4 += 15;
-                            distanceFromRight = canvasSize.width - yr2015[y].x;
-                            
-                            if (yr2015[y].y < 0) {
-                            yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 6); // 6th column
-                            yr2015[y].y = canvasSize.height - resetSpriteHeight5;
-                            resetSpriteHeight5 += 15;
-                            distanceFromRight = canvasSize.width - yr2015[y].x;
-                                
-                                if (yr2015[y].y < 0) {
-                                    yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 7); // 7th column
-                                    yr2015[y].y = canvasSize.height - resetSpriteHeight6;
-                                    resetSpriteHeight6 += 15;
-                                    distanceFromRight = canvasSize.width - yr2015[y].x;
-                                    
-                                    if (yr2015[y].y < 0) {
-                                        yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 8); // 8th column
-                                        yr2015[y].y = canvasSize.height - resetSpriteHeight7;
-                                        resetSpriteHeight7 += 15;
-                                        distanceFromRight = canvasSize.width - yr2015[y].x;
-                                        
-                                        if (yr2015[y].y < 0) {
-                                            yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 9); // 9th column
-                                            yr2015[y].y = canvasSize.height - resetSpriteHeight8;
-                                            resetSpriteHeight8 += 15;
-                                            distanceFromRight = canvasSize.width - yr2015[y].x;
-                                            
-                                            if (yr2015[y].y < 0) {
-                                                yr2015[y].x = canvasSize.width - spriteWidth*(columnsFromRight + 10); // 10th column
-                                                yr2015[y].y = canvasSize.height - resetSpriteHeight9;
-                                                resetSpriteHeight9 += 15;
-                                                distanceFromRight = canvasSize.width - yr2015[y].x;
-                                            } 
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            stage.addChild(yr2015[y]);
-        } // close 2015 loop
+        function resetHeights() {
+            resetSpriteHeight = 12, 
+            resetSpriteHeight2 = 12,
+            resetSpriteHeight3 = 12,
+            resetSpriteHeight4 = 12,
+            resetSpriteHeight5 = 12,
+            resetSpriteHeight6 = 12,
+            resetSpriteHeight7 = 12,
+            resetSpriteHeight8 = 12,
+            resetSpriteHeight9 = 12,
+            resetSpriteHeight10 = 12,
+            resetSpriteHeight11 = 12,
+            resetSpriteHeight12 = 12,
+            resetSpriteHeight13 = 12;
+        }
 			
 			// initialise the cat's velocity variables
 			//cat.vx = 0;

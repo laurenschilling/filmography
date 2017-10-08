@@ -56,7 +56,8 @@ div#data-background {
     background: linear-gradient(#092335 60%, #0e3549 100%);
     background-size: cover;
     background-repeat: no-repeat;
-    z-index: -1; }
+    z-index: -1;
+    pointer-events: none; }
 
 div#data-background:after {
     content: '';
@@ -71,7 +72,8 @@ div#data-background:after {
     bottom: 0;
     right: 0;
     position: fixed;
-    z-index: -1; }
+    z-index: -1;
+    pointer-events: none; }
 
 canvas {
     margin-left: 220px; /* this is the width of sidebar, so it sits after it */
@@ -86,7 +88,8 @@ footer {
     bottom: 0;
     right: 0;
     height: 60px; /* this is linked in jQuery so don't change without updating jQuery */
-    width: calc(100% - 220px); } /* subtract width of .sidebar */
+    width: calc(100% - 220px);
+    z-index: 20; } /* subtract width of .sidebar */
 	
 	
 /* Typography
@@ -131,7 +134,8 @@ h2 {
 #mouse-move,
 #line {
     height: 100%;
-    position: absolute; }
+    position: absolute;
+    pointer-events: none; }
 
 #mouse-move {
     cursor: none;
@@ -156,14 +160,16 @@ h2 {
 		position: relative;
 		top: 30px;
 		left: -4px;
-		cursor: none; }
+		cursor: none;
+		pointer-events: none; }
 	
 	#current-year {
 		width: 45px;
 		height: 20px;
 		background-color: #f7b7c7;
 		position: relative;
-		top: 20px; }
+		top: 20px;
+		pointer-events: none; }
 		
 		#dot-year {
 			color: #0e3549;
@@ -172,7 +178,8 @@ h2 {
 			top: 2px;
 			letter-spacing: 0.01em;
 			font-weight: 600;
-			font-size: 0.9em; }
+			font-size: 0.9em;
+			pointer-events: none; }
 	
 	
 /* --- pop up -- */	
@@ -215,7 +222,8 @@ h2 {
 	right: 0;
 	height: auto;
 	display: block;
-	padding-left: 60px; }
+	padding-left: 60px;
+	pointer-events: none; }
 
 .event-image-wrapper {
     width: 80px;
@@ -226,6 +234,7 @@ h2 {
     cursor: pointer;
 	background-size: 70%;
     background-repeat: no-repeat; 
+    pointer-events: none;
 /*     
 	overflow: hidden;
 	-webkit-transition: width .5s ease, height .5s ease, margin .5s ease, border-radius .5s ease;

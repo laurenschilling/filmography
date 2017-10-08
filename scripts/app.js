@@ -131,7 +131,7 @@ function movieController($scope, $http) {
 	
 	var dataElements = {
 	    mouse_move: $('#mouse-move'),
-	    canvas: document.getElementById('canvas'), // can't use jQuery for this it doesn't work
+	    canvas: document.getElementById('canvas') // can't use jQuery for this it doesn't work
 	    //footer: $('footer')
 	    // a few other elements will go in here
 	}
@@ -609,8 +609,7 @@ function movieController($scope, $http) {
 	
 	// put dot click events in here
 	function dotClick() {
-		console.log('clicked');
-        console.log('clicked on: ' + this.year);	
+		console.log('clicked on: ' + this.year + ': ' + this.title);
 	}
 	
 } // close movieController();

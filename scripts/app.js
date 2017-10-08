@@ -182,7 +182,7 @@ function movieController($scope, $http) {
 		
 		var texture = Texture.fromImage("images/dots-15.svg"),
 		    length = $scope.movies.length,
-            yr2017 = [], yr2016 = [], yr2015 = [], yr2014 = [], yr2013 = [], yr2012 = [], yr2011 = [], yr2010 = [], yr2009 = [], yr2008 = [], yr2007 = [], yr2006 = [], yr2005 = [], yr2004 = [], yr2003 = [], yr2002 = [], yr2001 = [], yr2000 = [], yr1999 = [], yr1998 = [], yr1997 = [], yr1996 = [], yr1995 = [], yr1994 = [], yr1993 = [], yr1992 = [], yr1991 = [], yr1990 = [], yr1989 = [], yr1988 = [], yr1987 = [], yr1986 = [], yr1985 = [], yr1984 = [], yr1983 = [], yr1982 = [], yr1981 = [], yr1980 = [], yr1979 = [], yr1978 = [], yr1977 = [], yr1976 = [], yr1975 = [], yr1974 = [], yr1973 = [], yr1972 = [], yr1971 = [], yr1970 = [], yr1969 = [], yr1968 = [], yr1967 = [], yr1966 = [], yr1965 = [], yr1964 = [], yr1963 = [], yr1962 = [], yr1961 = [], yr1960 = [], yr1959 = [], yr1958 = [], yr1957 = [], yr1956 = [], yr1955 = [], yr1954 = [], yr1953 = [], yr1952 = [], yr1951 = [], yr1950 = [], yr1949 = [], yr1948 = [], yr1947 = [], yr1946 = [], yr1945 = [], yr1944 = [], yr1943 = [], yr1942 = [], yr1941 = [], yr1940 = [], yr1939 = [], yr1938 = [], yr1937 = [], yr1936 = [], yr1935 = [], yr1934 = [], yr1933 = [], yr1932 = [], yr1931 = [], yr1930 = [], yr1929 = [], yr1928 = [], yr1927 = [], yr1926 = [], yr1925 = [], yr1924 = [], yr1923 = [], yr1922 = [], yr1921 = [], yr1920 = [], yr1919 = [], yr1918 = [], yr1917 = [], yr1916 = [], yr1915 = [], yr1914 = [], yr1913 = [], yr1912 = [], yr1911 = [], yr1910 = [], yr1909 = [], yr1908 = [], yr1907 = [], yr1906 = [], yr1905 = [], yr1904 = [], yr1903 = [], yr1902 = [], // for each year of data
+			yr2017 = [], yr2016 = [], yr2015 = [], yr2014 = [], yr2013 = [], yr2012 = [], yr2011 = [], yr2010 = [], yr2009 = [], yr2008 = [], yr2007 = [], yr2006 = [], yr2005 = [], yr2004 = [], yr2003 = [], yr2002 = [], yr2001 = [], yr2000 = [], yr1999 = [], yr1998 = [], yr1997 = [], yr1996 = [], yr1995 = [], yr1994 = [], yr1993 = [], yr1992 = [], yr1991 = [], yr1990 = [], yr1989 = [], yr1988 = [], yr1987 = [], yr1986 = [], yr1985 = [], yr1984 = [], yr1983 = [], yr1982 = [], yr1981 = [], yr1980 = [], yr1979 = [], yr1978 = [], yr1977 = [], yr1976 = [], yr1975 = [], yr1974 = [], yr1973 = [], yr1972 = [], yr1971 = [], yr1970 = [], yr1969 = [], yr1968 = [], yr1967 = [], yr1966 = [], yr1965 = [], yr1964 = [], yr1963 = [], yr1962 = [], yr1961 = [], yr1960 = [], yr1959 = [], yr1958 = [], yr1957 = [], yr1956 = [], yr1955 = [], yr1954 = [], yr1953 = [], yr1952 = [], yr1951 = [], yr1950 = [], yr1949 = [], yr1948 = [], yr1947 = [], yr1946 = [], yr1945 = [], yr1944 = [], yr1943 = [], yr1942 = [], yr1941 = [], yr1940 = [], yr1939 = [], yr1938 = [], yr1937 = [], yr1936 = [], yr1935 = [], yr1934 = [], yr1933 = [], yr1932 = [], yr1931 = [], yr1930 = [], yr1929 = [], yr1928 = [], yr1927 = [], yr1926 = [], yr1925 = [], yr1924 = [], yr1923 = [], yr1922 = [], yr1921 = [], yr1920 = [], yr1919 = [], yr1918 = [], yr1917 = [], yr1916 = [], yr1915 = [], yr1914 = [], yr1913 = [], yr1912 = [], yr1911 = [], yr1910 = [], yr1909 = [], yr1908 = [], yr1907 = [], yr1906 = [], yr1905 = [], yr1904 = [], yr1903 = [], yr1902 = [], // for each year of data
             distanceFromRight, // for sprite px from right
             columnsFromRight = 0, // divide by sprite width to get 'columns' from right, start at 0
             spriteWidth = 12, // including padding
@@ -220,16 +220,15 @@ function movieController($scope, $http) {
             dot.anchor.set = (0.5, 0.5);
 			dot.x = 0;
             dot.y = 0;
-            
-			dot.year = parseInt($scope.movies[d].release_date.substring(0, 4)); 
-			dot.genre = $scope.movies[d].genre_ids;
+			dot.year = parseInt(currentMovie.release_date.substring(0, 4)); 
+			dot.genre = currentMovie.genre_ids;
 			dot.title = currentMovie.title;
+            dot.img = imageBase + imageSize + currentMovie.poster_path;
             
 			// this seems to be a lifesaver! -ben
 			dot.hitArea = new Rectangle(-150, -150, 300, 300);
 			
-			// contain(dot, {x: 0, y: 0, width: canvasSize.width, height: canvasSize.height});
-			
+			// push movie data for each year into array		
             switch (dot.year) {
                 case 2017: yr2017.push(dot); break;
                 case 2016: yr2016.push(dot); break;
@@ -350,7 +349,7 @@ function movieController($scope, $http) {
                 default: break;
             }
             
-			// set the mouseover and click states listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
+			// set the mouseover and click states - listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
             dot.on('mouseover', dotHover);
             dot.on('click', dotClick);
             
@@ -486,8 +485,6 @@ function movieController($scope, $http) {
 			// scale the sprite's size proportionally
 			//cat.scale.set(0.5,0.5); */
 		
-		
-        
         // set the game state
 		state = play;
 	 
@@ -525,7 +522,6 @@ function movieController($scope, $http) {
 
 	        var mouseMove = document.getElementById('mouse-move');
 	        var cursor = document.getElementById('cursor');
-	        var offset = 20;
 	        var x = e.pageX;
 	        var y = e.pageY;
 				
@@ -593,6 +589,22 @@ function movieController($scope, $http) {
 	function dotHover() {
 		console.log('hovering over: ' + this.year + ': ' + this.title);
 		$('#dot-year').html(this.year);
+
+		console.log('this dot is at x: ' + this.x + ' and y: ' + this.y);
+		
+		var dotPosX = this.x,
+			dotPosY = this.y,
+			hoverDiv = document.getElementById('hover-event'),
+			$hoverDiv = $('#hover-event');
+		
+		// add data to hover div
+		$('.event-image').attr('src', this.img);
+		$('.event-title').html(this.title);		
+		
+		// position hover div left of cursor marker, show div
+		hoverDiv.style.left = dotPosX + 220 + 30 + 'px';
+		hoverDiv.style.top = dotPosY + 60 + 'px';
+		$hoverDiv.addClass('open');
 	}
 	
 	// put dot click events in here

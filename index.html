@@ -89,9 +89,9 @@
     </div>
     
     <!-- Link this DOM object to the movieController in app.js -->
-    <div ng-controller="movieController" style="display:none">
+    <div ng-controller="movieController">
 
-        <div class="col list">
+        <div class="col list" style="display:none">
             <p>Select a movie:</p>
             <ul class="films">
             <!-- Iterate through all movies in the dataset and display title with a click function -->
@@ -102,19 +102,21 @@
         </div>
         
         <!-- Event pop up on hover (image and title) -->
-		<div id="hover-event">
-			<div class="event">
-			    <div class="event-image-wrapper">
-				    <img class="event-image" src="{{ mouseoveredMovieImage }}">
-				</div>
-			    <div class="event-title-wrapper">
-	                <p class="event-title"></p>
+		<div id="hover-container">
+			<div id="hover-event">
+				<div class="event">
+				    <div class="event-image-wrapper">
+					    <img class="event-image" src="">
+					</div>
+				    <div class="event-title-wrapper">
+		                <p class="event-title"></p>
+				    </div>
 			    </div>
-		    </div>
+			</div>
 		</div>
 
         <!-- This section will automatically display detail when selectedArtist is updated -->
-        <div class="col detail">
+        <div class="col detail" style="display:none">
             <div class="detail-image-wrapper">
                 <img class="detail-image" src="{{selectedMovieImage}}" >
             </div>

@@ -227,7 +227,11 @@ h2 {
 
 .event-image-wrapper {
     width: 100px;
+<<<<<<< Updated upstream
     height: 120px;
+=======
+    height: 100px;
+>>>>>>> Stashed changes
     box-shadow: 0 0 0 0 #fff;
     position: relative;
     margin: 0 auto;
@@ -357,7 +361,11 @@ h2 {
     position: absolute;
     width: 100%;
     height: 100%;
+<<<<<<< Updated upstream
     border: 4px solid #fff;
+=======
+    border: 3px solid #fff;
+>>>>>>> Stashed changes
     border-radius: 2%;
     margin-left: -5px;
 /*

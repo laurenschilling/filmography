@@ -57,24 +57,25 @@
         <h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
         <div id="genres">
             <ul>
-                <li data-link="action"><span class="line"></span>Action</li>
-                <li data-link="adventure"><span class="line"></span>Adventure</li>
-                <li data-link="animation"><span class="line"></span>Animation</li>
-                <li data-link="comedy"><span class="line"></span>Comedy</li>
-                <li data-link="crime"><span class="line"></span>Crime</li>
-                <li data-link="doc"><span class="line"></span>Documentary</li>
-                <li data-link="drama"><span class="line"></span>Drama</li>
-                <li data-link="family"><span class="line"></span>Family</li>
-                <li data-link="fantasy"><span class="line"></span>Fantasy</li>
-                <li data-link="history"><span class="line"></span>History</li>
-                <li data-link="music"><span class="line"></span>Music</li>
-                <li data-link="mystery"><span class="line"></span>Mystery</li>
-                <li data-link="romance"><span class="line"></span>Romance</li>
-                <li data-link="scifi"><span class="line"></span>Sci-fi</li>
-                <li data-link="thriller"><span class="line"></span>Thriller</li>
-                <li data-link="tv"><span class="line"></span>TV Movie</li>
-                <li data-link="war"><span class="line"></span>War</li>
-                <li data-link="western"><span class="line"></span>Western</li>
+                <li data-link="28"><span class="line"></span>Action</li>
+                <li data-link="12"><span class="line"></span>Adventure</li>
+                <li data-link="16"><span class="line"></span>Animation</li>
+                <li data-link="35"><span class="line"></span>Comedy</li>
+                <li data-link="80"><span class="line"></span>Crime</li>
+                <li data-link="99"><span class="line"></span>Documentary</li>
+                <li data-link="18"><span class="line"></span>Drama</li>
+                <li data-link="10751"><span class="line"></span>Family</li>
+                <li data-link="14"><span class="line"></span>Fantasy</li>
+                <li data-link="36"><span class="line"></span>History</li>
+                <li data-link="27"><span class="line"></span>Horror</li>
+                <li data-link="10402"><span class="line"></span>Music</li>
+                <li data-link="9648"><span class="line"></span>Mystery</li>
+                <li data-link="10749"><span class="line"></span>Romance</li>
+                <li data-link="878"><span class="line"></span>Sci-fi</li>
+                <li data-link="53"><span class="line"></span>Thriller</li>
+                <li data-link="10770"><span class="line"></span>TV Movie</li>
+                <li data-link="10752"><span class="line"></span>War</li>
+                <li data-link="37"><span class="line"></span>Western</li>
             </ul>
         </div>
     </div>
@@ -82,7 +83,7 @@
     <!-- year marker over canvas -->
     <div id="mouse-move">
         <div id="current-year">
-	        <p id="dot-year"></p>
+	        <p id="dot-year" ng-click='movieClick(movie)'></p>
         </div>
         <div id="line"></div>
         <div id="cursor"></div>
@@ -91,6 +92,7 @@
     <!-- Link this DOM object to the movieController in app.js -->
     <div ng-controller="movieController">
 
+<!-- Bens list code -->
         <div class="col list" style="display:none">
             <p>Select a movie:</p>
             <ul class="films">
@@ -118,10 +120,10 @@
         <!-- This section will automatically display detail when selectedArtist is updated -->
         <div class="col detail" style="display:none">
             <div class="detail-image-wrapper">
-                <img class="detail-image" src="{{selectedMovieImage}}" >
+                <img class="detail-image" src="">
             </div>
             <div class="detail-title-wrapper">
-                <h2>{{ selectedMovie.title }}</h2>
+                <h2 class = "detail-title"></h2>
                 <p class="yr"></p>
             </div>
             <p class="genre-ids"></p>

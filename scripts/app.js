@@ -530,7 +530,8 @@ function movieController($scope, $http) {
             if (n % 2 != 0)
                 return true;
             else
-                return false; }
+                return false;
+           }
         
         // to determine number of columns from right
         function columnCalc() {
@@ -678,11 +679,18 @@ function movieController($scope, $http) {
 		hoverDiv.style.left = dotPosX + 220 + 30 + 'px';
 		hoverDiv.style.top = dotPosY + 60 + 'px';
 		$hoverDiv.addClass('open');
+        
+        $('#cursor').addClass('pink-glow');
 	}
 	
 	// put dot click events in here
 	function dotClick() {
 		console.log('clicked on: ' + this.year + ': ' + this.title);
+        $('.detail').toggle();
+        $('.detail-image').attr('src', this.img);
+        $('.yr').html(this.year);
+        $('.genre-ids').html(this.genre);
+        $('.detail-title').html(this.title);
+        $('.detail-overview').html(this.overview);
 	}
-	
 } // close movieController();

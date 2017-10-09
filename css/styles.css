@@ -162,6 +162,12 @@ h2 {
 		left: -4px;
 		cursor: none;
 		pointer-events: none; }
+
+.pink-glow {
+    -webkit-box-shadow: 0px 0px 35px 16px rgba(255,178,178,0.95);
+    -moz-box-shadow: 0px 0px 35px 16px rgba(255,178,178,0.95);
+    box-shadow: 0px 0px 35px 16px rgba(255,178,178,0.95);
+}
 	
 	#current-year {
 		width: 45px;

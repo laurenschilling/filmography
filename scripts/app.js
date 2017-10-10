@@ -299,10 +299,17 @@ function movieController($scope, $http) {
                     incompleteColumnSprites = allYears[y].length - (spritesToColumn*(widthOfCurrYear - 1)), // to find the number of sprites in the incomplete column
                     incompleteColumnSpace = canvasSize.height - (incompleteColumnSprites*spriteHeight), // find the remainder unused column space
                     offsetYincomplete;
-                    if (isOdd(incompleteColumnSprites)) {
-                        offsetYincomplete = Math.floor(incompleteColumnSpace/2) + (spriteHeight/2); // for offsetting y axis of odd number of sprites in incomplete column
-                    } else {
-                        offsetYincomplete = Math.floor(incompleteColumnSpace/2); } // for offsetting y axis of even number of sprites for incomplete column
+                    if (isOdd(spritesToColumn) == false) { // if the no of sprites in a full column is even
+                        if (isOdd(incompleteColumnSprites)) { // if the no of sprites in the incomplete column is odd
+                            offsetYincomplete = Math.floor(incompleteColumnSpace/2) + (spriteHeight/2);
+                        } else {
+                            offsetYincomplete = Math.floor(incompleteColumnSpace/2); }
+                    } else { // if the no of sprites in a full column is odd
+                        if (isOdd(incompleteColumnSprites)) { // if the no of sprites in the in the incomplete column is odd
+                            offsetYincomplete = Math.floor(incompleteColumnSpace/2);
+                        } else {
+                            offsetYincomplete = Math.floor(incompleteColumnSpace/2) + (spriteHeight/2); }
+                    }
                 
                 // 1st column
                 allYears[y][r].x = canvasSize.width - spriteWidth*(columnsFromRight + 1); // 1 column

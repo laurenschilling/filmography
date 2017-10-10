@@ -454,10 +454,16 @@ function movieController($scope, $http) {
         function isOdd(n) {
             if (n % 2 != 0) {
                 return true;
+<<<<<<< HEAD
             } else {
                 return false;
             }
         }
+=======
+            else
+                return false;
+           }
+>>>>>>> origin/master
         
         // to determine number of columns from right
         function columnCalc() {
@@ -613,6 +619,7 @@ function movieController($scope, $http) {
 	function dotClick() {
         
 		console.log('clicked on: ' + this.year + ': ' + this.title);
+<<<<<<< HEAD
         var popUp = $('.detail'),
             popUpX = this.x,
 			popUpY = this.y;
@@ -704,5 +711,6 @@ function movieController($scope, $http) {
 			} else {
 					$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
 			}
-		}
+		} // close dotClick
+
 } // close movieController();

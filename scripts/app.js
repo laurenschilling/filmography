@@ -19,82 +19,6 @@ function movieController($scope, $http) {
 		console.log('current filter selected: ' + currGenreFilter);
 	})
     
-    //what happens when you click the ng-click in the movie list
-    $scope.movieClick = function(movie) {
-        $scope.selectedMovie = movie;
-        console.log(movie);
-
-        //if there is an image then add the filepath to the string 
-        if ( movie.poster_path ) {
-          $scope.selectedMovieImage = imageBase + imageSize + movie.poster_path;
-        } else {
-          $scope.selectedMovieImage = imageBase + defaultImg;
-        }
-        
-        // if there is a release date, only show release year
-        if ( movie.release_date ) {
-	        var yr = movie.release_date.substring(0, 4);
-			$('.yr').empty().append(yr);
-        }
-        
-        // if there is a genre id, find the genre name
-        if ( movie.genre_ids ) {
-
-			var currGenres = [];
-			var ids = movie.genre_ids;			
-			var genres = [
-				{ id: 28, name: 'Action' },
-				{ id: 12, name: 'Adventure' },
-				{ id: 16, name: 'Animation' },
-				{ id: 35, name: 'Comedy' },
-				{ id: 80, name: 'Crime' },
-				{ id: 99, name: 'Documentary' },
-				{ id: 18, name: 'Drama' },
-				{ id: 10751, name: 'Family' },
-				{ id: 14, name: 'Fantasy' },
-				{ id: 36, name: 'History' },
-				{ id: 27, name: 'Horror' },
-				{ id: 10402, name: 'Music' },
-				{ id: 9648, name: 'Mystery' },
-				{ id: 10749, name: 'Romance' },
-				{ id: 878, name: 'Science Fiction' },
-				{ id: 10770, name: 'TV Movie' },
-				{ id: 53, name: 'Thriller' },
-				{ id: 10752, name: 'War' },
-				{ id: 37, name: 'Western' }
-			]			
-			
-			// match the movie ids with the genre names
-			for (var j = 0; j < genres.length; j++) {
-
-				for (var i = 0; i < ids.length; i++) {
-					if ( ids[i] == genres[j].id) {
-						console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
-						currGenres.push(genres[j].name);
-					}
-				}
-			}
-			
-			// log current genre names to console
-			console.log('current genres are: ' + currGenres);
-
-			// append genre names to page
-			var numOfGenres = currGenres.length;
-			if ( numOfGenres === 1 ) {
-				$('.genre-ids').empty().append(currGenres[0]);
-			} else if ( numOfGenres === 2 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
-			} else if ( numOfGenres === 3 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
-			} else if ( numOfGenres === 4 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
-			} else if ( numOfGenres === 5 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
-			} else {
-					$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
-			}
-		}
-	}
 
 	// ----- PIXI CODE -----
 	var type = "WebGL"
@@ -223,6 +147,7 @@ function movieController($scope, $http) {
 			dot.genre = currentMovie.genre_ids;
 			dot.title = currentMovie.title;
             dot.img = imageBase + imageSize + currentMovie.poster_path;
+            dot.overview = currentMovie.overview;
             
 			// this seems to be a lifesaver! -ben
 			dot.hitArea = new Rectangle(-150, -150, 300, 300);
@@ -527,10 +452,12 @@ function movieController($scope, $http) {
         
         // to determine an odd number
         function isOdd(n) {
-            if (n % 2 != 0)
+            if (n % 2 != 0) {
                 return true;
-            else
-                return false; }
+            } else {
+                return false;
+            }
+        }
         
         // to determine number of columns from right
         function columnCalc() {
@@ -660,10 +587,10 @@ function movieController($scope, $http) {
 	
 	// mouse hover
 	function dotHover() {
-		console.log('hovering over: ' + this.year + ': ' + this.title);
+		// console.log('hovering over: ' + this.year + ': ' + this.title);
 		$('#dot-year').html(this.year);
 
-		console.log('this dot is at x: ' + this.x + ' and y: ' + this.y);
+		// console.log('this dot is at x: ' + this.x + ' and y: ' + this.y);
 		
 		var dotPosX = this.x,
 			dotPosY = this.y,
@@ -678,11 +605,104 @@ function movieController($scope, $http) {
 		hoverDiv.style.left = dotPosX + 220 + 30 + 'px';
 		hoverDiv.style.top = dotPosY + 60 + 'px';
 		$hoverDiv.addClass('open');
+        
+        $('#cursor').addClass('pink-glow');
 	}
 	
 	// put dot click events in here
 	function dotClick() {
+        
 		console.log('clicked on: ' + this.year + ': ' + this.title);
-	}
-	
+        var popUp = $('.detail'),
+            popUpX = this.x,
+			popUpY = this.y;
+        console.log(this);
+        
+        var test = popUpX + 220 + 30 + 'px';
+        var t2 = popUpY + 60 + 'px';
+        // getting the pop up div to display where the hover div is
+        popUp.css('left', test);
+        popUp.css('top', t2);
+        popUp.toggle();
+        
+        if (popUp.css('display') === 'block') {
+            $('#hover-event').addClass('close');
+            $('#current-year').hide();
+            $('#line').hide();
+        } else {
+            $('#hover-event').removeClass('close').addClass('open');
+            $('#current-year').show();
+            $('#line').show();
+        }
+        
+        
+        console.log(popUp);
+        
+        //popUp.style.left = popUpX + 220 + 30 + 'px';
+		//popUp.style.top = popUpY + 60 + 'px';
+        //$popUp.css('display', 'block');
+        
+        $('.detail-image').attr('src', this.img);
+        $('.detail-title').html(this.title);
+        $('.yr').html(this.year);
+//        $('.genre-ids').html(this.genre);
+        $('.detail-overview').html(this.overview);
+        console.log(this.overview);
+        
+        
+        // if there is a genre id, find the genre name
+			var currGenres = [];
+			var ids = this.genre;			
+			var genres = [
+				{ id: 28, name: 'Action' },
+				{ id: 12, name: 'Adventure' },
+				{ id: 16, name: 'Animation' },
+				{ id: 35, name: 'Comedy' },
+				{ id: 80, name: 'Crime' },
+				{ id: 99, name: 'Documentary' },
+				{ id: 18, name: 'Drama' },
+				{ id: 10751, name: 'Family' },
+				{ id: 14, name: 'Fantasy' },
+				{ id: 36, name: 'History' },
+				{ id: 27, name: 'Horror' },
+				{ id: 10402, name: 'Music' },
+				{ id: 9648, name: 'Mystery' },
+				{ id: 10749, name: 'Romance' },
+				{ id: 878, name: 'Science Fiction' },
+				{ id: 10770, name: 'TV Movie' },
+				{ id: 53, name: 'Thriller' },
+				{ id: 10752, name: 'War' },
+				{ id: 37, name: 'Western' }
+			]			
+			
+			// match the movie ids with the genre names
+			for (var j = 0; j < genres.length; j++) {
+
+				for (var i = 0; i < ids.length; i++) {
+					if ( ids[i] == genres[j].id) {
+						console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
+						currGenres.push(genres[j].name);
+					}
+				}
+			}
+			
+			// log current genre names to console
+			console.log('current genres are: ' + currGenres);
+
+			// append genre names to page
+			var numOfGenres = currGenres.length;
+			if ( numOfGenres === 1 ) {
+				$('.genre-ids').empty().append(currGenres[0]);
+			} else if ( numOfGenres === 2 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
+			} else if ( numOfGenres === 3 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
+			} else if ( numOfGenres === 4 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
+			} else if ( numOfGenres === 5 ) {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
+			} else {
+					$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
+			}
+		}
 } // close movieController();

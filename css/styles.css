@@ -11,6 +11,7 @@ Table of Contents:
 */
 
 /* Ben's styles to test Angular - will delete */
+/*
 .col {
     float: left;
     width: 35%;
@@ -19,6 +20,7 @@ Table of Contents:
 .detail {
     background: #f4f4f4;
     height: 2px; }
+*/
 
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -162,6 +164,12 @@ h2 {
 		left: -4px;
 		cursor: none;
 		pointer-events: none; }
+
+.pink-glow {
+    -webkit-box-shadow: 0px 0px 35px 16px rgba(255,178,178,0.95);
+    -moz-box-shadow: 0px 0px 35px 16px rgba(255,178,178,0.95);
+    box-shadow: 0px 0px 35px 16px rgba(255,178,178,0.95);
+}
 	
 	#current-year {
 		width: 45px;
@@ -185,18 +193,34 @@ h2 {
 /* --- pop up -- */	
 .detail {
 	height: 100%;
-	width: 300px;
+	width: 400px;
+    height: 300px;
 	padding: 5px;
-	color: #0e3549; }
+	color: #0e3549;
+    background-color: #fff;
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    overflow: scroll;
+}
 
 	.detail-image-wrapper	{
-		height: 300px;
-		overflow: hidden; }
-		
+		overflow: hidden;
+        float: left;
+        padding: 5px;
+        vertical-align: middle;
+        width: 150px;
+        height: 225px;
+}
+
+.detail-image {
+    width: 100%;
+}
+
 	.detail-title-wrapper h2,
 	.detail-title-wrapper p {
 		display: inline-block; 
-		padding: 8px 2px 20px 2px; }
+		padding: 8px 8px 20px 2px; }
 	
 		.yr {
 			float: right; }	
@@ -214,7 +238,12 @@ h2 {
 	z-index: 30; }
 
 .open {
-	display: block !important; }
+	display: block !important;
+}
+
+.close {
+    display: none !important;
+}
 	
 .event {
 	position: relative;
@@ -637,10 +666,10 @@ ul li {
 	border-top: 1px solid #f7b7c7;
 	width: 50%;
 	position: relative;
-	left: -90px;
-	top: 15px;
-	margin: 0;
-	padding: 0; }
+    left: -90px;
+    top: 15px;
+    margin: 0;
+    padding: 0; }
 
 	.move-line {
 		left: -70px;

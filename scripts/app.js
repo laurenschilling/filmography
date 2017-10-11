@@ -11,6 +11,28 @@ function movieController($scope, $http) {
     $http.get('scripts/all-moviedata.json').success(function(data) {
         $scope.movies = data;
     });
+    
+	// ---- GENRE FILTER ANIMATIONS: WIP ----
+	
+	var li = $('#genres ul li');
+
+	$(function() {
+		var line,
+			active;
+		
+		// genre list item : enter hover
+		// show span line
+		li.bind('mouseover', function() {
+			line = $(this).find('span');
+			line.removeClass('move-line-back').addClass('move-line');
+		});
+	
+		// genre list item : exit hover
+		// hide span line	
+		li.bind('mouseleave', function() {	
+			line.addClass('move-line-back').removeClass('move-line');
+		});
+	});    
 
 	// when genre filter is clicked, only show movies with that genre
 	$('#genres ul li').on('click', function() {
@@ -82,22 +104,10 @@ function movieController($scope, $http) {
 	
 	
 	// ----- CREATE SPRITES -----
-	// load textures
-	// run setup function when loaded
+	// load textures and run setup function
 	loader
 		.add("images/dots.svg")
-		.on("progress", loadProgressHandler)
 		.load(setup);
-		
-	// log the progress of images loading
-	function loadProgressHandler(loader, resource) {
-		
-		// log the file url currently being loaded
-		console.log("loading: " + resource.url);
-		
-		// log the percentage of files currently loaded
-		console.log("progress: " + loader.progress + "%");
-	}
 	
  
 	// ----- FUNCTION SET UP ----- 
@@ -274,7 +284,7 @@ function movieController($scope, $http) {
             }
             
 			// set the mouseover and click states - listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
-            dot.on('mouseover', dotHover);
+            dot.on('mouseover', dotHover).on('mouseout', dotLeave);
             dot.on('click', dotClick);
             
 		} // close data/sprite loop
@@ -465,7 +475,6 @@ function movieController($scope, $http) {
                 return false; }
         }
         
-        
         // to determine number of columns from right
         function columnCalc() {
             columnsFromRight = distanceFromRight / spriteWidth; }
@@ -592,18 +601,22 @@ function movieController($scope, $http) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 	
-	// mouse hover
+	// global variables for mouseover and mouseout
+	var timer,
+		$hoverDiv = $('#hover-event');
+	
+	// mouseover
 	function dotHover() {
-		// console.log('hovering over: ' + this.year + ': ' + this.title);
+		//console.log('hovering over: ' + this.year + ': ' + this.title);
 		$('#dot-year').html(this.year);
 
-		// console.log('this dot is at x: ' + this.x + ' and y: ' + this.y);
+		//console.log('this dot is at x: ' + this.x + ' and y: ' + this.y);
 		
 		var dotPosX = this.x,
 			dotPosY = this.y,
 			hoverDiv = document.getElementById('hover-event'),
-			$hoverDiv = $('#hover-event');
-		
+			glow;
+					
 		// add data to hover div
 		$('.event-image').attr('src', this.img);
 		$('.event-title').html(this.title);		
@@ -611,25 +624,36 @@ function movieController($scope, $http) {
 		// position hover div left of cursor marker, show div
 		hoverDiv.style.left = dotPosX + 220 + 30 + 'px';
 		hoverDiv.style.top = dotPosY + 60 + 'px';
-		$hoverDiv.addClass('open');
-        
+
+		// hover delay - this works, but it seems there's issues with the cursor picking up a dot and displaying the data (it's not as smooth). 
+        timer = setTimeout(function() {
+			$hoverDiv.addClass('open');
+			console.log('hover event opened');
+        }, 120);
+
         $('#cursor').addClass('pink-glow');
 	}
 	
-	// put dot click events in here
+	// mouseout
+	function dotLeave() {
+		clearTimeout(timer);
+        $hoverDiv.removeClass('open');
+		console.log('leave mouseover, hover event closed');
+	}
+	
+	// click events
 	function dotClick() {
         
 		console.log('clicked on: ' + this.year + ': ' + this.title);
         var popUp = $('.detail'),
             popUpX = this.x,
-			popUpY = this.y;
-        console.log(this);
+			popUpY = this.y,
+			popUpPosX = popUpX + 220 + 30 + 'px',
+			popUpPosY = popUpY + 60 + 'px';
         
-        var test = popUpX + 220 + 30 + 'px';
-        var t2 = popUpY + 60 + 'px';
         // getting the pop up div to display where the hover div is
-        popUp.css('left', test);
-        popUp.css('top', t2);
+        popUp.css('left', popUpPosX);
+        popUp.css('top', popUpPosY);
         popUp.toggle();
         
         if (popUp.css('display') === 'block') {
@@ -642,75 +666,68 @@ function movieController($scope, $http) {
             $('#line').show();
         }
         
-        
         console.log(popUp);
         
-        //popUp.style.left = popUpX + 220 + 30 + 'px';
-		//popUp.style.top = popUpY + 60 + 'px';
-        //$popUp.css('display', 'block');
-        
+        // append film details
         $('.detail-image').attr('src', this.img);
         $('.detail-title').html(this.title);
         $('.yr').html(this.year);
-//        $('.genre-ids').html(this.genre);
         $('.detail-overview').html(this.overview);
-        console.log(this.overview);
-        
-        
+               
         // if there is a genre id, find the genre name
-			var currGenres = [];
-			var ids = this.genre;			
-			var genres = [
-				{ id: 28, name: 'Action' },
-				{ id: 12, name: 'Adventure' },
-				{ id: 16, name: 'Animation' },
-				{ id: 35, name: 'Comedy' },
-				{ id: 80, name: 'Crime' },
-				{ id: 99, name: 'Documentary' },
-				{ id: 18, name: 'Drama' },
-				{ id: 10751, name: 'Family' },
-				{ id: 14, name: 'Fantasy' },
-				{ id: 36, name: 'History' },
-				{ id: 27, name: 'Horror' },
-				{ id: 10402, name: 'Music' },
-				{ id: 9648, name: 'Mystery' },
-				{ id: 10749, name: 'Romance' },
-				{ id: 878, name: 'Science Fiction' },
-				{ id: 10770, name: 'TV Movie' },
-				{ id: 53, name: 'Thriller' },
-				{ id: 10752, name: 'War' },
-				{ id: 37, name: 'Western' }
-			]			
-			
-			// match the movie ids with the genre names
-			for (var j = 0; j < genres.length; j++) {
+		var currGenres = [];
+		var ids = this.genre;			
+		var genres = [
+			{ id: 28, name: 'Action' },
+			{ id: 12, name: 'Adventure' },
+			{ id: 16, name: 'Animation' },
+			{ id: 35, name: 'Comedy' },
+			{ id: 80, name: 'Crime' },
+			{ id: 99, name: 'Documentary' },
+			{ id: 18, name: 'Drama' },
+			{ id: 10751, name: 'Family' },
+			{ id: 14, name: 'Fantasy' },
+			{ id: 36, name: 'History' },
+			{ id: 27, name: 'Horror' },
+			{ id: 10402, name: 'Music' },
+			{ id: 9648, name: 'Mystery' },
+			{ id: 10749, name: 'Romance' },
+			{ id: 878, name: 'Science Fiction' },
+			{ id: 10770, name: 'TV Movie' },
+			{ id: 53, name: 'Thriller' },
+			{ id: 10752, name: 'War' },
+			{ id: 37, name: 'Western' }
+		]			
+		
+		// match the movie ids with the genre names
+		for (var j = 0; j < genres.length; j++) {
 
-				for (var i = 0; i < ids.length; i++) {
-					if ( ids[i] == genres[j].id) {
-						console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
-						currGenres.push(genres[j].name);
-					}
+			for (var i = 0; i < ids.length; i++) {
+				if ( ids[i] == genres[j].id) {
+					console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
+					currGenres.push(genres[j].name);
 				}
 			}
-			
-			// log current genre names to console
-			console.log('current genres are: ' + currGenres);
+		}
+		
+		// log current genre names to console
+		console.log('current genres are: ' + currGenres);
 
-			// append genre names to page
-			var numOfGenres = currGenres.length;
-			if ( numOfGenres === 1 ) {
-				$('.genre-ids').empty().append(currGenres[0]);
-			} else if ( numOfGenres === 2 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
-			} else if ( numOfGenres === 3 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
-			} else if ( numOfGenres === 4 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
-			} else if ( numOfGenres === 5 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
-			} else {
-					$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
-			}
-		} // close dotClick
+		// append genre names to page
+		var numOfGenres = currGenres.length;
+		if ( numOfGenres === 1 ) {
+			$('.genre-ids').empty().append(currGenres[0]);
+		} else if ( numOfGenres === 2 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
+		} else if ( numOfGenres === 3 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
+		} else if ( numOfGenres === 4 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
+		} else if ( numOfGenres === 5 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
+		} else {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
+		}
+	} // close dotClick
 
 } // close movieController();

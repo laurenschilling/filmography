@@ -285,29 +285,98 @@ h2 {
     position: absolute;
     z-index: 9999;
     overflow: scroll;
+    border-radius: 4px;
 }
 
 	.detail-image-wrapper	{
 		overflow: hidden;
         float: left;
         padding: 5px;
-        vertical-align: middle;
         width: 150px;
         height: 225px;
+        display: inline-block;
+        padding: 5px;
 }
 
-.detail-image {
-    width: 100%;
-}
+        .detail-image {
+            width: 100%;
+        }
+
+        .detail-title-wrapper {
+             width: 160px;
+        }
 
 	.detail-title-wrapper h2,
 	.detail-title-wrapper p {
-		display: inline-block; 
-		padding: 8px 8px 20px 2px; }
-	
-		.yr {
-			float: right; }	
-		
+		display: block; 
+        float: left;
+        width: 100%;
+        padding-bottom: 5%;
+        padding-left: 5px;
+}
+
+        .yr {
+            float: left;
+            padding-top: 8px;
+            font-size: 0.9em;
+}
+
+
+        .detail-title {
+            font-weight: 400;
+            padding-top: 5px;
+        }
+
+.trivia-awards {
+    width: 100%;
+    display: inline-block;
+    margin: 2px;
+    font-size: 1.5em;
+}
+
+.awards.fa.fa-trophy {
+    width: 45%;
+}
+
+.trivia.fa.fa-question-circle {
+    width: 45%;
+    text-align: right;
+}
+
+.revenue, .run-time, .budget {
+    display: block;
+    font-size: 80%;
+    padding-bottom: 5%;
+    vertical-align: middle;
+}
+
+.detail-details {
+    clear: right;
+    display: inline-block;
+    width: 220px;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.detail-overview {
+    padding-bottom: 5%;
+    font-weight: 100;
+    display: block;
+    padding-top: 30px;
+    
+}
+
+    .genre-ids {
+        padding-bottom: 5%;
+        padding-top: 5px;
+        text-transform: uppercase;
+        font-size: 0.8em;
+    }
+
+    .actors {
+        font-weight: 100;
+        padding-bottom: 10px;
+    }
 
 /* Hover Event Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

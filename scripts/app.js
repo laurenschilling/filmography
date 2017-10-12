@@ -541,9 +541,7 @@ function movieController($scope, $http) {
 	        var cursor = document.getElementById('cursor');
 	        var x = e.pageX;
 	        var y = e.pageY;
-	        
-	        console.log('x: ' + x + ' and y: ' + y);
-				
+	        				
 	        mouseMove.style.left = x + 'px';
 	        cursor.style.top = y + 'px';			
 	    });
@@ -617,8 +615,7 @@ function movieController($scope, $http) {
 		
 		var dotPosX = this.x,
 			dotPosY = this.y,
-			hoverDiv = document.getElementById('hover-event'),
-			glow;
+			hoverDiv = document.getElementById('hover-event');
 					
 		// add data to hover div
 		$('.event-image').attr('src', this.img);
@@ -628,7 +625,7 @@ function movieController($scope, $http) {
 		hoverDiv.style.left = dotPosX + 220 + 30 + 'px';
 		hoverDiv.style.top = dotPosY + 60 + 'px';
 
-		// hover delay - this works, but it seems there's issues with the cursor picking up a dot and displaying the data (it's not as smooth). 
+		// hover delay
         timer = setTimeout(function() {
 			$hoverDiv.addClass('open');
 			console.log('hover event opened');
@@ -639,7 +636,6 @@ function movieController($scope, $http) {
 	
 	// mouseout
 	function dotLeave() {
-		clearTimeout(timer);
         $hoverDiv.removeClass('open');
 		console.log('leave mouseover, hover event closed');
 	}
@@ -663,116 +659,109 @@ function movieController($scope, $http) {
             $('#hover-event').addClass('close');
             $('#current-year').hide();
             $('#line').hide();
+            $('canvas').removeClass('add-opacity').addClass('min-opacity');
         } else {
             $('#hover-event').removeClass('close').addClass('open');
             $('#current-year').show();
             $('#line').show();
+            $('canvas').addClass('add-opacity').removeClass('min-opacity');
         }
         
-        console.log(popUp);
-        var currMovie = this.id;
-        console.log(currMovie);
-        var key = "2385af2e8136eb616d2a12e316efa014";
-        var url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits";
+        var currMovie = this.id,
+        	key = "2385af2e8136eb616d2a12e316efa014",
+			url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits";
+        
         $('.detail-image').attr('src', this.img);
         $('.detail-title').html(this.title);
         $('.yr').html(this.year);
-//        $('.genre-ids').html(this.genre);
         $('.detail-overview').html(this.overview);
-        console.log(this.overview);
-        
         
         // if there is a genre id, find the genre name
-			var currGenres = [];
-			var ids = this.genre;			
-			var genres = [
-				{ id: 28, name: 'Action' },
-				{ id: 12, name: 'Adventure' },
-				{ id: 16, name: 'Animation' },
-				{ id: 35, name: 'Comedy' },
-				{ id: 80, name: 'Crime' },
-				{ id: 99, name: 'Documentary' },
-				{ id: 18, name: 'Drama' },
-				{ id: 10751, name: 'Family' },
-				{ id: 14, name: 'Fantasy' },
-				{ id: 36, name: 'History' },
-				{ id: 27, name: 'Horror' },
-				{ id: 10402, name: 'Music' },
-				{ id: 9648, name: 'Mystery' },
-				{ id: 10749, name: 'Romance' },
-				{ id: 878, name: 'Science Fiction' },
-				{ id: 10770, name: 'TV Movie' },
-				{ id: 53, name: 'Thriller' },
-				{ id: 10752, name: 'War' },
-				{ id: 37, name: 'Western' }
-			]			
-			
-			// match the movie ids with the genre names
-			for (var j = 0; j < genres.length; j++) {
+		var currGenres = [];
+		var ids = this.genre;			
+		var genres = [
+			{ id: 28, name: 'Action' },
+			{ id: 12, name: 'Adventure' },
+			{ id: 16, name: 'Animation' },
+			{ id: 35, name: 'Comedy' },
+			{ id: 80, name: 'Crime' },
+			{ id: 99, name: 'Documentary' },
+			{ id: 18, name: 'Drama' },
+			{ id: 10751, name: 'Family' },
+			{ id: 14, name: 'Fantasy' },
+			{ id: 36, name: 'History' },
+			{ id: 27, name: 'Horror' },
+			{ id: 10402, name: 'Music' },
+			{ id: 9648, name: 'Mystery' },
+			{ id: 10749, name: 'Romance' },
+			{ id: 878, name: 'Science Fiction' },
+			{ id: 10770, name: 'TV Movie' },
+			{ id: 53, name: 'Thriller' },
+			{ id: 10752, name: 'War' },
+			{ id: 37, name: 'Western' }
+		];	
+		
+		// match the movie ids with the genre names
+		for (var j = 0; j < genres.length; j++) {
 
-				for (var i = 0; i < ids.length; i++) {
-					if ( ids[i] == genres[j].id) {
-						console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
-						currGenres.push(genres[j].name);
-					}
+			for (var i = 0; i < ids.length; i++) {
+				if ( ids[i] == genres[j].id) {
+					console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
+					currGenres.push(genres[j].name);
 				}
 			}
-			
-			// log current genre names to console
-			console.log('current genres are: ' + currGenres);
+		}
+		
+		// log current genre names to console
+		console.log('current genres are: ' + currGenres);
 
-			// append genre names to page
-			var numOfGenres = currGenres.length;
-			if ( numOfGenres === 1 ) {
-				$('.genre-ids').empty().append(currGenres[0]);
-			} else if ( numOfGenres === 2 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
-			} else if ( numOfGenres === 3 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
-			} else if ( numOfGenres === 4 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
-			} else if ( numOfGenres === 5 ) {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
-			} else {
-					$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
-			}
-        
+		// append genre names to page
+		var numOfGenres = currGenres.length;
+		if ( numOfGenres === 1 ) {
+			$('.genre-ids').empty().append(currGenres[0]);
+		} else if ( numOfGenres === 2 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
+		} else if ( numOfGenres === 3 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
+		} else if ( numOfGenres === 4 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
+		} else if ( numOfGenres === 5 ) {
+			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
+		} else {
+				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
+		}
         
         // api call for specific data requests ie. director, cast, runtime 
-       
-        
-        
         var castList = new Array();
-    $.getJSON(url, function(data)
-              {    //request json data through get
+	    
+	    $.getJSON(url, function(data) {    
+		    
+		    //request json data through get
             for(var i = 0; i < 4; i++){
                 castList.push(data.credits.cast[i].name);
             }
-                $('.actors').addClass('.names').empty().append('<p>' + castList[0] + '</p>' + '<p>' + castList[1] + '</p>' + '<p>' + castList[2] + '</p>' +'<p>' + castList[3] + '</p>');
-//                $('.actors').empty().append('<li>' + castList[1] + '</li>'),
-//                $('.actors').empty().append('<li>' + castList[2] + '</li>'),
-//                $('.actors').empty().append('<li>' + castList[3] + '</li>');
-    // console.log(castList);
+            
+            $('.actors').addClass('.names').empty().append('<p>' + castList[0] + '</p>' + '<p>' + castList[1] + '</p>' + '<p>' + castList[2] + '</p>' +'<p>' + castList[3] + '</p>');
+			// $('.actors').empty().append('<li>' + castList[1] + '</li>'),
+			// $('.actors').empty().append('<li>' + castList[2] + '</li>'),
+			// $('.actors').empty().append('<li>' + castList[3] + '</li>');
+			// console.log(castList);
         
-    var directors = new Array();    
-    data.credits.crew.forEach(function(entry){
-    if (entry.job === 'Director') {
-        directors.push(entry.name);
-    }
-})
-//console.log('Director: ' + directors.join(', '));
-         $('.director').empty().append('<p>' + '<strong>' + "Director: " + '</strong> '+ directors + '</p>');
-        
-        $('.run-time').empty().append(' ' + data.runtime + ' ' + 'min');
-        $('.budget').empty().append(' ' + data.budget);
-        $('.revenue').empty().append(' ' + data.revenue);
-        
-   });  
-      
-           
-		} // close dotClick
-
-  
-
+		    var directors = new Array();  
+		      
+		    data.credits.crew.forEach(function(entry) {
+			    if (entry.job === 'Director') {
+			        directors.push(entry.name);
+			    }
+			})
+			
+			//console.log('Director: ' + directors.join(', '));
+	        $('.director').empty().append('<p>' + '<strong>' + "Director: " + '</strong> '+ directors + '</p>');
+	        $('.run-time').empty().append(' ' + data.runtime + ' ' + 'min');
+	        $('.budget').empty().append(' ' + data.budget);
+	        $('.revenue').empty().append(' ' + data.revenue);
+	   });  
+	   
+    } // close dotClick
     
 } // close movieController();

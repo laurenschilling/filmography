@@ -540,6 +540,8 @@ function movieController($scope, $http) {
 	        var cursor = document.getElementById('cursor');
 	        var x = e.pageX;
 	        var y = e.pageY;
+	        
+	        console.log('x: ' + x + ' and y: ' + y);
 				
 	        mouseMove.style.left = x + 'px';
 	        cursor.style.top = y + 'px';			

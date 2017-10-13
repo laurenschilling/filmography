@@ -501,6 +501,23 @@ function movieController($scope, $http) {
         
         $('#slider-block').css('width', sliderWidth + '%');
         
+        // to find the length of the pink slider in pixels
+        var sliderPx = $('#slider-block').outerWidth();
+        
+        // to get the slider to drag along the x axis
+        $(function() {
+            var slideWidth = $('.slider').width(),
+                min = canvasSize.width - sliderPx,
+                max = 0;
+
+            $('#slider-block').draggable({
+                axis: 'x',
+                drag: function (event, ui) {
+                    if (ui.position.left > min) ui.position.left = min;
+                    if (ui.position.left < max) ui.position.left = max;
+                }
+            });
+        });
 			// initialise the cat's velocity variables
 			//cat.vx = 0;
 			//cat.vy = 0;

@@ -71,8 +71,8 @@ function movieController($scope, $http) {
 	// ----- SET UP THE CANVAS ----- 
 	
 	var canvasSize = {
-	    height: window.innerHeight - 60, /* subtract the height of the footer 60px */
-	    width: window.innerWidth - 220 /* subtract the width of left sidebar 220px */
+	    height: window.innerHeight - 60 - 30, /* subtract the height of the footer 60px and 15px * 2 for top and bottom margins */
+	    width: window.innerWidth - 220 - 15 /* subtract the width of left sidebar 220px and 15px right margin */
 	}
 	
 	var dataElements = {
@@ -494,7 +494,13 @@ function movieController($scope, $http) {
             resetSpriteHeight10 = 10,
             resetSpriteHeight11 = 10,
             resetSpriteHeight12 = 10; }
-			
+        
+        // work out how many columns are visible on screen
+        var columnsOnScreen = Math.floor(canvasSize.width / spriteWidth),
+            sliderWidth = (columnsOnScreen / columnsFromRight) * 100;
+        
+        $('#slider-block').css('width', sliderWidth + '%');
+        
 			// initialise the cat's velocity variables
 			//cat.vx = 0;
 			//cat.vy = 0;

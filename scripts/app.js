@@ -161,7 +161,8 @@ function movieController($scope, $http) {
 			dot.id = currentMovie.id;            
             
 			// this seems to be a lifesaver! -ben
-			dot.hitArea = new Rectangle(-150, -150, 300, 300);
+			// dot.hitArea = new Rectangle(-150, -150, 300, 300);
+			dot.hitArea = new Rectangle(0, 0, 15, 15);
 			
 			// push movie data for each year into array		
             switch (dot.year) {
@@ -516,7 +517,7 @@ function movieController($scope, $http) {
                     if (ui.position.left > min) ui.position.left = min;
                     if (ui.position.left < max) ui.position.left = max;
                 }
-            });
+            }); 
         });
 			// initialise the cat's velocity variables
 			//cat.vx = 0;
@@ -645,8 +646,8 @@ function movieController($scope, $http) {
 		$('.event-title').html(this.title);		
 		
 		// position hover div left of cursor marker, show div
-		hoverDiv.style.left = dotPosX + 220 + 30 + 'px';
-		hoverDiv.style.top = dotPosY + 60 + 'px';
+        hoverDiv.style.left = dotPosX + 180 + 'px';
+        hoverDiv.style.top = dotPosY + 'px';
 
 		// hover delay
         timer = setTimeout(function() {
@@ -670,8 +671,8 @@ function movieController($scope, $http) {
         var popUp = $('.detail'),
             popUpX = this.x,
 			popUpY = this.y,
-			popUpPosX = popUpX + 220 + 30 + 'px',
-			popUpPosY = popUpY + 60 + 'px';
+            popUpPosX = popUpX + 180 + 'px',
+            popUpPosY = popUpY + 'px';
         
         // getting the pop up div to display where the hover div is
         popUp.css('left', popUpPosX);

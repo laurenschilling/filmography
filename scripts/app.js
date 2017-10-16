@@ -693,7 +693,7 @@ function movieController($scope, $http) {
         
         var currMovie = this.id,
         	key = "2385af2e8136eb616d2a12e316efa014",
-			url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits";
+			url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits,videos";
         
         $('.detail-image').attr('src', this.img);
         $('.detail-title').html(this.title);
@@ -779,11 +779,35 @@ function movieController($scope, $http) {
 			    }
 			})
 			
-			//console.log('Director: ' + directors.join(', '));
-	        $('.director').empty().append('<p>' + '<strong>' + "Director: " + '</strong> '+ directors + '</p>');
+           //console.log('Director: ' + directors.join(', '));
+	        $('.director').empty().append("Director: " + directors);
 	        $('.run-time').empty().append(' ' + data.runtime + ' ' + 'min');
-	        $('.budget').empty().append(' ' + data.budget);
-	        $('.revenue').empty().append(' ' + data.revenue);
+            
+            if (data.budget == 0) {
+                $('.budget').html(' ');
+            } else {
+                $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000000) + 'm');
+            }
+            
+            if (data.revenue == 0) {
+                $('.revenue').html(' ');
+            } else {
+	        $('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
+            }
+            
+            
+        //console.log(data.videos.results[0].id);
+        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
+        console.log (trailer);
+        $('.trailer').html('<a href = ' + trailer + 'target="_blank">' + '<p>' + 'Trailer' + '</p>' + '</a>');
+        
+            var imdb = data.imdb_id;
+            console.log("IMDB ID is: " + imdb);
+            var awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1";
+            var trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
+            console.log("This IMDB link is: " + awards);
+            $('.awards.fa.fa-trophy').html('<a href = ' + awards + '>' + '</a>');
+            
 	   });  
 	   
     } // close dotClick

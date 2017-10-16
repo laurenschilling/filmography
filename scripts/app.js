@@ -806,7 +806,8 @@ function movieController($scope, $http) {
             var awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1";
             var trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
             console.log("This IMDB link is: " + awards);
-            $('.awards.fa.fa-trophy').html('<a href = ' + awards + '>' + '</a>');
+            $('.awards-trivia a:nth-child(1)').attr('href', awards);
+            $('.awards-trivia a:nth-child(2)').attr('href', trivia);
             
 	   });  
 	   

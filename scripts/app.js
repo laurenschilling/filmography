@@ -677,29 +677,13 @@ function movieController($scope, $http) {
         // getting the pop up div to display where the hover div is
         popUp.css('left', popUpPosX);
         popUp.css('top', popUpPosY);
-        popUp.toggle();
         
-        if (popUp.css('display') === 'block') {
-            $('#hover-event').addClass('close');
-            $('#current-year').hide();
-            $('#line').hide();
-            $('canvas').removeClass('add-opacity').addClass('min-opacity');
-        } else {
-            $('#hover-event').removeClass('close').addClass('open');
-            $('#current-year').show();
-            $('#line').show();
-            $('canvas').addClass('add-opacity').removeClass('min-opacity');
-        }
-        
-        var currMovie = this.id,
-        	key = "2385af2e8136eb616d2a12e316efa014",
-			url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits,videos";
-        
+        // add movie details to pop up
         $('.detail-image').attr('src', this.img);
         $('.detail-title').html(this.title);
         $('.yr').html(this.year);
         $('.detail-overview').html(this.overview);
-        
+                        
         // if there is a genre id, find the genre name
 		var currGenres = [];
 		var ids = this.genre;			
@@ -754,18 +738,22 @@ function movieController($scope, $http) {
 		} else {
 				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
 		}
-        
-        // api call for specific data requests ie. director, cast, runtime 
-        var castList = new Array();
+
+
+        // api call for specific data requests ie. director, cast, runtime        
+        var currMovie = this.id,
+        	key = "2385af2e8136eb616d2a12e316efa014",
+			url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits,videos",
+			castList = new Array();
 	    
 	    $.getJSON(url, function(data) {    
 		    
 		    //request json data through get
-            for(var i = 0; i < 4; i++){
+            for (var i = 0; i < 4; i++) {
                 castList.push(data.credits.cast[i].name);
             }
             
-            $('.actors').addClass('.names').empty().append('<p>' + castList[0] + '</p>' + '<p>' + castList[1] + '</p>' + '<p>' + castList[2] + '</p>' +'<p>' + castList[3] + '</p>');
+            $('.actors').addClass('.names').html('<p>' + castList[0] + '</p>' + '<p>' + castList[1] + '</p>' + '<p>' + castList[2] + '</p>' +'<p>' + castList[3] + '</p>');
 			// $('.actors').empty().append('<li>' + castList[1] + '</li>'),
 			// $('.actors').empty().append('<li>' + castList[2] + '</li>'),
 			// $('.actors').empty().append('<li>' + castList[3] + '</li>');
@@ -779,27 +767,26 @@ function movieController($scope, $http) {
 			    }
 			})
 			
-           //console.log('Director: ' + directors.join(', '));
-	        $('.director').empty().append("Director: " + directors);
-	        $('.run-time').empty().append(' ' + data.runtime + ' ' + 'min');
+			// console.log('Director: ' + directors.join(', '));
+	        $('.director').html("Director: " + directors);
+	        $('.run-time').html(' ' + data.runtime + ' ' + 'min');
             
-            if (data.budget == 0) {
+            if (data.budget === 0) {
                 $('.budget').html(' ');
             } else {
                 $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000000) + 'm');
             }
             
-            if (data.revenue == 0) {
+            if (data.revenue === 0) {
                 $('.revenue').html(' ');
             } else {
 	        $('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
             }
-            
-            
-        //console.log(data.videos.results[0].id);
+             
+        // console.log(data.videos.results[0].id);
         var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
         console.log (trailer);
-        $('.trailer').html('<a href = ' + trailer + 'target="_blank">' + '<p>' + 'Trailer' + '</p>' + '</a>');
+        $('.trailer').attr('href', trailer);
         
             var imdb = data.imdb_id;
             console.log("IMDB ID is: " + imdb);
@@ -807,10 +794,22 @@ function movieController($scope, $http) {
             var trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
             console.log("This IMDB link is: " + awards);
             $('.awards-trivia a:nth-child(1)').attr('href', awards);
-            $('.awards-trivia a:nth-child(2)').attr('href', trivia);
-            
+            $('.awards-trivia a:nth-child(2)').attr('href', trivia); 
 	   });  
 	   
+	    popUp.toggle();
+        if (popUp.css('display') === 'block') {
+            $('#hover-event').addClass('close');
+            $('#current-year').hide();
+            $('#line').hide();
+            $('canvas').removeClass('add-opacity').addClass('min-opacity');
+        } else {
+            $('#hover-event').removeClass('close').addClass('open');
+            $('#current-year').show();
+            $('#line').show();
+            $('canvas').addClass('add-opacity').removeClass('min-opacity');
+        }
+        	   
     } // close dotClick
     
 } // close movieController();

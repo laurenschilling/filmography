@@ -360,7 +360,11 @@ h2 {
     margin-top: 6px;
     font-size: 0.9em; 
     display: inline-block;
-    cursor: pointer; }
+    cursor: pointer;
+    color: #7bb9c5;
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
 	.trivia-awards {
 	    width: 100%;
@@ -374,7 +378,7 @@ h2 {
         color: #7bb9c5;
 }
 
-	.awards.fa.fa-trophy:hover, .trivia.fa.fa-question-circle:hover {
+	.awards.fa.fa-trophy:hover, .trivia.fa.fa-question-circle:hover, .trailer:hover {
         color: #f7b7c7;
 }
 	

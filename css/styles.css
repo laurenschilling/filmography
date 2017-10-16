@@ -357,8 +357,8 @@ h2 {
 
 .trailer {
     float: right;
-    margin-top: 6px;
-    font-size: 0.9em; 
+    margin-top: 10px;
+    font-size: 0.82em; 
     display: inline-block;
     cursor: pointer;
     color: #7bb9c5;

@@ -784,9 +784,9 @@ function movieController($scope, $http) {
             }
              
         // console.log(data.videos.results[0].id);
-        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
-        console.log (trailer);
-        $('.trailer').attr('href', trailer);
+	        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
+	        console.log (trailer);
+	        $('.trailer').attr('href', trailer);
         
             var imdb = data.imdb_id;
             console.log("IMDB ID is: " + imdb);

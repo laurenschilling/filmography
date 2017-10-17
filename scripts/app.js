@@ -158,7 +158,8 @@ function movieController($scope, $http) {
 			dot.title = currentMovie.title;
             dot.img = imageBase + imageSize + currentMovie.poster_path;
             dot.overview = currentMovie.overview;
-			dot.id = currentMovie.id;            
+			dot.id = currentMovie.id;
+            dot.match = false;
             
 			// this seems to be a lifesaver! -ben
 			// dot.hitArea = new Rectangle(-150, -150, 300, 300);
@@ -519,6 +520,61 @@ function movieController($scope, $http) {
                 }
             }); 
         });
+        
+         
+     // genre filter
+     $('#genres ul li').on('click', function() {
+            var genres = []; // 
+            var moviesWithCurrentGenre = [];
+            var noMovieMatch = []; 
+
+            console.log('a genre filter has been clicked');
+            var currGenreFilter = $(this).attr('data-link');
+
+
+             //loop through all years 
+             for (var z = 0; z <  allYears.length; z++) {
+
+                 // loop through all movies in all years 
+                 for (a = 0; a < allYears[z].length; a++) {
+
+                     // push film genres into genre array
+                    var genreArray = allYears[z][a].genre;
+                    
+                     
+                    //loop through genre array
+                    for (b = 0; b < genreArray.length; b++) {
+
+                        // console.log('no of genres: ' + genreArray.length);
+                        allYears[z][a].match = false;
+                        
+                        //if genre array matches clicked filter
+                        if (genreArray[b] == currGenreFilter) {
+                            // assign all matching the genre with match true
+                            allYears[z][a].match = true;
+                           
+                        };
+                        
+                        if (allYears[z][a].match === true) {
+                            // push movie into movie with current genre array
+                            console.log('this is running');
+                            moviesWithCurrentGenre.push(allYears[z][a]);
+                        } else {
+                            noMovieMatch.push(allYears[z][a]);
+                            dot.visible = false;
+                        }
+                    }  
+                }
+             }
+
+            console.log('DONE');
+             // logging the amount of films with clicked genre
+            console.log('No of movies that match: ' + moviesWithCurrentGenre.length); 
+            console.log('No of movies that do not match: ' + noMovieMatch.length); 
+
+        }); //close first click genre filter function 
+             
+        
 			// initialise the cat's velocity variables
 			//cat.vx = 0;
 			//cat.vy = 0;

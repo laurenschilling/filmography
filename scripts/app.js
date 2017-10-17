@@ -10,12 +10,10 @@ function movieController($scope, $http) {
     });
     
 	// ---- GENRE FILTER ANIMATIONS: WIP ----
-	
-	var li = $('#genres ul li');
 
 	$(function() {
-		var line,
-			active;
+		var li = $('#genres ul li');
+		var line;
 		
 		// genre list item : enter hover
 		// show span line
@@ -31,12 +29,14 @@ function movieController($scope, $http) {
 		});
 	});    
 
+/*
 	// when genre filter is clicked, only show movies with that genre
 	$('#genres ul li').on('click', function() {
 		console.log('a genre filter has been clicked');
 		var currGenreFilter = $(this).attr('data-link');
 		console.log('current filter selected: ' + currGenreFilter);
 	})
+*/
     
 
 	// ----- PIXI CODE -----
@@ -151,6 +151,7 @@ function movieController($scope, $http) {
             dot.overview = currentMovie.overview;
 			dot.id = currentMovie.id;
             dot.match = false;
+            dot.visible = true;
             
 			// this seems to be a lifesaver! -ben
 			// dot.hitArea = new Rectangle(-150, -150, 300, 300);
@@ -538,56 +539,61 @@ function movieController($scope, $http) {
          
         // genre filter
         $('#genres ul li').on('click', function() {
-            var genres = []; // 
-            var moviesWithCurrentGenre = [];
-            var noMovieMatch = []; 
-
             console.log('a genre filter has been clicked');
-            var currGenreFilter = $(this).attr('data-link');
 
+            var genres = [],
+            	moviesWithCurrentGenre = [],
+            	noMovieMatch = [],
+            	currGenreFilter = $(this).attr('data-link');
 
-             //loop through all years 
-             for (var z = 0; z <  allYears.length; z++) {
+            // add active class to genre list item and span line
+            $(this).toggleClass('active');
+            $(this).find('span').toggleClass('span-active');
 
-                 // loop through all movies in all years 
-                 for (a = 0; a < allYears[z].length; a++) {
+            // loop through all years 
+            for (var z = 0; z <  allYears.length; z++) {
 
-                     // push film genres into genre array
+                // loop through all movies in all years 
+                for (a = 0; a < allYears[z].length; a++) {
+
+                    // push film genres into genre array
                     var genreArray = allYears[z][a].genre;
                     
-                     
-                    //loop through genre array
+                    // loop through genre array
                     for (b = 0; b < genreArray.length; b++) {
 
-                        // console.log('no of genres: ' + genreArray.length);
+						// reset previous matches to false
                         allYears[z][a].match = false;
                         
-                        //if genre array matches clicked filter
+                        // if genre array matches clicked filter
                         if (genreArray[b] == currGenreFilter) {
-                            // assign all matching the genre with match true
+                            
+                            // assign all films matching the genre with match true
                             allYears[z][a].match = true;
                            
                         };
                         
                         if (allYears[z][a].match === true) {
-                            // push movie into movie with current genre array
-                            console.log('this is running');
-                            moviesWithCurrentGenre.push(allYears[z][a]);
-                        } else {
-                            noMovieMatch.push(allYears[z][a]);
-                            dot.visible = false;
-                        }
+                        
+	                        // push movie into movie with current genre array
+	                        console.log('this is running');
+	                        moviesWithCurrentGenre.push(allYears[z][a]);
+	                        dot.visible = true;
+	                        
+	                    } else {
+	                        noMovieMatch.push(allYears[z][a]);
+							dot.visible = false;
+	                    }
                     }  
                 }
-             }
+            }
 
             console.log('DONE');
-             // logging the amount of films with clicked genre
+            // log the amount of films with clicked genre
             console.log('No of movies that match: ' + moviesWithCurrentGenre.length); 
             console.log('No of movies that do not match: ' + noMovieMatch.length); 
 
-        }); //close first click genre filter function 
-             
+        }); // genre filter click function 
         
 			// initialise the cat's velocity variables
 			//cat.vx = 0;
@@ -726,7 +732,7 @@ function movieController($scope, $http) {
 		// hover delay
         timer = setTimeout(function() {
 			$hoverDiv.addClass('open');
-			console.log('hover event opened');
+			//console.log('hover event opened');
         }, 120);
 
         $('#cursor').addClass('pink-glow');
@@ -735,7 +741,7 @@ function movieController($scope, $http) {
 	// mouseout
 	function dotLeave() {
         $hoverDiv.removeClass('open');
-		console.log('leave mouseover, hover event closed');
+		//console.log('leave mouseover, hover event closed');
 	}
 	
 	// click events

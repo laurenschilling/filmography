@@ -4,9 +4,6 @@ function movieController($scope, $http) {
     imageSize = 'w300/';// from https://developers.themoviedb.org/3/getting-started/images
     
     defaultImg = "blank.gif";
-    
-//    $scope.selectedArtist = "";
-//    $scope.selectedArtistImage = IMAGE_ROOT + DEFAULT_IMAGE;
 
     $http.get('scripts/all-moviedata.json').success(function(data) {
         $scope.movies = data;
@@ -75,19 +72,12 @@ function movieController($scope, $http) {
 	    width: window.innerWidth - 220 - 15 /* subtract the width of left sidebar 220px and 15px right margin */
 	}
 	
-	var dataElements = {
-	    mouse_move: $('#mouse-move'),
-	    canvas: document.getElementById('canvas') // can't use jQuery for this it doesn't work
-	    //footer: $('footer')
-	    // a few other elements will go in here
-	}
-	
 	var stage = new Container();
 	stage.interactive = false;
 	var renderer = new PIXI.WebGLRenderer(canvasSize.width, canvasSize.height, {
 	    transparent: !0,
-	    view: dataElements.canvas
-	}, dataElements.canvas, !1, !0);
+	    view: document.getElementById('canvas')
+	}, document.getElementById('canvas'), !1, !0);
 	
 	document.body.appendChild(renderer.view);
 	
@@ -109,7 +99,8 @@ function movieController($scope, $http) {
 		.add("images/dots.svg")
 		.load(setup);
 	
- 
+    var offsetX = 0; // need to initialise this variable outside of setup() so the hover and click events recognise the x axis offset globally (for stage horizontal scroll)    
+    
 	// ----- FUNCTION SET UP ----- 
 	
 	function setup() {
@@ -497,9 +488,8 @@ function movieController($scope, $http) {
             resetSpriteHeight11 = 10,
             resetSpriteHeight12 = 10; }
         
-        // work out how many columns are visible on screen
-        var columnsOnScreen = Math.floor(canvasSize.width / spriteWidth),
-            sliderWidth = (columnsOnScreen / columnsFromRight) * 100;
+        var columnsOnScreen = Math.floor(canvasSize.width / spriteWidth), // work out how many columns are visible on screen
+            sliderWidth = (columnsOnScreen / columnsFromRight) * 100; // set the slider width to the percentage of columns on screen from the total no of columns
         
         $('#slider-block').css('width', sliderWidth + '%');
         
@@ -510,20 +500,44 @@ function movieController($scope, $http) {
         $(function() {
             var slideWidth = $('.slider').width(),
                 min = canvasSize.width - sliderPx,
-                max = 0;
+                max = 0,
+                stageMin = 0,
+                stageMax = containerPx - canvasSize.width;
 
             $('#slider-block').draggable({
                 axis: 'x',
                 drag: function (event, ui) {
-                    if (ui.position.left > min) ui.position.left = min;
-                    if (ui.position.left < max) ui.position.left = max;
+                    if (ui.position.left > min) {
+                        ui.position.left = min;
+                        stage.x = stageMin; }
+                    if (ui.position.left < max) {
+                        ui.position.left = max;
+                        stage.x = stageMax; }
                 }
-            }); 
+            });
         });
         
+        // to link the slider to the Pixi Container of data - the horizontal scroll
+        var origSliderPos = $('#slider-block').position(),
+            containerPx = columnsFromRight * spriteWidth,
+            sliderMovSpace = canvasSize.width - sliderPx, // how many px the slider can move
+            canvasMovSpace = containerPx - canvasSize.width, // how many px the canvas can move
+            increment = canvasMovSpace / sliderMovSpace; // the relative increment to work out what slider movement increment triggers the canvas to move along x axis
+     
+        $('#slider-block').mousemove(function() {
+            newSliderPos = $('#slider-block').position();
+            
+            var originalLeft = Math.round(origSliderPos.left / 10) * 10, // to find slider left starting position to nearest 10px
+                newLeft = Math.round(newSliderPos.left / 10) * 10, // to find the new slider left position to nearest 10px
+                movement = originalLeft - newLeft; // to find how far in px the slider has moved
+
+            // returns function
+            stage.x = adjustStage(newLeft, originalLeft, increment, movement, stage.x);
+            offsetX = stage.x; // so hover event alignment updates with the movement of the stage
+        });
          
-     // genre filter
-     $('#genres ul li').on('click', function() {
+        // genre filter
+        $('#genres ul li').on('click', function() {
             var genres = []; // 
             var moviesWithCurrentGenre = [];
             var noMovieMatch = []; 
@@ -589,6 +603,12 @@ function movieController($scope, $http) {
 		gameLoop();
 	}
 	
+    function adjustStage(newSliderPosLeft, origSliderPosLeft, increment, movement, stageX) {
+        
+        if (newSliderPosLeft < origSliderPosLeft) {
+            stageX = increment * movement; }
+        return stageX;
+    }
 	
 	// ----- FUNCTION GAME LOOP -----
 	
@@ -688,10 +708,8 @@ function movieController($scope, $http) {
 	
 	// mouseover
 	function dotHover() {
-		//console.log('hovering over: ' + this.year + ': ' + this.title);
+		
 		$('#dot-year').html(this.year);
-
-		//console.log('this dot is at x: ' + this.x + ' and y: ' + this.y);
 		
 		var dotPosX = this.x,
 			dotPosY = this.y,
@@ -702,7 +720,7 @@ function movieController($scope, $http) {
 		$('.event-title').html(this.title);		
 		
 		// position hover div left of cursor marker, show div
-        hoverDiv.style.left = dotPosX + 180 + 'px';
+        hoverDiv.style.left = dotPosX + 180 + offsetX + 'px';
         hoverDiv.style.top = dotPosY + 'px';
 
 		// hover delay

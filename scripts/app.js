@@ -155,7 +155,7 @@ function movieController($scope, $http) {
             
 			// this seems to be a lifesaver! -ben
 			// dot.hitArea = new Rectangle(-150, -150, 300, 300);
-			dot.hitArea = new Rectangle(0, 0, 15, 15);
+			dot.hitArea = new Rectangle(0, -34, 17, 17);
 			
 			// push movie data for each year into array		
             switch (dot.year) {
@@ -581,7 +581,7 @@ function movieController($scope, $http) {
 	                        //console.log('this is running');
 	                        moviesWithCurrentGenre.push(allYears[z][a]);
 	                        allYears[z][a].visible = true;
-	                        
+	                        console.log('visible years: ' + allYears[z][a].title + ',' + allYears[z][a].year + ', genres: ' + allYears[z][a].genre);
 	                    } else {
 	                        noMovieMatch.push(allYears[z][a]);
 							allYears[z][a].visible = false;

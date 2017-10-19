@@ -9,35 +9,24 @@ function movieController($scope, $http) {
         $scope.movies = data;
     });
     
-	// ---- GENRE FILTER ANIMATIONS: WIP ----
+	// ---- GENRE FILTER HOVER ----
 
 	$(function() {
 		var li = $('#genres ul li');
 		var line;
 		
-		// genre list item : enter hover
-		// show span line
+		// hover on list item, show span line
 		li.bind('mouseover', function() {
 			line = $(this).find('span');
 			line.removeClass('move-line-back').addClass('move-line');
 		});
 	
-		// genre list item : exit hover
-		// hide span line	
+		// exit hover on list item, hide span line	
 		li.bind('mouseleave', function() {	
 			line.addClass('move-line-back').removeClass('move-line');
 		});
 	});    
-
-/*
-	// when genre filter is clicked, only show movies with that genre
-	$('#genres ul li').on('click', function() {
-		console.log('a genre filter has been clicked');
-		var currGenreFilter = $(this).attr('data-link');
-		console.log('current filter selected: ' + currGenreFilter);
-	})
-*/
-    
+ 
 
 	// ----- PIXI CODE -----
 	var type = "WebGL"
@@ -278,12 +267,14 @@ function movieController($scope, $http) {
                 default: break;
             }
             
-			// set the mouseover and click states - listed here: http://pixijs.download/v4.3.4/docs/PIXI.interaction.InteractionManager.html#event:click 
+			// set the mouseover and click states
             dot.on('mouseover', dotHover).on('mouseout', dotLeave);
             dot.on('click', dotClick);
             
 		} // close data/sprite loop
         
+    	// ---- POSITION SPRITES ----
+    
         var allYears = [];
         allYears.push(yr2017, yr2016, yr2015, yr2014, yr2013, yr2012, yr2011, yr2010, yr2009, yr2008, yr2007, yr2006, yr2005, yr2004, yr2003, yr2002, yr2001, yr2000, yr1999, yr1998, yr1997, yr1996, yr1995, yr1994, yr1993, yr1992, yr1991, yr1990, yr1989, yr1988, yr1987, yr1986, yr1985, yr1984, yr1983, yr1982, yr1981, yr1980, yr1979, yr1978, yr1977, yr1976, yr1975, yr1974, yr1973, yr1972, yr1971, yr1970, yr1969, yr1968, yr1967, yr1966, yr1965, yr1964, yr1963, yr1962, yr1961, yr1960, yr1959, yr1958, yr1957, yr1956, yr1955, yr1954, yr1953, yr1952, yr1951, yr1950, yr1949, yr1948, yr1947, yr1946, yr1945, yr1944, yr1943, yr1942, yr1941, yr1940, yr1939, yr1938, yr1937, yr1936, yr1935, yr1934, yr1933, yr1932, yr1931, yr1930, yr1929, yr1928, yr1927, yr1926, yr1925, yr1924, yr1923, yr1922, yr1921, yr1920, yr1919, yr1918, yr1917, yr1916, yr1915, yr1914, yr1913, yr1912, yr1911, yr1910, yr1909, yr1908, yr1907, yr1906, yr1905, yr1904, yr1903, yr1902);
         
@@ -488,6 +479,8 @@ function movieController($scope, $http) {
             resetSpriteHeight10 = 10,
             resetSpriteHeight11 = 10,
             resetSpriteHeight12 = 10; }
+
+		// ---- SLIDER ----
         
         var columnsOnScreen = Math.floor(canvasSize.width / spriteWidth), // work out how many columns are visible on screen
             sliderWidth = (columnsOnScreen / columnsFromRight) * 100; // set the slider width to the percentage of columns on screen from the total no of columns
@@ -537,7 +530,8 @@ function movieController($scope, $http) {
             offsetX = stage.x; // so hover event alignment updates with the movement of the stage
         });
          
-        // genre filter
+		// ---- GENRE FILTER FUNCTIONALITY ----
+		
         $('#genres ul li').on('click', function() {
             console.log('a genre filter has been clicked');
 
@@ -559,34 +553,29 @@ function movieController($scope, $http) {
                 for (a = 0; a < allYears[z].length; a++) {
 
                     // push film genres into genre array
-                    var genreArray = allYears[z][a].genre;
+                    var film = allYears[z][a];                   
+                    var genreArray = film.genre;
                     
                     // loop through genre array
                     for (b = 0; b < genreArray.length; b++) {
 
 						// reset previous matches to false
-                        allYears[z][a].match = false;
+                        film.match = false;
                         
                         // if genre array matches clicked filter
                         if (genreArray[b] == currGenreFilter) {
-                            
                             // assign all films matching the genre with match true
-                            allYears[z][a].match = true;
-                           
+                            film.match = true;
                         };
                         
-                        if (allYears[z][a].match === true) {
-                        
+                        if (film.match === true) {
 	                        // push movie into movie with current genre array
-	                        //console.log('this is running');
 	                        moviesWithCurrentGenre.push(allYears[z][a]);
-	                        allYears[z][a].visible = true;
-	                        console.log('visible years: ' + allYears[z][a].title + ',' + allYears[z][a].year + ', genres: ' + allYears[z][a].genre);
+	                        film.visible = true; // display sprite
+	                        console.log(film.title + ' ' + film.year + ' genres: ' + film.genre);
 	                    } else {
-	                        noMovieMatch.push(allYears[z][a]);
-							allYears[z][a].visible = false;
-							//allYears[z][a].css('display', 'none');
-							//console.log('else, visible changed to false');
+	                        noMovieMatch.push(film);
+							film.visible = false; // hide sprite
 	                    }
                     }  
                 }
@@ -597,7 +586,7 @@ function movieController($scope, $http) {
             console.log('No of movies that match: ' + moviesWithCurrentGenre.length); 
             console.log('No of movies that do not match: ' + noMovieMatch.length); 
 
-        }); // genre filter click function 
+        }); // close genre filter click function 
         
 			// initialise the cat's velocity variables
 			//cat.vx = 0;
@@ -711,7 +700,9 @@ function movieController($scope, $http) {
 	function randomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
-	
+
+	// ----- MOUSEOVER AND CLICK EVENTS -----
+
 	// global variables for mouseover and mouseout
 	var timer,
 		$hoverDiv = $('#hover-event');
@@ -724,8 +715,11 @@ function movieController($scope, $http) {
 		var dotPosX = this.x,
 			dotPosY = this.y,
 			hoverDiv = document.getElementById('hover-event');
-				this.width = 15;
-				this.height = 15;	
+			
+		// uncomment this code to scale sprite on hover	
+		// this.width = 15;
+		// this.height = 15;	
+			
 		// add data to hover div
 		$('.event-image').attr('src', this.img);
 		$('.event-title').html(this.title);		
@@ -737,7 +731,6 @@ function movieController($scope, $http) {
 		// hover delay
         timer = setTimeout(function() {
 			$hoverDiv.addClass('open');
-			//console.log('hover event opened');
         }, 120);
 
         $('#cursor').addClass('pink-glow');
@@ -746,7 +739,6 @@ function movieController($scope, $http) {
 	// mouseout
 	function dotLeave() {
         $hoverDiv.removeClass('open');
-		//console.log('leave mouseover, hover event closed');
 	}
 	
 	// click events
@@ -824,7 +816,6 @@ function movieController($scope, $http) {
 				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
 		}
 
-
         // api call for specific data requests ie. director, cast, runtime        
         var currMovie = this.id,
         	key = "2385af2e8136eb616d2a12e316efa014",
@@ -833,7 +824,7 @@ function movieController($scope, $http) {
 	    
 	    $.getJSON(url, function(data) {    
 		    
-		    //request json data through get
+		    // request json data through get
             for (var i = 0; i < 4; i++) {
                 castList.push(data.credits.cast[i].name);
             }
@@ -864,16 +855,18 @@ function movieController($scope, $http) {
 	        $('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
             }
              
-        // console.log(data.videos.results[0].id);
+			// console.log(data.videos.results[0].id);
 	        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
 	        console.log (trailer);
 	        $('.trailer').attr('href', trailer);
         
-            var imdb = data.imdb_id;
-            console.log("IMDB ID is: " + imdb);
-            var awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1";
-            var trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
-            console.log("This IMDB link is: " + awards);
+            var imdb = data.imdb_id,
+            	awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1",
+            	trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
+
+            // console.log("IMDB ID is: " + imdb);
+            // console.log("This IMDB link is: " + awards);
+            
             $('.awards-trivia a:nth-child(1)').attr('href', awards);
             $('.awards-trivia a:nth-child(2)').attr('href', trivia); 
 	   });  
@@ -890,6 +883,13 @@ function movieController($scope, $http) {
             $('#line').show();
             $('canvas').addClass('add-opacity').removeClass('min-opacity');
         }
+        
+        // how to make pop up div close on canvas click?
+/*
+        $('canvas').on('click', function() {
+	    	popUp.hide();
+		})
+*/
         	   
     } // close dotClick
     

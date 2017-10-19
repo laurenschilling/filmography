@@ -547,6 +547,8 @@ function movieController($scope, $http) {
             	currGenreFilter = $(this).attr('data-link');
 
             // add active class to genre list item and span line
+            $('#genres ul li').removeClass('active');
+            $('#genres ul li').find('span').removeClass('span-active');
             $(this).toggleClass('active');
             $(this).find('span').toggleClass('span-active');
 
@@ -576,13 +578,15 @@ function movieController($scope, $http) {
                         if (allYears[z][a].match === true) {
                         
 	                        // push movie into movie with current genre array
-	                        console.log('this is running');
+	                        //console.log('this is running');
 	                        moviesWithCurrentGenre.push(allYears[z][a]);
-	                        dot.visible = true;
+	                        allYears[z][a].visible = true;
 	                        
 	                    } else {
 	                        noMovieMatch.push(allYears[z][a]);
-							dot.visible = false;
+							allYears[z][a].visible = false;
+							//allYears[z][a].css('display', 'none');
+							//console.log('else, visible changed to false');
 	                    }
                     }  
                 }
@@ -720,7 +724,8 @@ function movieController($scope, $http) {
 		var dotPosX = this.x,
 			dotPosY = this.y,
 			hoverDiv = document.getElementById('hover-event');
-					
+				this.width = 15;
+				this.height = 15;	
 		// add data to hover div
 		$('.event-image').attr('src', this.img);
 		$('.event-title').html(this.title);		
@@ -834,10 +839,6 @@ function movieController($scope, $http) {
             }
             
             $('.actors').addClass('.names').html('<p>' + castList[0] + '</p>' + '<p>' + castList[1] + '</p>' + '<p>' + castList[2] + '</p>' +'<p>' + castList[3] + '</p>');
-			// $('.actors').empty().append('<li>' + castList[1] + '</li>'),
-			// $('.actors').empty().append('<li>' + castList[2] + '</li>'),
-			// $('.actors').empty().append('<li>' + castList[3] + '</li>');
-			// console.log(castList);
         
 		    var directors = new Array();  
 		      

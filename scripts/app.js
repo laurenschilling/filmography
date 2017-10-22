@@ -285,6 +285,15 @@ function movieController($scope, $http) {
             columnSpace = canvasSize.height - fullColumnHeight, // find the remainder unused column space (in px)
             offsetY = Math.floor(columnSpace/2); // divide columnSpace by 2 and round down (to offset y axis to vertically centre sprites)
         
+        // to assign an invisible sprite to years with a value of 0, so they get picked up and positioned in the allYears[y][r] loop below, leaving a 'gap' for a year with no associated data
+        for (y = 0; y < allYears.length; y++) {
+            
+            if (allYears[y] == 0) {
+                var dot = new Sprite(texture);
+                dot.alpha = 0;
+                allYears[y].push(dot); }
+        }
+        
         // wider loop for all years
         for (y = 0; y < allYears.length; y++) {
             
@@ -745,10 +754,6 @@ function movieController($scope, $http) {
 		var dotPosX = this.x,
 			dotPosY = this.y,
 			hoverDiv = document.getElementById('hover-event');
-			
-		// uncomment this code to scale sprite on hover	
-		// this.width = 15;
-		// this.height = 15;	
 			
 		// add data to hover div
 		$('.event-image').attr('src', this.img);

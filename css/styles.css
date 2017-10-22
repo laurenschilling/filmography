@@ -397,8 +397,10 @@ h2 {
 	
 	.revenue, .budget {
 	    display: block;
-	    padding-bottom: 5%;
-}
+	    padding-bottom: 5px; }
+	    
+	    .revenue {
+		    padding-bottom: 5%; }
 
 	.detail-details {
 	    clear: right;
@@ -422,8 +424,12 @@ h2 {
 
     .actors {
         font-weight: 100;
-        padding-bottom: 10px; 
-}
+        padding-bottom: 10px; }
+        
+    .rating {
+	    letter-spacing: 0.1em;
+	    padding: 10px 0 0 0;
+	    font-size: .95em; }    
 
 /* Hover Event Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

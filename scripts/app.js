@@ -139,6 +139,7 @@ function movieController($scope, $http) {
             dot.img = imageBase + imageSize + currentMovie.poster_path;
             dot.overview = currentMovie.overview;
 			dot.id = currentMovie.id;
+			dot.rating = currentMovie.vote_average;
             dot.match = false;
             dot.visible = true;
             
@@ -547,17 +548,17 @@ function movieController($scope, $http) {
             $(this).find('span').toggleClass('span-active');
 
             // loop through all years 
-            for (var z = 0; z <  allYears.length; z++) {
+            for (var z = 0; z < allYears.length; z++) {
 
                 // loop through all movies in all years 
-                for (a = 0; a < allYears[z].length; a++) {
+                for (var a = 0; a < allYears[z].length; a++) {
 
                     // push film genres into genre array
                     var film = allYears[z][a];                   
                     var genreArray = film.genre;
                     
                     // loop through genre array
-                    for (b = 0; b < genreArray.length; b++) {
+                    for (var b = 0; b < genreArray.length; b++) {
 
 						// reset previous matches to false
                         film.match = false;
@@ -568,7 +569,7 @@ function movieController($scope, $http) {
                             film.match = true;
                         };
                         
-                        if (film.match === true) {
+                        if (film.match == true) {
 	                        // push movie into movie with current genre array
 	                        moviesWithCurrentGenre.push(allYears[z][a]);
 	                        film.visible = true; // display sprite
@@ -644,6 +645,30 @@ function movieController($scope, $http) {
 	        mouseMove.style.left = x + 'px';
 	        cursor.style.top = y + 'px';			
 	    });
+
+	    	
+/*
+		// ----- WIP: KEEP HOVER EVENT IN VIEW -----
+
+			var hoverEvent = $('#hover-event');
+			
+			// check the hover event's screen boundaries
+			var hoverEventHitsWall = contain(hoverEvent, {x: 50, y: 50, width: 400, height: 500});
+				    
+		  // if the hover event hits the top or bottom of the stage
+		  // push it back into frame
+		  if (hoverEventHitsWall === "bottom") {
+		    hoverEvent.top = -50;
+		    console.log('running hover event hits wall');
+		  }
+		
+		  //Test for a collision. If any of the enemies are touching
+		  //the explorer, set `explorerHit` to `true`
+
+		  if(hitTestRectangle(explorer, blob)) {
+		    explorerHit = true;
+		  }
+*/
     
 	/*
 		// apply the velocity values to the cat's position to make it move
@@ -663,7 +688,12 @@ function movieController($scope, $http) {
 	
 	// ----- HELPER FUNCTIONS -----
 	
-	// contain the sprite
+	// ROUND NUMBER TO NEAREST HALF
+	function roundHalf(num) {
+	    return Math.round(num*2)/2;
+	}
+	
+	// CONTAIN
 	function contain(sprite, container) {
 	
 		var collision = undefined;
@@ -696,18 +726,18 @@ function movieController($scope, $http) {
 		return collision;
 	}
 	
-	// get a random integer
+	// GET RANDOM INTEGER
 	function randomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
 	// ----- MOUSEOVER AND CLICK EVENTS -----
 
-	// global variables for mouseover and mouseout
+	// GLOBAL VARIABLES FOR MOUSEOVER AND MOUSEOUT
 	var timer,
 		$hoverDiv = $('#hover-event');
 	
-	// mouseover
+	// MOUSEOVER
 	function dotHover() {
 		
 		$('#dot-year').html(this.year);
@@ -734,17 +764,20 @@ function movieController($scope, $http) {
         }, 120);
 
         $('#cursor').addClass('pink-glow');
+        
+//         if ()
 	}
 	
-	// mouseout
+	// MOUSEOUT
 	function dotLeave() {
         $hoverDiv.removeClass('open');
 	}
 	
-	// click events
+	// CLICK EVENTS
 	function dotClick() {
         
 		console.log('clicked on: ' + this.year + ': ' + this.title);
+		console.log(this);
         var popUp = $('.detail'),
             popUpX = this.x,
 			popUpY = this.y,
@@ -760,7 +793,26 @@ function movieController($scope, $http) {
         $('.detail-title').html(this.title);
         $('.yr').html(this.year);
         $('.detail-overview').html(this.overview);
-                        
+        
+        // get film's rating, halve it and round to nearest half
+        var halfRating = this.rating/2,
+        	roundRating = roundHalf(halfRating),
+        	star = "<i class='fa fa-star'></i>",
+        	halfStar = "<i class='fa fa-star-half'></i>";
+        
+        // log ratings to console 
+        console.log('original rating: ' + this.rating);
+        console.log('half rating: ' + halfRating);
+        console.log('rounded rating: ' + roundRating);
+        
+        // append rating to div using star icons
+        // if rating is an integer, else if rating is a float
+        if (Math.floor(roundRating) == roundRating && $.isNumeric(roundRating)) {
+			$('.rating').html(star.repeat(roundRating));
+        } else {
+			$('.rating').html(star.repeat(roundRating - 0.5) + halfStar);
+        }
+                
         // if there is a genre id, find the genre name
 		var currGenres = [];
 		var ids = this.genre;			
@@ -802,18 +854,22 @@ function movieController($scope, $http) {
 
 		// append genre names to page
 		var numOfGenres = currGenres.length;
-		if ( numOfGenres === 1 ) {
-			$('.genre-ids').empty().append(currGenres[0]);
-		} else if ( numOfGenres === 2 ) {
-			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1]);
-		} else if ( numOfGenres === 3 ) {
-			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2]);
-		} else if ( numOfGenres === 4 ) {
-			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3]);
-		} else if ( numOfGenres === 5 ) {
-			$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4]);
-		} else {
-				$('.genre-ids').empty().append(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and more!');
+		
+		switch (numOfGenres) {
+			case 1:
+				$('.genre-ids').html(currGenres[0]); break;
+			case 2:
+				$('.genre-ids').html(currGenres[0] + ' and ' + currGenres[1]); break;
+			case 3: 
+				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ' and ' + currGenres[2]); break;
+			case 4: 
+				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ' and ' + currGenres[3]); break;
+			case 5:
+				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ' and ' + currGenres[4]); break;
+			case 6:
+				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and ' + currGenres[5]); break;
+			default: 
+				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ', ' + currGenres[5] + ' and more!'); break;
 		}
 
         // api call for specific data requests ie. director, cast, runtime        
@@ -824,15 +880,16 @@ function movieController($scope, $http) {
 	    
 	    $.getJSON(url, function(data) {    
 		    
-		    // request json data through get
+		    // find top 4 actors and append to div
             for (var i = 0; i < 4; i++) {
                 castList.push(data.credits.cast[i].name);
             }
-            
+
             $('.actors').addClass('.names').html('<p>' + castList[0] + '</p>' + '<p>' + castList[1] + '</p>' + '<p>' + castList[2] + '</p>' +'<p>' + castList[3] + '</p>');
         
+			// find directors and append to div
 		    var directors = new Array();  
-		      
+		     
 		    data.credits.crew.forEach(function(entry) {
 			    if (entry.job === 'Director') {
 			        directors.push(entry.name);
@@ -843,6 +900,8 @@ function movieController($scope, $http) {
 	        $('.director').html("Director: " + directors);
 	        $('.run-time').html(' ' + data.runtime + ' ' + 'min');
             
+            // if budget or revenue is $0, display nothing
+			// else round to nearest million
             if (data.budget === 0) {
                 $('.budget').html(' ');
             } else {
@@ -852,14 +911,15 @@ function movieController($scope, $http) {
             if (data.revenue === 0) {
                 $('.revenue').html(' ');
             } else {
-	        $('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
+	        	$('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
             }
-             
-			// console.log(data.videos.results[0].id);
+            
+            // find trailer and append link to div
 	        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
 	        console.log (trailer);
 	        $('.trailer').attr('href', trailer);
-        
+			
+			// find links to trivia and award pages on imdb
             var imdb = data.imdb_id,
             	awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1",
             	trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
@@ -871,6 +931,8 @@ function movieController($scope, $http) {
             $('.awards-trivia a:nth-child(2)').attr('href', trivia); 
 	   });  
 	   
+	   	// toggle pop up display
+	   	// change background opacity and hide mouseover elements
 	    popUp.toggle();
         if (popUp.css('display') === 'block') {
             $('#hover-event').addClass('close');

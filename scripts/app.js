@@ -291,6 +291,7 @@ function movieController($scope, $http) {
             if (allYears[y] == 0) {
                 var dot = new Sprite(texture);
                 dot.alpha = 0;
+				
                 allYears[y].push(dot); }
         }
         
@@ -562,33 +563,48 @@ function movieController($scope, $http) {
                 // loop through all movies in all years 
                 for (var a = 0; a < allYears[z].length; a++) {
 
-                    // push film genres into genre array
-                    var film = allYears[z][a];                   
-                    var genreArray = film.genre;
-                    
-                    // loop through genre array
-                    for (var b = 0; b < genreArray.length; b++) {
-
-						// reset previous matches to false
-                        film.match = false;
-                        
-                        // if genre array matches clicked filter
-                        if (genreArray[b] == currGenreFilter) {
-                            // assign all films matching the genre with match true
-                            film.match = true;
-                        };
-                        
-                        if (film.match == true) {
-	                        // push movie into movie with current genre array
-	                        moviesWithCurrentGenre.push(allYears[z][a]);
-	                        film.visible = true; // display sprite
-	                        console.log(film.title + ' ' + film.year + ' genres: ' + film.genre);
-	                    } else {
-	                        noMovieMatch.push(film);
-							film.visible = false; // hide sprite
-	                    }
-                    }  
-                }
+	                    // push film genres into genre array
+	                    var film = allYears[z][a];                   
+	                    var genreArray = film.genre;
+	                    	                    
+	                    // loop through genre array
+	                    for (var b = 0; b < genreArray.length; b++) {
+	
+						// if genre array is undefined (i.e. invisible/fake/filler dot)
+							// this if/else statement is not working
+							// because the condition is not working
+							if (genreArray.length == undefined) {
+											
+								console.log('year has 0 films');					
+								continue;
+									
+							} 
+							
+						// else if actual dot with data, run through genre array as normal
+							else {
+										
+		                        // if genre array matches clicked filter
+		                        if (genreArray[b] == currGenreFilter) {
+		                            // assign all films matching the genre with match true
+		                            film.match = true;
+		                        };
+		                        
+		                        if (film.match == true) {
+			                        // push movie into movie with current genre array
+			                        moviesWithCurrentGenre.push(allYears[z][a]);
+			                        film.visible = true; // display sprite
+			                        console.log(film.title + ' ' + film.year + ' genres: ' + film.genre);
+			                    } else {
+			                        noMovieMatch.push(film);
+									film.visible = false; // hide sprite
+			                    }
+		                    }  
+		                }
+		                
+                // reset previous matches to false
+				film.match = false;    
+				
+            	}
             }
 
             console.log('DONE');
@@ -618,6 +634,7 @@ function movieController($scope, $http) {
             stageX = increment * movement; }
         return stageX;
     }
+    
 	
 	// ----- FUNCTION GAME LOOP -----
 	
@@ -636,7 +653,7 @@ function movieController($scope, $http) {
 	
 	// ----- FUNCTION PLAY -----
 	// all of the animations and changes to the canvas elements go here
-	
+
 	function play() {			
 	
 		// meant to help with lagging frame rate
@@ -652,33 +669,9 @@ function movieController($scope, $http) {
 	        var y = e.pageY;
 	        				
 	        mouseMove.style.left = x + 'px';
-	        cursor.style.top = y + 'px';			
+	        cursor.style.top = y + 'px';
 	    });
 
-	    	
-/*
-		// ----- WIP: KEEP HOVER EVENT IN VIEW -----
-
-			var hoverEvent = $('#hover-event');
-			
-			// check the hover event's screen boundaries
-			var hoverEventHitsWall = contain(hoverEvent, {x: 50, y: 50, width: 400, height: 500});
-				    
-		  // if the hover event hits the top or bottom of the stage
-		  // push it back into frame
-		  if (hoverEventHitsWall === "bottom") {
-		    hoverEvent.top = -50;
-		    console.log('running hover event hits wall');
-		  }
-		
-		  //Test for a collision. If any of the enemies are touching
-		  //the explorer, set `explorerHit` to `true`
-
-		  if(hitTestRectangle(explorer, blob)) {
-		    explorerHit = true;
-		  }
-*/
-    
 	/*
 		// apply the velocity values to the cat's position to make it move
 		cat.x += cat.vx;
@@ -754,7 +747,7 @@ function movieController($scope, $http) {
 		var dotPosX = this.x,
 			dotPosY = this.y,
 			hoverDiv = document.getElementById('hover-event');
-			
+						
 		// add data to hover div
 		$('.event-image').attr('src', this.img);
 		$('.event-title').html(this.title);		
@@ -770,7 +763,23 @@ function movieController($scope, $http) {
 
         $('#cursor').addClass('pink-glow');
         
-//         if ()
+        // move hover div to left when near right edge of window
+/*
+		// this doesn't get the correct left position of the the hover div
+		var divLeft = $($hoverDiv).offset().left;
+		var divPos = ($(window).width() - divLeft);
+		
+		// this is working
+	    if (divPos > ($(window).width() - 190)) {
+				console.log('divleft is greater than window width - 190');
+				hoverDiv.style.left = dotPosX + 45 + 'px';
+	        }
+	        
+	    console.log('div left: ' + divLeft);
+	    console.log('div pos left: ' + divPos);
+	    console.log('window width: ' + $(window).width());
+	    console.log('window width - 190: ' + ($(window).width() - 190));
+*/
 	}
 	
 	// MOUSEOUT
@@ -953,9 +962,9 @@ function movieController($scope, $http) {
         
         // how to make pop up div close on canvas click?
 /*
-        $('canvas').on('click', function() {
-	    	popUp.hide();
-		})
+            $('canvas').on('click', function() {
+	    		popUp.hide();
+			})
 */
         	   
     } // close dotClick

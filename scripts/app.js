@@ -692,39 +692,6 @@ function movieController($scope, $http) {
 	    return Math.round(num*2)/2;
 	}
 	
-	// CONTAIN
-	function contain(sprite, container) {
-	
-		var collision = undefined;
-		
-		// left
-		if (sprite.x < container.x) {
-			sprite.x = container.x;
-			collision = "left";
-		}
-		
-		// top
-		if (sprite.y < container.y) {
-			sprite.y = container.y;
-			collision = "top";
-		}
-		
-		// right
-		if (sprite.x + sprite.width > container.width) {
-			sprite.x = container.width - sprite.width;
-			collision = "right";
-		}
-		
-		// bottom
-		if (sprite.y + sprite.height > container.height) {
-			sprite.y = container.height - sprite.height;
-			collision = "bottom";
-		}
-		  
-		// return the `collision` value
-		return collision;
-	}
-	
 	// GET RANDOM INTEGER
 	function randomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -753,29 +720,25 @@ function movieController($scope, $http) {
         hoverDiv.style.left = dotPosX + 180 + offsetX + 'px';
         hoverDiv.style.top = dotPosY + 'px';
 
-		// hover delay
-        timer = setTimeout(function() {
-			$hoverDiv.addClass('open');
-        }, 120);
 
+		// prevent hover events from showing when hovering over the genre filter
+        $(window).on('mousemove', function(e) {
+	        if (e.pageX <= 220) {
+		        $hoverDiv.removeClass('open');
+		    } else {
+				// hover delay
+		        timer = setTimeout(function() {
+					$hoverDiv.addClass('open');
+		        }, 120);
+		    }
+		})
+		
 		// pink glow on cursor
         $('#cursor').addClass('pink-glow');
         
-        // prevent hover events from showing when hovering over the genre filter
-        $(window).on('mousemove', function(e) {
-	        if (e.pageX <= 220) {
-		        $hoverDiv.addClass('close');  
-		        $('#current-year').hide();
-				$('#line').hide();
-				$('#cursor').hide();
-	        } else {
-		        $hoverDiv.removeClass('close');
-		        $('#current-year').show();
-				$('#line').show();
-				$('#cursor').show();
-			}
-        })
-        
+		
+
+		        
         // move hover div to left when near right edge of window
 /*
 		// this doesn't get the correct left position of the the hover div
@@ -793,6 +756,7 @@ function movieController($scope, $http) {
 	    console.log('window width: ' + $(window).width());
 	    console.log('window width - 190: ' + ($(window).width() - 190));
 */
+	
 	}
 	
 	// MOUSEOUT
@@ -962,7 +926,7 @@ function movieController($scope, $http) {
 	   	// change background opacity and hide mouseover elements
 	    popUp.toggle();
         if (popUp.css('display') === 'block') {
-            $('#hover-event').addClass('close');
+            $('#hover-event').removeClass('open').addClass('close');
             $('#current-year').hide();
             $('#line').hide();
             $('canvas').removeClass('add-opacity').addClass('min-opacity');

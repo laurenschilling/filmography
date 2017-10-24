@@ -11,21 +11,19 @@ function movieController($scope, $http) {
     
 	// ---- GENRE FILTER HOVER ----
 
-	$(function() {
-		var li = $('#genres ul li');
-		var line;
-		
-		// hover on list item, show span line
-		li.bind('mouseover', function() {
-			line = $(this).find('span');
-			line.removeClass('move-line-back').addClass('move-line');
-		});
+	var li = $('#genres ul li'),
+		line;
 	
-		// exit hover on list item, hide span line	
-		li.bind('mouseleave', function() {	
-			line.addClass('move-line-back').removeClass('move-line');
-		});
-	});    
+	// hover on list item, show span line
+	li.on('mouseover', function() {
+		line = $(this).find('span');
+		line.removeClass('move-line-back').addClass('move-line');
+	});
+
+	// exit hover on list item, hide span line	
+	li.on('mouseleave', function() {	
+		line.addClass('move-line-back').removeClass('move-line');
+	});
  
 
 	// ----- PIXI CODE -----
@@ -546,11 +544,27 @@ function movieController($scope, $http) {
         $('#genres ul li').on('click', function() {
             console.log('a genre filter has been clicked');
 
-            var genres = [],
-            	moviesWithCurrentGenre = [],
-            	noMovieMatch = [],
+            var moviesWithCurrentGenre = [],
             	currGenreFilter = $(this).attr('data-link');
 
+			// if active genre filter is clicked 'off', show all films
+/*
+			if ($(this).hasClass('active')) {
+				
+				console.log('this was an active class');
+				
+				for (var z = 0; z < allYears.length; z++) {
+
+	                // loop through all movies in all years 
+	                for (var a = 0; a < allYears[z].length; a++) {
+	
+	                    // make all films visible
+	                    allYears[z][a].visible = true;  
+	                }
+	            }  
+			}
+*/
+			
             // add active class to genre list item and span line
             $('#genres ul li').removeClass('active');
             $('#genres ul li').find('span').removeClass('span-active');
@@ -563,43 +577,35 @@ function movieController($scope, $http) {
                 // loop through all movies in all years 
                 for (var a = 0; a < allYears[z].length; a++) {
 
-	                    // push film genres into genre array
-	                    var film = allYears[z][a];                   
-	                    var genreArray = film.genre;
-	                    	                    
+                    // push film genres into genre array
+                    var film = allYears[z][a];                   
+                    var genreArray = film.genre;
+                    
+                    // if genre array is undefined (i.e. invisible/fake/filler dot)
+					if (genreArray === undefined) {
+						console.log('year has 0 films');
+					} 
+						
+					// else if it's an actual dot
+					else {	                    
 	                    // loop through genre array
 	                    for (var b = 0; b < genreArray.length; b++) {
-	
-						// if genre array is undefined (i.e. invisible/fake/filler dot)
-							// this if/else statement is not working
-							// because the condition is not working
-							if (genreArray.length == undefined) {
-											
-								console.log('year has 0 films');					
-								continue;
-									
-							} 
-							
-						// else if actual dot with data, run through genre array as normal
-							else {
-										
-		                        // if genre array matches clicked filter
-		                        if (genreArray[b] == currGenreFilter) {
-		                            // assign all films matching the genre with match true
-		                            film.match = true;
-		                        };
-		                        
-		                        if (film.match == true) {
-			                        // push movie into movie with current genre array
-			                        moviesWithCurrentGenre.push(allYears[z][a]);
-			                        film.visible = true; // display sprite
-			                        console.log(film.title + ' ' + film.year + ' genres: ' + film.genre);
-			                    } else {
-			                        noMovieMatch.push(film);
-									film.visible = false; // hide sprite
-			                    }
-		                    }  
-		                }
+	                        // if genre array matches clicked filter
+	                        if (genreArray[b] == currGenreFilter) {
+	                            // assign all films matching the genre with match true
+	                            film.match = true;
+	                        };
+		                }  
+		                
+		                if (film.match == true) {
+	                        // push movie into movie with current genre array
+	                        moviesWithCurrentGenre.push(allYears[z][a]);
+	                        film.visible = true; // display sprite
+ 				            // console.log(film.title + ' ' + film.year + ' genres: ' + film.genre);
+	                    } else {
+							film.visible = false; // hide sprite
+	                    }
+                	}
 		                
                 // reset previous matches to false
 				film.match = false;    
@@ -610,17 +616,9 @@ function movieController($scope, $http) {
             console.log('DONE');
             // log the amount of films with clicked genre
             console.log('No of movies that match: ' + moviesWithCurrentGenre.length); 
-            console.log('No of movies that do not match: ' + noMovieMatch.length); 
 
         }); // close genre filter click function 
         
-			// initialise the cat's velocity variables
-			//cat.vx = 0;
-			//cat.vy = 0;
-			
-			// scale the sprite's size proportionally
-			//cat.scale.set(0.5,0.5); */
-		
         // set the game state
 		state = play;
 	 
@@ -649,7 +647,6 @@ function movieController($scope, $http) {
 		// render the stage the see the animation
 		renderer.render(stage);
 	}
-	
 	
 	// ----- FUNCTION PLAY -----
 	// all of the animations and changes to the canvas elements go here
@@ -761,7 +758,23 @@ function movieController($scope, $http) {
 			$hoverDiv.addClass('open');
         }, 120);
 
+		// pink glow on cursor
         $('#cursor').addClass('pink-glow');
+        
+        // prevent hover events from showing when hovering over the genre filter
+        $(window).on('mousemove', function(e) {
+	        if (e.pageX <= 220) {
+		        $hoverDiv.addClass('close');  
+		        $('#current-year').hide();
+				$('#line').hide();
+				$('#cursor').hide();
+	        } else {
+		        $hoverDiv.removeClass('close');
+		        $('#current-year').show();
+				$('#line').show();
+				$('#cursor').show();
+			}
+        })
         
         // move hover div to left when near right edge of window
 /*

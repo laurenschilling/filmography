@@ -536,6 +536,9 @@ $('#hover-event').addClass('close');
             canvasMovSpace = containerPx - canvasSize.width, // how many px the canvas can move
             increment = canvasMovSpace / sliderMovSpace; // the relative increment to work out what slider movement increment triggers the canvas to move along x axis
      
+        // to set the width of the decade container to match the stage width
+        $('#decades-container').css('width', containerPx + 'px');
+        
         $('#slider-block').mousemove(function() {
             newSliderPos = $('#slider-block').position();
             
@@ -545,8 +548,103 @@ $('#hover-event').addClass('close');
 
             // returns function
             stage.x = adjustStage(newLeft, originalLeft, increment, movement, stage.x);
+            
+            $('#decades').css('margin-right', -stage.x + 'px'); // so the decade markers drag with it
+            
             offsetX = stage.x; // so hover event alignment updates with the movement of the stage
         });
+        
+        var offset = 15; // offset half the length of the year text so it sits in the middle, calcs below are a bit random but they work
+        
+        // position the 2015 year marker
+        var median2015 = Math.round(yr2015.length / 2), // find the median number of the array
+            pos2015 = yr2015[median2015].x, // find the x position of the median sprite
+            x2015 = canvasSize.width - pos2015 - offset; // use that to position the 2015 year marker
+        
+        $('#y2015').css('margin-right', x2015 + 'px');
+        
+        // position the 2010 year marker
+        var median2010 = Math.round(yr2010.length / 2),
+            pos2010 = yr2010[median2010].x,
+            x2010 = -(pos2010 - pos2015 + (offset*2));
+        
+        $('#y2010').css('margin-right', x2010 + 'px');
+        
+        // position the 2005 year marker
+        var median2005 = Math.round(yr2005.length / 2),
+            pos2005 = yr2005[median2005].x,
+            x2005 = -(pos2005 - pos2010 + (offset*3));
+        
+        $('#y2005').css('margin-right', x2005 + 'px');
+        
+        // position the 2000 year marker
+        var median2000 = Math.round(yr2000.length / 2),
+            pos2000 = yr2000[median2000].x,
+            x2000 = -(pos2000 - pos2005 + (offset*2));
+        
+        $('#y2000').css('margin-right', x2000 + 'px');
+        
+        // position the 1990 year marker
+        var median1990 = Math.round(yr1990.length / 2),
+            pos1990 = yr1990[median1990].x,
+            x1990 = -(pos1990 - pos2000 + (offset*3));
+        
+        $('#y1990').css('margin-right', x1990 + 'px');
+        
+        // position the 1980 year marker
+        var median1980 = Math.round(yr1980.length / 2),
+            pos1980 = yr1980[median1980].x,
+            x1980 = -(pos1980 - pos1990 + (offset*2.5));
+        
+        $('#y1980').css('margin-right', x1980 + 'px');
+        
+        // position the 1970 year marker
+        var median1970 = Math.round(yr1970.length / 2),
+            pos1970 = yr1970[median1970].x,
+            x1970 = -(pos1970 - pos1980 + (offset*2.5));
+        
+        $('#y1970').css('margin-right', x1970 + 'px');
+        
+        // position the 1960 year marker
+        var median1960 = Math.round(yr1960.length / 2),
+            pos1960 = yr1960[median1960].x,
+            x1960 = -(pos1960 - pos1970 + (offset*3));
+        
+        $('#y1960').css('margin-right', x1960 + 'px');
+        
+        // position the 1950 year marker
+        var median1950 = Math.round(yr1950.length / 2),
+            pos1950 = yr1950[median1950].x,
+            x1950 = -(pos1950 - pos1960 + (offset*2.5));
+        
+        $('#y1950').css('margin-right', x1950 + 'px');
+        
+        // position the 1940 year marker
+        var median1940 = Math.round(yr1940.length / 2),
+            pos1940 = yr1940[median1940].x,
+            x1940 = -(pos1940 - pos1950 + (offset*2.5));
+        
+        $('#y1940').css('margin-right', x1940 + 'px');
+        
+        // position the 1930 year marker - it only has one entry, not an ideal solution as you need to know the data
+        var pos1930 = yr1930[0].x,
+            x1930 = -(pos1930 - pos1940 + (offset*2.5));
+        
+        $('#y1930').css('margin-right', x1930 + 'px');
+        
+        // position the 1920 year marker - it only has one entry, not an ideal solution as you need to know the data
+        var pos1920 = yr1920[0].x,
+            x1920 = -(pos1920 - pos1930 + (offset*3));
+        
+        $('#y1920').css('margin-right', x1920 + 'px');
+        
+        // position the 1910 year marker - it has an invisible sprite, not an ideal solution as you need to know the data
+        var pos1910 = yr1910[0].x,
+            x1910 = -(pos1910 - pos1920 + (offset*2.5));
+        
+        $('#y1910').css('margin-right', x1910 + 'px');
+        
+        
          
 		// ---- GENRE FILTER FUNCTIONALITY ----
 		

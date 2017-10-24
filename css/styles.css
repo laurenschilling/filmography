@@ -187,32 +187,7 @@ h2 {
     background: -moz-linear-gradient(#092335 50%, #0e3549 100%);
     background: -ms-linear-gradient(#092335 50%, #0e3549 100%);
     background: -o-linear-gradient(#092335 50%, #0e3549 100%);
-    background: linear-gradient(#092335 50%, #0e3549 100%); }	
-    
-/* footer */
-.baseline-bar {
-	background: #0e3549;
-    height: 35px; }
-
-/* slider */
-.slider {
-    height: 25px;
-    width: 100%; }
-
-#slider-block {
-    height: 15px;
-    position: absolute;
-    right: 15px; /* starting position */
-    border-radius: 2px;
-    margin-top: 5px;
-    background: -moz-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* ff3.6+ */
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(247,201,216,1)), color-stop(100%, rgba(247,183,199,1))); /* safari4+,chrome */
-    background: -webkit-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* safari5.1+,chrome10+ */
-    background: -o-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* opera 11.10+ */
-    background: -ms-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* ie10+ */
-    background: linear-gradient(90deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* w3c */
-}
-
+    background: linear-gradient(#092335 50%, #0e3549 100%); }
 
 /* --- mousemove/year marker -- */
 #mouse-move,
@@ -1010,15 +985,41 @@ ul li {
 
 
 
-/* Decade Filter List
+/* Footer
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.baseline-bar {
+	background: #0e3549;
+    height: 35px;
+    width: 100%;
+    overflow: hidden;
+    direction: rtl; }
 
 ul#decades {
 	text-align: right;
-    padding: 0.1em 0; }
+    padding: 0.1em 0;
+    direction: rtl; /* right to left */ }
 		
 	ul#decades li {
 		font-size: .95em;
 		display: inline-block;
-		text-align: center;
-		padding: 0 20px; }	
+		text-align: center; }	
+
+/* slider */
+.slider {
+    height: 25px;
+    width: 100%; }
+
+#slider-block {
+    height: 15px;
+    position: absolute;
+    right: 15px; /* starting position */
+    border-radius: 2px;
+    margin-top: 5px;
+    background: -moz-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(247,201,216,1)), color-stop(100%, rgba(247,183,199,1))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(0deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* ie10+ */
+    background: linear-gradient(90deg, rgba(247,201,216,1) 0%, rgba(247,183,199,1) 100%); /* w3c */
+}

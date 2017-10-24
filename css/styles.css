@@ -838,7 +838,102 @@ h2 {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 #splash {
-	display: none; }
+	/*	display: none; */
+    background: -webkit-linear-gradient(#092335 50%, #0e3549 100%);
+    background: -moz-linear-gradient(#092335 50%, #0e3549 100%);
+    background: -ms-linear-gradient(#092335 50%, #0e3549 100%);
+    background: -o-linear-gradient(#092335 50%, #0e3549 100%);
+    background: linear-gradient(#092335 50%, #0e3549 100%); 
+    opacity: 0.9;
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+    position: fixed;
+    justify-content: center;
+}
+
+#splash-content {
+    z-index: 9999;
+    position:relative;
+}
+#splash-content img {
+    width: 30%;
+    display: block;
+    margin: auto;
+}
+
+#splash-content p {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    text-align: center;
+    width: 40%;
+    margin: auto;
+    padding-bottom: 2%;
+}
+
+#splash-content a {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    text-align: center;
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 25%;
+    text-decoration: none;
+}
+
+.label {
+  color: #0e3549;
+  line-height: 50px;
+  display: block;
+  padding: 0 5.5em;
+  transition: all 0.3s ease;
+}
+.button-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9c5d2;
+    margin-top: 5%;
+}
+.button {
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+}
+.relative-box {
+  position: relative;
+  height: 100%;
+}
+.button:hover .label {
+  background-color: white;
+  color: rgba(22, 22, 22, 0.3);
+  box-shadow: 0 0 20px #f9c5d2;
+}
+.button:after, .button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: 2px solid #fff;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+.button:after {
+  -webkit-transform: translate(3px, 3px);
+          transform: translate(3px, 3px);
+}
+.button:before {
+  -webkit-transform: translate(-5px, -5px);
+          transform: translate(-3px, -3px);
+}
+.button:hover:after, .button:hover:before {
+  -webkit-transform: translate(0);
+          transform: translate(0);
+}
 
 
 /* Filter Lists	

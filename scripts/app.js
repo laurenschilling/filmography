@@ -24,6 +24,15 @@ function movieController($scope, $http) {
 	li.on('mouseleave', function() {	
 		line.addClass('move-line-back').removeClass('move-line');
 	});
+    
+        // ---- SPLASH SCREEN ----
+    
+
+$('#hover-event').addClass('close');
+     $( ".button" ).click(function() {
+        $("#splash" ).fadeOut('slow');
+          $('#hover-event').removeClass('close').addClass('open');
+});
  
 
 	// ----- PIXI CODE -----
@@ -893,17 +902,25 @@ function movieController($scope, $http) {
             
             // if budget or revenue is $0, display nothing
 			// else round to nearest million
+           // if less than 1m round to the nearest thousand
             if (data.budget === 0) {
                 $('.budget').html(' ');
-            } else {
+            } else if (data.budget < 1000000) {
+                $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000) + 'k');
+            }
+            else {
                 $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000000) + 'm');
             }
             
             if (data.revenue === 0) {
                 $('.revenue').html(' ');
-            } else {
+            } else if (data.revenue < 1000000) {
+                $('.revenue').html('Revenue: ' + '$' + Math.round(data.revenue/1000) + 'k'); 
+            }
+            else {
 	        	$('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
             }
+            
             
             // find trailer and append link to div
 	        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;

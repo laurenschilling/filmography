@@ -843,26 +843,22 @@ $('#hover-event').addClass('close');
 		// pink glow on cursor
         $('#cursor').addClass('pink-glow');
         
+		// if hover div is close to the window's right edge, move div to the left	
+	    if (dotPosX > ($(window).width() - 220 - 150)) {
+			hoverDiv.style.left = dotPosX + 45 + 'px';
+        }
 		
-
-		        
-        // move hover div to left when near right edge of window
-/*
-		// this doesn't get the correct left position of the the hover div
-		var divLeft = $($hoverDiv).offset().left;
-		var divPos = ($(window).width() - divLeft);
-		
-		// this is working
-	    if (divPos > ($(window).width() - 190)) {
-				console.log('divleft is greater than window width - 190');
-				hoverDiv.style.left = dotPosX + 45 + 'px';
-	        }
-	        
-	    console.log('div left: ' + divLeft);
-	    console.log('div pos left: ' + divPos);
-	    console.log('window width: ' + $(window).width());
-	    console.log('window width - 190: ' + ($(window).width() - 190));
-*/
+		// if hover div is close to the window's bottom edge, move div up	
+        if (dotPosY > ($(window).height() - 150)) {
+			hoverDiv.style.top = dotPosY - 120 + 'px';	
+// 			console.log('150 cat');
+        } else if (dotPosY < ($(window).height() - 150) && dotPosY > ($(window).height() - 160)) {
+	        hoverDiv.style.top = dotPosY - 110 + 'px';	       
+// 	        console.log('150 - 170 cat'); 
+        } else if (dotPosY < ($(window).height() - 160)) {
+	        hoverDiv.style.top = dotPosY - 20 + 'px';
+// 	        console.log('out of 170 cat');
+        }
 	
 	}
 	

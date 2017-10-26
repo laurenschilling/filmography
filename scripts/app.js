@@ -1,3 +1,31 @@
+// checking if browser is safari
+// if not, hide page and show wrong browser screen
+var sBrowser, sUsrAg = navigator.userAgent;
+
+if(sUsrAg.indexOf("Chrome") > -1) {
+    sBrowser = "Google Chrome";
+    $("#browser").show().fadeIn('slow');
+    $("#content").hide().fadeOut('slow');
+    $("#canvas").hide();
+} else if (sUsrAg.indexOf("Safari") > -1) {
+    sBrowser = "Apple Safari";
+} else if (sUsrAg.indexOf("Opera") > -1) {
+    sBrowser = "Opera";
+    $("#browser").show().fadeIn('slow');
+    $("#content").hide().fadeOut('slow');
+    $("#canvas").hide();
+} else if (sUsrAg.indexOf("Firefox") > -1) {
+    sBrowser = "Mozilla Firefox";
+    $("#browser").show().fadeIn('slow');
+    $("#content").hide().fadeOut('slow');
+    $("#canvas").hide();
+} else if (sUsrAg.indexOf("MSIE") > -1) {
+    sBrowser = "Microsoft Internet Explorer";
+    $("#browser").show().fadeIn('slow');
+    $("#content").hide().fadeOut('slow');
+    $("#canvas").hide();
+}
+
 // this is our controller - basically a function 
 function movieController($scope, $http) {
     imageBase = "https://image.tmdb.org/t/p/";

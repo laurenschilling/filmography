@@ -1,5 +1,4 @@
 <!doctype html>
-<!-- Define this as an AngularJS app -->
 <html lang="en" ng-app>
     
 <head>
@@ -28,7 +27,6 @@
 	<script src="scripts/app.js" defer></script> <!-- Angular --> 
     <script src="https://use.fontawesome.com/41c03d3c7b.js"></script>
 
-
 	<!-- CSS
 	–––––––––––––––––––––––––––––––––––––––––––––––––– -->
 	<link rel="stylesheet" href="css/reset.css">
@@ -38,160 +36,158 @@
 
 <body>
 
-
-	<!-- Content
-	–––––––––––––––––––––––––––––––––––––––––––––––––– -->	
-    <!-- Wrong Browser Page -->
-    
-    <div id = "browser">
-        <img src="images/Logo.svg">
-        <h1 class="browser-title"> Filmography is currently optimised for Safari.</h1> 
-        <h1 class="browser-title"> Please change your browser to enjoy exploring.</h1>
+    <!-- Wrong browser screen -->
+    <div id="browser">
+        <div id="browser-content">
+            <img src="images/Logo.svg" alt="Filmography">
+            <p>Filmography is currently optimised for Safari.</p> 
+            <p>Please change your browser to enjoy exploring.</p>
+        </div>
     </div>
     
-<!--  added content div to hide when wrong browser screen shows  -->
-    <div id = "content"> 
+    
+    <!--  content div to hide when wrong browser screen shows  -->
+    <div id="content">
+        
+        <!-- Browser window too small screen -->
+        <div id="small">
+            <div id="small-content">
+                <p>Oops, your browser window size is too small for Filmography.</p>
+                <p>Please increase your broswer window size to enjoy exploring.</p>
+            </div>
+        </div>
       
-    <!-- splash page -->
-    <div id="splash">
-         <div id = "splash-content">
-        <img src="images/Logo.svg"> <!-- filmography logo type to go here -->
-				
-        <!-- intro description and instructions go here -->
-        <p>Filmography is a visual timeline of films over history, 
-            each dot represents a film from 1902 to now.<br>
-            <p>Click on a dot to find out more about a film.</p>
-          
-        <div class="button-container">
-  <div class="button">
-    <span class="label">LET'S GO!</span>
-  </div>
-</div>
-    </div>
-          </div>
-    
-	<!-- sidebar -->
-    <div class="sidebar">
-        <h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
-        <div id="genres">
-            <ul>
-                <li data-link="28"><span class="line"></span>Action</li>
-                <li data-link="12"><span class="line"></span>Adventure</li>
-                <li data-link="16"><span class="line"></span>Animation</li>
-                <li data-link="35"><span class="line"></span>Comedy</li>
-                <li data-link="80"><span class="line"></span>Crime</li>
-                <li data-link="99"><span class="line"></span>Documentary</li>
-                <li data-link="18"><span class="line"></span>Drama</li>
-                <li data-link="10751"><span class="line"></span>Family</li>
-                <li data-link="14"><span class="line"></span>Fantasy</li>
-                <li data-link="36"><span class="line"></span>History</li>
-                <li data-link="27"><span class="line"></span>Horror</li>
-                <li data-link="10402"><span class="line"></span>Music</li>
-                <li data-link="9648"><span class="line"></span>Mystery</li>
-                <li data-link="10749"><span class="line"></span>Romance</li>
-                <li data-link="878"><span class="line"></span>Sci-fi</li>
-                <li data-link="53"><span class="line"></span>Thriller</li>
-                <li data-link="10770"><span class="line"></span>TV Movie</li>
-                <li data-link="10752"><span class="line"></span>War</li>
-                <li data-link="37"><span class="line"></span>Western</li>
-            </ul>
-        </div>
-    </div>
-    
-    <!-- year marker over canvas -->
-    <div id="mouse-move">
-        <div id="current-year">
-	        <p id="dot-year" ng-click='movieClick(movie)'></p>
-        </div>
-        <div id="line"></div>
-        <div id="cursor"></div>
-    </div>
-    
-    <!-- Link this DOM object to the movieController in app.js -->
-    <div ng-controller="movieController">
+        <!-- splash page -->
+        <div id="splash">
+            <div id="splash-content">
+                <img src="images/Logo.svg" alt="Filmography">
 
-<!-- Bens list code -->
-        <div class="col list" style="display:none">
-            <p>Select a movie:</p>
-            <ul class="films">
-            <!-- Iterate through all movies in the dataset and display title with a click function -->
-                <li ng-repeat="movie in movies">
-                    <a href ng-click='movieClick(movie)'>{{ movie.title }}</a>
-                </li>
-            </ul>
-        </div>
-        
-         <!-- Event pop up on hover (image and title) -->
-<!-- 		<div id="hover-container"> -->
-			<div id="hover-event">
-				<div class="event">
-				    <div class="event-image-wrapper">
-					    <img class="event-image" src="">
-					</div>
-				    <div class="event-title-wrapper">
-		                <p class="event-title"></p>
-				    </div>
-			    </div>
-			</div>
-<!-- 		</div> -->
+                <!-- intro description and instructions go here -->
+                <p>Filmography is a visual timeline of films over history &ndash; each dot represents a film from 1902 to now.</p>
+                <p>Select a dot to find out more about a film!</p>
 
-        
-         <!-- Event pop up on click (image and movie info) -->
-         <div class="col detail">
-            <div class="detail-image-wrapper">
-                <img class="detail-image" src="">
-	            <div class="detail-title-wrapper">
-	                <p class="genre-ids"></p>
-	                <div class="awards-trivia">
-	                    <a href="" target="_blank"><i class="awards fa fa-trophy" title="imdb awards page"></i></a>
-						<a href="" target="_blank"><i class="trivia fa fa-question-circle" title="imdb trivia page"></i></a>
-	                    <i class="fa fa-clock-o"></i><span class="run-time"></span>
-	                </div>
-	                <p class="rating"></p>
-	            </div>
+                <div class="button-container">
+                    <div class="button">
+                        <span class="label">LET'S GO!</span>
+                    </div>
+                </div>
             </div>
-
-            <div class="detail-details">
-                <h2 class="detail-title"></h2>
-                <p class="yr"></p>
-                <a class="trailer" href="" target="_blank"><p>Watch the trailer</p></a>
-				<p class="detail-overview"></p>
-                <p class="director"></p>
-                <p class="actors"></p>
-                <p class="budget"></p>  
-                <p class="revenue"></p>
-            </div>
-        </div>
-    </div>
+        </div> <!-- close #splash div -->
+        
     
-    <div id="data-background"></div>
-    <canvas id="canvas"></canvas>
-			
-    <footer>
-        <div class="baseline-bar">
-            <div id="decades-container">
-                <ul id="decades">
-                    <li id="y2015">2015</li>
-                    <li id="y2010">2010</li>
-                    <li id="y2005">2005</li>
-                    <li id="y2000">2000</li>
-                    <li id="y1990">1990</li>
-                    <li id="y1980">1980</li>
-                    <li id="y1970">1970</li>
-                    <li id="y1960">1960</li>
-                    <li id="y1950">1950</li>
-                    <li id="y1940">1940</li>
-                    <li id="y1930">1930</li>
-                    <li id="y1920">1920</li>
-                    <li id="y1910">1910</li>
+        <!-- sidebar -->
+        <div class="sidebar">
+            <h1 id="logo"><a href="index.html"></a></h1><!--logo added in via CSS-->
+            <div id="genres">
+                <ul>
+                    <li data-link="28"><span class="first line"></span>Action<span id="action" class="count"></span></li>
+                    <li data-link="12"><span class="first line"></span>Adventure<span id="adventure" class="count"></span></li>
+                    <li data-link="16"><span class="first line"></span>Animation<span id="animation" class="count"></span></li>
+                    <li data-link="35"><span class="first line"></span>Comedy<span id="comedy" class="count"></span></li>
+                    <li data-link="80"><span class="first line"></span>Crime<span id="crime" class="count"></span></li>
+                    <li data-link="99"><span class="first line"></span>Documentary<span id="documentary" class="count"></span></li>
+                    <li data-link="18"><span class="first line"></span>Drama<span id="drama" class="count"></span></li>
+                    <li data-link="10751"><span class="first line"></span>Family<span id="family" class="count"></span></li>
+                    <li data-link="14"><span class="first line"></span>Fantasy<span id="fantasy" class="count"></span></li>
+                    <li data-link="36"><span class="first line"></span>History<span id="history" class="count"></span></li>
+                    <li data-link="27"><span class="first line"></span>Horror<span id="horror" class="count"></span></li>
+                    <li data-link="10402"><span class="first line"></span>Music<span id="music" class="count"></span></li>
+                    <li data-link="9648"><span class="first line"></span>Mystery<span id="mystery" class="count"></span></li>
+                    <li data-link="10749"><span class="first line"></span>Romance<span id="romance" class="count"></span></li>
+                    <li data-link="878"><span class="first line"></span>Sci-fi<span id="scifi" class="count"></span></li>
+                    <li data-link="53"><span class="first line"></span>Thriller<span id="thriller" class="count"></span></li>
+                    <li data-link="10770"><span class="first line"></span>TV Movie<span id="tv-mov" class="count"></span></li>
+                    <li data-link="10752"><span class="first line"></span>War<span id="war" class="count"></span></li>
+                    <li data-link="37"><span class="first line"></span>Western<span id="western" class="count"></span></li>
                 </ul>
             </div>
         </div>
-        
-        <div class="slider">
-            <div id="slider-block"></div>
+    
+        <!-- year marker over canvas -->
+        <div id="mouse-move">
+            <div id="current-year">
+                <p id="dot-year" ng-click='movieClick(movie)'></p>
+            </div>
+            <div id="line"></div>
+            <div id="cursor"></div>
         </div>
-    </footer>   
-    </div>	
+    
+    
+        <div ng-controller="movieController">
+
+            <!-- Event pop up on hover (image and title) -->
+            <div id="hover-event">
+                <div class="event">
+                    <div class="event-image-wrapper">
+                        <img class="event-image" src="">
+                    </div>
+                    <div class="event-title-wrapper">
+                        <p class="event-title"></p>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Event pop up on click (image and movie info) -->
+             <div class="col detail">
+                <div class="detail-image-wrapper">
+                    <img class="detail-image" src="">
+                    <div class="detail-title-wrapper">
+                        <p class="genre-ids"></p>
+                        <div class="awards-trivia">
+                            <a href="" target="_blank"><i class="awards fa fa-trophy" title="imdb awards page"></i></a>
+                            <a href="" target="_blank"><i class="trivia fa fa-question-circle" title="imdb trivia page"></i></a>
+                            <i class="fa fa-clock-o"></i><span class="run-time"></span>
+                        </div>
+                        <p class="rating"></p>
+                    </div>
+                </div>
+
+                <div class="detail-details">
+                    <h2 class="detail-title"></h2>
+                    <p class="yr"></p>
+                    <a class="trailer" href="" target="_blank"><p>Watch the trailer</p></a>
+                    <p class="detail-overview"></p>
+                    <p class="director"></p>
+                    <p class="actors"></p>
+                    <p class="budget"></p>  
+                    <p class="revenue"></p>
+                </div>
+            </div>
+        </div> <!-- close moviecontroller div -->
+    
+        
+        <div id="data-background"></div>
+        <canvas id="canvas"></canvas>
+			
+        
+        <footer>
+            <!-- decades -->
+            <div class="baseline-bar">
+                <div id="decades-container">
+                    <ul id="decades">
+                        <li id="y2015">2015</li>
+                        <li id="y2010">2010</li>
+                        <li id="y2005">2005</li>
+                        <li id="y2000">2000</li>
+                        <li id="y1990">1990</li>
+                        <li id="y1980">1980</li>
+                        <li id="y1970">1970</li>
+                        <li id="y1960">1960</li>
+                        <li id="y1950">1950</li>
+                        <li id="y1940">1940</li>
+                        <li id="y1930">1930</li>
+                        <li id="y1920">1920</li>
+                        <li id="y1910">1910</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- pink slider -->
+            <div class="slider">
+                <div id="slider-block"></div>
+            </div>
+        </footer> 
+        
+    </div> <!-- close #content div -->	
 </body>
 </html>

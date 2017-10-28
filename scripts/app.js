@@ -26,25 +26,46 @@ if(sUsrAg.indexOf("Chrome") > -1) {
     $("#canvas").hide();
 }
 
+// if browser window is too small, show warning screen, if not, show splash screen
+$(document).ready(function() {
+    if ($(window).width() < 900 && $(window).height() < 425) {
+        $('#small').show();
+        $('#splash').hide();
+    } else {
+        $('#small').hide();
+        $('#splash').show();
+    }
+});
+
+
 // this is our controller - basically a function 
 function movieController($scope, $http) {
+    
+    // to reload the page on window resize (as canvas doesn't resize dynamically)
+    var resizeTimeout;
+
+    $(window).resize(function(e) {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function(){
+            location.href = location.href;
+        }, 500); // ensure there's a half second delay so too many events don't fire off
+    });
+    
     imageBase = "https://image.tmdb.org/t/p/";
     imageSize = 'w300/';// from https://developers.themoviedb.org/3/getting-started/images
-    
-    defaultImg = "blank.gif";
 
     $http.get('scripts/all-moviedata.json').success(function(data) {
         $scope.movies = data;
     });
     
+    
 	// ---- GENRE FILTER HOVER ----
-
 	var li = $('#genres ul li'),
 		line;
 	
 	// hover on list item, show span line
 	li.on('mouseover', function() {
-		line = $(this).find('span');
+		line = $(this).find('.first');
 		line.removeClass('move-line-back').addClass('move-line');
 	});
 
@@ -53,14 +74,14 @@ function movieController($scope, $http) {
 		line.addClass('move-line-back').removeClass('move-line');
 	});
     
-        // ---- SPLASH SCREEN ----
     
-
-$('#hover-event').addClass('close');
-     $( ".button" ).click(function() {
-        $("#splash" ).fadeOut('slow');
-          $('#hover-event').removeClass('close').addClass('open');
-});
+    // ---- SPLASH SCREEN ----
+    $('#hover-event').addClass('close');
+    
+    $('.button').click(function() {
+        $('#splash').fadeOut('slow');
+        $('#hover-event').removeClass('close').addClass('open');
+    });
  
 
 	// ----- PIXI CODE -----
@@ -86,7 +107,7 @@ $('#hover-event').addClass('close');
 	
 	// change the texture a sprite is displaying
 	// use this to interactively change a sprite's appearance
-		// anySprite.texture = TextureCache["anyTexture.png"];
+    // anySprite.texture = TextureCache["anyTexture.png"];
 	
 	
 	// ----- SET UP THE CANVAS ----- 
@@ -98,6 +119,7 @@ $('#hover-event').addClass('close');
 	
 	var stage = new Container();
 	stage.interactive = false;
+    
 	var renderer = new PIXI.WebGLRenderer(canvasSize.width, canvasSize.height, {
 	    transparent: !0,
 	    view: document.getElementById('canvas')
@@ -132,6 +154,7 @@ $('#hover-event').addClass('close');
 		var texture = Texture.fromImage("images/dots-15.svg"),
 		    length = $scope.movies.length,
 			yr2017 = [], yr2016 = [], yr2015 = [], yr2014 = [], yr2013 = [], yr2012 = [], yr2011 = [], yr2010 = [], yr2009 = [], yr2008 = [], yr2007 = [], yr2006 = [], yr2005 = [], yr2004 = [], yr2003 = [], yr2002 = [], yr2001 = [], yr2000 = [], yr1999 = [], yr1998 = [], yr1997 = [], yr1996 = [], yr1995 = [], yr1994 = [], yr1993 = [], yr1992 = [], yr1991 = [], yr1990 = [], yr1989 = [], yr1988 = [], yr1987 = [], yr1986 = [], yr1985 = [], yr1984 = [], yr1983 = [], yr1982 = [], yr1981 = [], yr1980 = [], yr1979 = [], yr1978 = [], yr1977 = [], yr1976 = [], yr1975 = [], yr1974 = [], yr1973 = [], yr1972 = [], yr1971 = [], yr1970 = [], yr1969 = [], yr1968 = [], yr1967 = [], yr1966 = [], yr1965 = [], yr1964 = [], yr1963 = [], yr1962 = [], yr1961 = [], yr1960 = [], yr1959 = [], yr1958 = [], yr1957 = [], yr1956 = [], yr1955 = [], yr1954 = [], yr1953 = [], yr1952 = [], yr1951 = [], yr1950 = [], yr1949 = [], yr1948 = [], yr1947 = [], yr1946 = [], yr1945 = [], yr1944 = [], yr1943 = [], yr1942 = [], yr1941 = [], yr1940 = [], yr1939 = [], yr1938 = [], yr1937 = [], yr1936 = [], yr1935 = [], yr1934 = [], yr1933 = [], yr1932 = [], yr1931 = [], yr1930 = [], yr1929 = [], yr1928 = [], yr1927 = [], yr1926 = [], yr1925 = [], yr1924 = [], yr1923 = [], yr1922 = [], yr1921 = [], yr1920 = [], yr1919 = [], yr1918 = [], yr1917 = [], yr1916 = [], yr1915 = [], yr1914 = [], yr1913 = [], yr1912 = [], yr1911 = [], yr1910 = [], yr1909 = [], yr1908 = [], yr1907 = [], yr1906 = [], yr1905 = [], yr1904 = [], yr1903 = [], yr1902 = [], // for each year of data
+            action = 0, adventure = 0, animation = 0, comedy = 0, crime = 0, documentary = 0, drama = 0, family = 0, fantasy = 0, history = 0, horror = 0, music = 0, mystery = 0, romance = 0, sciFi = 0, tvMovie = 0, thriller = 0, war = 0, western = 0,
             distanceFromRight, // for sprite px from right
             columnsFromRight = 0, // divide by sprite width to get 'columns' from right
             spriteWidth = 10, // including padding
@@ -303,11 +326,77 @@ $('#hover-event').addClass('close');
                 default: break;
             }
             
+            var genres = dot.genre;
+            
+            for (g = 0; g < genres.length; g++) {
+                // push movie data for each year into array	
+                if (genres[g] == 28) {
+                    action++; }
+                if (genres[g] == 12) {
+                    adventure++; }
+                if (genres[g] == 16) {
+                    animation++; }
+                if (genres[g] == 35) {
+                     comedy++; }
+                if (genres[g] == 80) {
+                     crime++; }
+                if (genres[g] == 99) {
+                     documentary++; }
+                if (genres[g] == 18) {
+                     drama++; }
+                if (genres[g] == 10751) {
+                     family++; }
+                if (genres[g] == 14) {
+                     fantasy++; }
+                if (genres[g] == 36) {
+                     history++; }
+                if (genres[g] == 27) {
+                     horror++; }
+                if (genres[g] == 10402) {
+                     music++; }
+                if (genres[g] == 9648) {
+                     mystery++; }
+                if (genres[g] == 10749) {
+                     romance++; }
+                if (genres[g] == 878) {
+                     sciFi++; }
+                if (genres[g] == 10770) {
+                     tvMovie++; }
+                if (genres[g] == 53) {
+                     thriller++; }
+                if (genres[g] == 10752) {
+                     war++; }
+                if (genres[g] == 37) {
+                     western++; }
+            }
+            
 			// set the mouseover and click states
             dot.on('mouseover', dotHover).on('mouseout', dotLeave);
             dot.on('click', dotClick);
             
 		} // close data/sprite loop
+        
+        // display genre count next to genre
+        $('#action').text(action);
+        $('#adventure').text(adventure);
+        $('#animation').text(animation);
+        $('#comedy').text(comedy);
+        $('#crime').text(crime);
+        $('#documentary').text(documentary);
+        $('#drama').text(drama);
+        $('#family').text(family);
+        $('#fantasy').text(fantasy);
+        $('#history').text(history);
+        $('#horror').text(horror);
+        $('#music').text(music);
+        $('#mystery').text(mystery);
+        $('#romance').text(romance);
+        $('#scifi').text(sciFi);
+        $('#thriller').text(thriller);
+        $('#tv-mov').text(tvMovie);
+        $('#war').text(war);
+        $('#western').text(western);
+        
         
     	// ---- POSITION SPRITES ----
     
@@ -672,12 +761,9 @@ $('#hover-event').addClass('close');
         
         $('#y1910').css('margin-right', x1910 + 'px');
         
-        
          
 		// ---- GENRE FILTER FUNCTIONALITY ----
-		
         $('#genres ul li').on('click', function() {
-            console.log('a genre filter has been clicked');
 
             var moviesWithCurrentGenre = [],
             	currGenreFilter = $(this).attr('data-link');
@@ -702,10 +788,10 @@ $('#hover-event').addClass('close');
 			
             // add active class to genre list item and span line
             $('#genres ul li').removeClass('active');
-            $('#genres ul li').find('span').removeClass('span-active');
+            $('#genres ul li').find('.first').removeClass('span-active');
             $(this).toggleClass('active');
-            $(this).find('span').toggleClass('span-active');
-
+            $(this).find('.first').toggleClass('span-active');
+            
             // loop through all years 
             for (var z = 0; z < allYears.length; z++) {
 
@@ -715,6 +801,8 @@ $('#hover-event').addClass('close');
                     // push film genres into genre array
                     var film = allYears[z][a];                   
                     var genreArray = film.genre;
+                    
+                    
                     
                     // if genre array is undefined (i.e. invisible/fake/filler dot)
 					if (genreArray === undefined) {
@@ -740,11 +828,9 @@ $('#hover-event').addClass('close');
 	                    } else {
 							film.visible = false; // hide sprite
 	                    }
-                	}
-		                
+                	}    
                 // reset previous matches to false
 				film.match = false;    
-				
             	}
             }
 
@@ -804,10 +890,6 @@ $('#hover-event').addClass('close');
 	        cursor.style.top = y + 'px';
 	    });
 
-	/*
-		// apply the velocity values to the cat's position to make it move
-		cat.x += cat.vx;
-		cat.y += cat.vy; */
 	}
     
     
@@ -832,6 +914,7 @@ $('#hover-event').addClass('close');
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
+    
 	// ----- MOUSEOVER AND CLICK EVENTS -----
 
 	// GLOBAL VARIABLES FOR MOUSEOVER AND MOUSEOUT
@@ -1043,7 +1126,6 @@ $('#hover-event').addClass('close');
 	        	$('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
             }
             
-            
             // find trailer and append link to div
 	        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
 	        console.log (trailer);
@@ -1053,9 +1135,6 @@ $('#hover-event').addClass('close');
             var imdb = data.imdb_id,
             	awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1",
             	trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
-
-            // console.log("IMDB ID is: " + imdb);
-            // console.log("This IMDB link is: " + awards);
             
             $('.awards-trivia a:nth-child(1)').attr('href', awards);
             $('.awards-trivia a:nth-child(2)').attr('href', trivia); 

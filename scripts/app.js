@@ -128,17 +128,6 @@ function movieController($scope, $http) {
 	document.body.appendChild(renderer.view);
 	
 	
-	// ----- OPTIONAL ELEMENTS -----
-	// to find out if the mouse is touching something
-	// convert pixel positions to scaled element coordinates
-		// pointer.x = pointer.x / scale;
-		// pointer.y = pointer.y / scale;
-	
-	// find the scale value the element is scaled to
-		// var scale = scaleToWindow(renderer.view);
-		// console.log(scale);
-	
-	
 	// ----- CREATE SPRITES -----
 	// load textures and run setup function
 	loader
@@ -769,76 +758,63 @@ function movieController($scope, $http) {
             	currGenreFilter = $(this).attr('data-link');
 
 			// if active genre filter is clicked 'off', show all films
-/*
-			if ($(this).hasClass('active')) {
-				
-				console.log('this was an active class');
-				
-				for (var z = 0; z < allYears.length; z++) {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active');
+                $(this).find('.first').removeClass('span-active');
+                
+                for (var z = 0; z < allYears.length; z++) {
 
-	                // loop through all movies in all years 
-	                for (var a = 0; a < allYears[z].length; a++) {
-	
-	                    // make all films visible
-	                    allYears[z][a].visible = true;  
-	                }
-	            }  
-			}
-*/
-			
-            // add active class to genre list item and span line
-            $('#genres ul li').removeClass('active');
-            $('#genres ul li').find('.first').removeClass('span-active');
-            $(this).toggleClass('active');
-            $(this).find('.first').toggleClass('span-active');
-            
-            // loop through all years 
-            for (var z = 0; z < allYears.length; z++) {
+                    for (var a = 0; a < allYears[z].length; a++) {
 
-                // loop through all movies in all years 
-                for (var a = 0; a < allYears[z].length; a++) {
+                    allYears[z][a].match = false;
+                    allYears[z][a].visible = true;
+                    }
+                }
+            } else {
+                // add active class to genre list item and span line
+                $('#genres ul li').removeClass('active');
+                $('#genres ul li').find('.first').removeClass('span-active');
+                $(this).toggleClass('active');
+                $(this).find('.first').toggleClass('span-active');
+                  
+                for (var z = 0; z < allYears.length; z++) {
+ 
+                    for (var a = 0; a < allYears[z].length; a++) {
 
-                    // push film genres into genre array
-                    var film = allYears[z][a];                   
-                    var genreArray = film.genre;
-                    
-                    
-                    
-                    // if genre array is undefined (i.e. invisible/fake/filler dot)
-					if (genreArray === undefined) {
-						console.log('year has 0 films');
-					} 
-						
-					// else if it's an actual dot
-					else {	                    
-	                    // loop through genre array
-	                    for (var b = 0; b < genreArray.length; b++) {
-	                        // if genre array matches clicked filter
-	                        if (genreArray[b] == currGenreFilter) {
-	                            // assign all films matching the genre with match true
-	                            film.match = true;
-	                        };
-		                }  
-		                
-		                if (film.match == true) {
-	                        // push movie into movie with current genre array
-	                        moviesWithCurrentGenre.push(allYears[z][a]);
-	                        film.visible = true; // display sprite
- 				            // console.log(film.title + ' ' + film.year + ' genres: ' + film.genre);
-	                    } else {
-							film.visible = false; // hide sprite
-	                    }
-                	}    
-                // reset previous matches to false
-				film.match = false;    
-            	}
-            }
+                        // push film genres into genre array
+                        var film = allYears[z][a];                   
+                        var genreArray = film.genre;
 
-            console.log('DONE');
-            // log the amount of films with clicked genre
-            console.log('No of movies that match: ' + moviesWithCurrentGenre.length); 
+                        // if genre array is undefined (i.e. invisible/fake/filler dot)
+                        if (genreArray === undefined) {
+                            console.log('year has 0 films');
+                        } 
+                        // else if it's an actual dot
+                        else {	                    
+                            // loop through genre array
+                            for (var b = 0; b < genreArray.length; b++) {
+                                // if genre array matches clicked filter
+                                if (genreArray[b] == currGenreFilter) {
+                                    // assign all films matching the genre with match true
+                                    film.match = true;
+                                };
+                            }  
 
-        }); // close genre filter click function 
+                            if (film.match == true) {
+                                // push movie into movie with current genre array
+                                moviesWithCurrentGenre.push(allYears[z][a]);
+                                film.visible = true; // display sprite
+                            } else {
+                                film.visible = false; // hide sprite
+                            }
+                        }    
+                    // reset previous matches to false
+                    film.match = false;    
+                    }
+                }
+            } 
+
+        }); // close genre filter click function
         
         // set the game state
 		state = play;
@@ -962,16 +938,13 @@ function movieController($scope, $http) {
 		// if hover div is close to the window's bottom edge, move div up	
         if (dotPosY > ($(window).height() - 150)) {
 			hoverDiv.style.top = dotPosY - 120 + 'px';	
-// 			console.log('150 cat');
         } else if (dotPosY < ($(window).height() - 150) && dotPosY > ($(window).height() - 160)) {
 	        hoverDiv.style.top = dotPosY - 110 + 'px';	       
-// 	        console.log('150 - 170 cat'); 
         } else if (dotPosY < ($(window).height() - 160)) {
 	        hoverDiv.style.top = dotPosY - 20 + 'px';
-// 	        console.log('out of 170 cat');
         }
 	
-	}
+	} // close dotHover function
 	
 	// MOUSEOUT
 	function dotLeave() {
@@ -981,8 +954,6 @@ function movieController($scope, $http) {
 	// CLICK EVENTS
 	function dotClick() {
         
-		console.log('clicked on: ' + this.year + ': ' + this.title);
-		console.log(this);
         var popUp = $('.detail'),
             popUpX = this.x,
 			popUpY = this.y,
@@ -1004,11 +975,6 @@ function movieController($scope, $http) {
         	roundRating = roundHalf(halfRating),
         	star = "<i class='fa fa-star'></i>",
         	halfStar = "<i class='fa fa-star-half'></i>";
-        
-        // log ratings to console 
-        console.log('original rating: ' + this.rating);
-        console.log('half rating: ' + halfRating);
-        console.log('rounded rating: ' + roundRating);
         
         // append rating to div using star icons
         // if rating is an integer, else if rating is a float
@@ -1048,14 +1014,10 @@ function movieController($scope, $http) {
 
 			for (var i = 0; i < ids.length; i++) {
 				if ( ids[i] == genres[j].id) {
-					console.log('Match: ' + ids[i] + ' and ' + genres[j].id);
 					currGenres.push(genres[j].name);
 				}
 			}
 		}
-		
-		// log current genre names to console
-		console.log('current genres are: ' + currGenres);
 
 		// append genre names to page
 		var numOfGenres = currGenres.length;
@@ -1101,7 +1063,6 @@ function movieController($scope, $http) {
 			    }
 			})
 			
-			// console.log('Director: ' + directors.join(', '));
 	        $('.director').html("Director: " + directors);
 	        $('.run-time').html(' ' + data.runtime + ' ' + 'min');
             
@@ -1128,7 +1089,6 @@ function movieController($scope, $http) {
             
             // find trailer and append link to div
 	        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
-	        console.log (trailer);
 	        $('.trailer').attr('href', trailer);
 			
 			// find links to trivia and award pages on imdb

@@ -923,6 +923,13 @@ function movieController($scope, $http) {
 		// if hover div is close to the window's right edge, move div to the left	
 	    if (dotPosX > ($(window).width() - 220 - 150)) {
 			hoverDiv.style.left = dotPosX + 45 + 'px';
+        } 
+        
+        // if current year is close to the window's right edge, move to the left	
+        if (dotPosX > ($(window).width() - 220 - 65)) {
+			$('#current-year').css('margin-left', '-45px');
+        } else {
+	        $('#current-year').css('margin-left', '0px');
         }
 		
 		// if hover div is close to the window's bottom edge, move div up	

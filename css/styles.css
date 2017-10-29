@@ -500,9 +500,11 @@ h2 {
 		    -webkit-animation-duration: .3s;
 		    -moz-animation-duration: .3s;
 		    animation-duration: .3s;
+/*
 		    -webkit-animation-delay: .1s;
 		    -moz-animation-delay: .1s;
 		    animation-delay: .1s;
+*/
 		    animation-fill-mode: both;
 		    -webkit-animation-name: content_show;
 		    -moz-animation-name: content_show;
@@ -741,56 +743,6 @@ h2 {
 		margin-top: 15px;
 	    margin-left: -200px;
 		padding: 5px; }
-}
-
-@-webkit-keyframes collapse {
-    0% {
-		width: 400px;
-	    height: auto;
-	    margin-left: -200px;
-		padding: 5px 		
-    }
-   
-    50% {
-		width: 400px;
-		height: 2px;
-        margin-left: -200px;
-		padding: 0px         
-    }
-
-    100% {
-		width: 0px;
-	    height: 0px;
-		padding: 0px;        
-		margin-top: 0px;
-        margin-left: 0px;
-        display: none
-    }
-}
-
-@keyframes collapse {
-    0% {
-		width: 400px;
-	    height: auto;
-	    margin-left: -200px;
-		padding: 5px 		
-    }
-   
-    50% {
-		width: 400px;
-		height: 2px;
-        margin-left: -200px;
-		padding: 0px         
-    }
-
-    100% {
-		width: 0px;
-	    height: 0px;
-		padding: 0px;        
-		margin-top: 0px;
-        margin-left: 0px;
-        display: none
-    }
 }
 
 /* fadeInDown and fadeInUp animations from animate.css 

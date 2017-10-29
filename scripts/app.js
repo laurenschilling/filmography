@@ -868,15 +868,6 @@ function movieController($scope, $http) {
 
 	}
     
-    
-	// ----- FUNCTION END -----
-	// will we have a function end?
-	
-	function end() {
-		gameScene.visible = false;
-		gameOverScene.visible = true;
-	}
-	
 	
 	// ----- HELPER FUNCTIONS -----
 	
@@ -913,7 +904,6 @@ function movieController($scope, $http) {
 		// position hover div left of cursor marker, show div
         hoverDiv.style.left = dotPosX + 180 + offsetX + 'px';
         hoverDiv.style.top = dotPosY + 'px';
-
 
 		// prevent hover events from showing when hovering over the genre filter
         $(window).on('mousemove', function(e) {
@@ -969,6 +959,7 @@ function movieController($scope, $http) {
         $('.detail-title').html(this.title);
         $('.yr').html(this.year);
         $('.detail-overview').html(this.overview);
+        $('.actors').html('');
         
         // get film's rating, halve it and round to nearest half
         var halfRating = this.rating/2,
@@ -1051,8 +1042,8 @@ function movieController($scope, $http) {
             for (var i = 0; i < 4; i++) {
                 castList.push(data.credits.cast[i].name);
             }
-
-            $('.actors').addClass('.names').html('<p>' + castList[0] + '</p>' + '<p>' + castList[1] + '</p>' + '<p>' + castList[2] + '</p>' +'<p>' + castList[3] + '</p>');
+			
+			$('.actors').html('<p>' + castList[0] + '<br>' + castList[1] + '<br>' + castList[2] + '<br>' + castList[3] + '</p>');
         
 			// find directors and append to div
 		    var directors = new Array();  
@@ -1068,7 +1059,7 @@ function movieController($scope, $http) {
             
             // if budget or revenue is $0, display nothing
 			// else round to nearest million
-           // if less than 1m round to the nearest thousand
+	        // if less than 1m round to the nearest thousand
             if (data.budget === 0) {
                 $('.budget').html(' ');
             } else if (data.budget < 1000000) {
@@ -1088,8 +1079,12 @@ function movieController($scope, $http) {
             }
             
             // find trailer and append link to div
-	        var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;
-	        $('.trailer').attr('href', trailer);
+	        if (data.videos.results[0] == undefined) {
+		        $('.trailer').hide();
+		    } else {
+	        	var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;	
+	        	$('.trailer').attr('href', trailer);
+		    }
 			
 			// find links to trivia and award pages on imdb
             var imdb = data.imdb_id,
@@ -1098,10 +1093,10 @@ function movieController($scope, $http) {
             
             $('.awards-trivia a:nth-child(1)').attr('href', awards);
             $('.awards-trivia a:nth-child(2)').attr('href', trivia); 
-	   });  
+		});  
 	   
-	   	// toggle pop up display
-	   	// change background opacity and hide mouseover elements
+		// toggle pop up display
+		// change background opacity and hide mouseover elements
 	    popUp.toggle();
         if (popUp.css('display') === 'block') {
             $('#hover-event').removeClass('open').addClass('close');
@@ -1115,6 +1110,76 @@ function movieController($scope, $http) {
             $('canvas').addClass('add-opacity').removeClass('min-opacity');
         }
         
+        // --- OFFSET LEFT IF POP UP IS CLOSE TO RIGHT SIDE --- 
+	    // find position of right side
+	    var popUpRight = $(popUp).offset().left + 400; 
+	    
+	    // find difference between right position and window width
+	    var popUpDif = (popUpRight - ($(window).width())); 	    
+	    
+	    // set offset as original position minus half of difference
+	    var popUpOffset = (popUpX + 180 - (popUpDif/2));
+	    
+	    // if right position of pop up is greater than window width
+		if (popUpRight > $(window).width()) {
+
+			// set left position as offset
+			popUp.css('left', popUpOffset + 'px');
+	    }
+	    
+	    // --- OFFSET RIGHT IF POP UP IS CLOSE TO LEFT SIDE --- 
+	    // find position of left side
+	    var popUpLeft = $(popUp).offset().left - 220; 
+	    
+	    // find difference between left position and left of window 
+        var popUpDif2 = (0 - popUpLeft);
+        
+		// set offset as original position plus difference
+	    var popUpOffset2 = popUpX + 180 + popUpDif2;
+	    
+	    // if left position of pop up is less than 0
+		if (popUpLeft < 0) {
+
+			// set left position as offset
+			popUp.css('left', popUpOffset2 + 'px');
+	    }
+
+        // --- OFFSET UP IF POP UP OVERFLOWS ON BOTTOM SIDE --- 
+	    // the setTimeout delays the offset by 1.2s(animation duration for pop up div)
+	    setTimeout(function() {
+		    if ($('.detail-image').is(':visible')) {
+			    
+			    // find position of bottom side
+				var popUpBase = $(popUp).offset().top + $(popUp).outerHeight();
+				
+				// find difference between bottom position and window height
+				var popUpDif3 = (popUpBase - $(window).height());
+				
+				// set offset as original position minus difference minus 60px (for footer)
+				var popUpOffset3 = ((popUpY - popUpDif3) - 60); 
+								    
+			    // if bottom position of pop up is greater than window height
+		        if (popUpBase > $(window).height()) {
+			        
+			        // set top position as offset
+			        popUp.css('top', popUpOffset3 + 'px');
+			        
+			        // if this makes top position go off screen
+			        if ($(popUp).offset().top < 0) {
+				        
+				        // find difference between top of window and top position 
+				        var topDif = (0 - $(popUp).offset().top);
+				        
+				        // set offset as first offset plus difference plus 10px
+				        var topOffset = popUpOffset3 + topDif + 10 + 'px';
+						
+						// set top position as new offset
+				        popUp.css('top', topOffset);
+			        }
+		        }
+		    } 
+		}, 1200);
+        
         // how to make pop up div close on canvas click?
 /*
             $('canvas').on('click', function() {
@@ -1123,5 +1188,5 @@ function movieController($scope, $http) {
 */
         	   
     } // close dotClick
-    
+
 } // close movieController();

@@ -843,8 +843,8 @@ h2 {
 #splash-content p,
 #small-content p {
     text-transform: uppercase;
-    font-size: 1.1em;
-    letter-spacing: 0.01em;
+    font-size: 1em;
+    letter-spacing: 0.02em;
     text-align: center;
     margin-bottom: 1em;
     line-height: 1.3; }

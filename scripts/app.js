@@ -28,7 +28,7 @@ if(sUsrAg.indexOf("Chrome") > -1) {
 
 // if browser window is too small, show warning screen, if not, show splash screen
 $(document).ready(function() {
-    if ($(window).width() < 900 || $(window).height() < 500) {
+    if ($(window).width() < 900 || $(window).height() < 450) {
         $('#small').show();
         $('#splash').hide();
     } else {
@@ -40,6 +40,9 @@ $(document).ready(function() {
 
 // this is our controller - basically a function 
 function movieController($scope, $http) {
+  
+	    var clickCount = 0;
+	    var dotClickCount = 0;
     
     // to reload the page on window resize (as canvas doesn't resize dynamically)
     var resizeTimeout;
@@ -950,250 +953,278 @@ function movieController($scope, $http) {
 	
 	// CLICK EVENTS
 	function dotClick() {
-        
-        var popUp = $('.detail'),
-            popUpX = this.x,
-			popUpY = this.y,
-            popUpPosX = popUpX + 180 + 'px',
-            popUpPosY = popUpY + 'px';
-        
-        // getting the pop up div to display where the hover div is
-        popUp.css('left', popUpPosX);
-        popUp.css('top', popUpPosY);
-        
-        // add movie details to pop up
-        $('.detail-image').attr('src', this.img);
-        $('.detail-title').html(this.title);
-        $('.yr').html(this.year);
-        $('.detail-overview').html(this.overview);
-        $('.actors').html('');
-        
-        // get film's rating, halve it and round to nearest half
-        var halfRating = this.rating/2,
-        	roundRating = roundHalf(halfRating),
-        	star = "<i class='fa fa-star'></i>",
-        	halfStar = "<i class='fa fa-star-half'></i>";
-        
-        // append rating to div using star icons
-        // if rating is an integer, else if rating is a float
-        if (Math.floor(roundRating) == roundRating && $.isNumeric(roundRating)) {
-			$('.rating').html(star.repeat(roundRating));
-        } else {
-			$('.rating').html(star.repeat(roundRating - 0.5) + halfStar);
-        }
-                
-        // if there is a genre id, find the genre name
-		var currGenres = [];
-		var ids = this.genre;			
-		var genres = [
-			{ id: 28, name: 'Action' },
-			{ id: 12, name: 'Adventure' },
-			{ id: 16, name: 'Animation' },
-			{ id: 35, name: 'Comedy' },
-			{ id: 80, name: 'Crime' },
-			{ id: 99, name: 'Documentary' },
-			{ id: 18, name: 'Drama' },
-			{ id: 10751, name: 'Family' },
-			{ id: 14, name: 'Fantasy' },
-			{ id: 36, name: 'History' },
-			{ id: 27, name: 'Horror' },
-			{ id: 10402, name: 'Music' },
-			{ id: 9648, name: 'Mystery' },
-			{ id: 10749, name: 'Romance' },
-			{ id: 878, name: 'Science Fiction' },
-			{ id: 10770, name: 'TV Movie' },
-			{ id: 53, name: 'Thriller' },
-			{ id: 10752, name: 'War' },
-			{ id: 37, name: 'Western' }
-		];	
-		
-		// match the movie ids with the genre names
-		for (var j = 0; j < genres.length; j++) {
+        dotClickCount= dotClickCount + 1;
 
-			for (var i = 0; i < ids.length; i++) {
-				if ( ids[i] == genres[j].id) {
-					currGenres.push(genres[j].name);
+		var popUp = $('.detail'),
+	            popUpX = this.x,
+				popUpY = this.y,
+	            popUpPosX = popUpX + 180 + offsetX + 'px',
+	            popUpPosY = popUpY + 'px';
+	            
+		// if a dot is clicked 
+        if (dotClickCount == 1) {
+	    
+	        // getting the pop up div to display where the hover div is
+	        popUp.css('left', popUpPosX);
+	        popUp.css('top', popUpPosY);
+	        
+	        // add movie details to pop up
+	        $('.detail-image').attr('src', this.img);
+	        $('.detail-title').html(this.title);
+	        $('.yr').html(this.year);
+	        $('.detail-overview').html(this.overview);
+	        $('.actors').html('');
+	        
+	        // get film's rating, halve it and round to nearest half
+	        var halfRating = this.rating/2,
+	        	roundRating = roundHalf(halfRating),
+	        	star = "<i class='fa fa-star'></i>",
+	        	halfStar = "<i class='fa fa-star-half'></i>";
+	        
+	        // append rating to div using star icons
+	        // if rating is an integer, else if rating is a float
+	        if (Math.floor(roundRating) == roundRating && $.isNumeric(roundRating)) {
+				$('.rating').html(star.repeat(roundRating));
+	        } else {
+				$('.rating').html(star.repeat(roundRating - 0.5) + halfStar);
+	        }
+	                
+	        // if there is a genre id, find the genre name
+			var currGenres = [];
+			var ids = this.genre;			
+			var genres = [
+				{ id: 28, name: 'Action' },
+				{ id: 12, name: 'Adventure' },
+				{ id: 16, name: 'Animation' },
+				{ id: 35, name: 'Comedy' },
+				{ id: 80, name: 'Crime' },
+				{ id: 99, name: 'Documentary' },
+				{ id: 18, name: 'Drama' },
+				{ id: 10751, name: 'Family' },
+				{ id: 14, name: 'Fantasy' },
+				{ id: 36, name: 'History' },
+				{ id: 27, name: 'Horror' },
+				{ id: 10402, name: 'Music' },
+				{ id: 9648, name: 'Mystery' },
+				{ id: 10749, name: 'Romance' },
+				{ id: 878, name: 'Science Fiction' },
+				{ id: 10770, name: 'TV Movie' },
+				{ id: 53, name: 'Thriller' },
+				{ id: 10752, name: 'War' },
+				{ id: 37, name: 'Western' }
+			];	
+			
+			// match the movie ids with the genre names
+			for (var j = 0; j < genres.length; j++) {
+	
+				for (var i = 0; i < ids.length; i++) {
+					if ( ids[i] == genres[j].id) {
+						currGenres.push(genres[j].name);
+					}
 				}
 			}
-		}
-
-		// append genre names to page
-		var numOfGenres = currGenres.length;
-		
-		switch (numOfGenres) {
-			case 1:
-				$('.genre-ids').html(currGenres[0]); break;
-			case 2:
-				$('.genre-ids').html(currGenres[0] + ' and ' + currGenres[1]); break;
-			case 3: 
-				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ' and ' + currGenres[2]); break;
-			case 4: 
-				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ' and ' + currGenres[3]); break;
-			case 5:
-				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ' and ' + currGenres[4]); break;
-			case 6:
-				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and ' + currGenres[5]); break;
-			default: 
-				$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ', ' + currGenres[5] + ' and more!'); break;
-		}
-
-        // api call for specific data requests ie. director, cast, runtime        
-        var currMovie = this.id,
-        	key = "2385af2e8136eb616d2a12e316efa014",
-			url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits,videos",
-			castList = new Array();
-	    
-	    $.getJSON(url, function(data) {    
+	
+			// append genre names to page
+			var numOfGenres = currGenres.length;
+			
+			switch (numOfGenres) {
+				case 1:
+					$('.genre-ids').html(currGenres[0]); break;
+				case 2:
+					$('.genre-ids').html(currGenres[0] + ' and ' + currGenres[1]); break;
+				case 3: 
+					$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ' and ' + currGenres[2]); break;
+				case 4: 
+					$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ' and ' + currGenres[3]); break;
+				case 5:
+					$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ' and ' + currGenres[4]); break;
+				case 6:
+					$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ' and ' + currGenres[5]); break;
+				default: 
+					$('.genre-ids').html(currGenres[0] + ', ' + currGenres[1] + ', ' + currGenres[2] + ', ' + currGenres[3] + ', ' + currGenres[4] + ', ' + currGenres[5] + ' and more!'); break;
+			}
+	
+	        // api call for specific data requests ie. director, cast, runtime        
+	        var currMovie = this.id,
+	        	key = "2385af2e8136eb616d2a12e316efa014",
+				url = "https://api.themoviedb.org/3/movie/" + currMovie + "?api_key=" + key + "&append_to_response=credits,videos",
+				castList = new Array();
 		    
-		    // find top 4 actors and append to div
-            for (var i = 0; i < 4; i++) {
-                castList.push(data.credits.cast[i].name);
-            }
-			
-			$('.actors').html('<p>' + castList[0] + '<br>' + castList[1] + '<br>' + castList[2] + '<br>' + castList[3] + '</p>');
-        
-			// find directors and append to div
-		    var directors = new Array();  
-		     
-		    data.credits.crew.forEach(function(entry) {
-			    if (entry.job === 'Director') {
-			        directors.push(entry.name);
-			    }
-			})
-			
-	        $('.director').html("Director: " + directors);
-	        $('.run-time').html(' ' + data.runtime + ' ' + 'min');
-            
-            // if budget or revenue is $0, display nothing
-			// else round to nearest million
-	        // if less than 1m round to the nearest thousand
-            if (data.budget === 0) {
-                $('.budget').html(' ');
-            } else if (data.budget < 1000000) {
-                $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000) + 'k');
-            }
-            else {
-                $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000000) + 'm');
-            }
-            
-            if (data.revenue === 0) {
-                $('.revenue').html(' ');
-            } else if (data.revenue < 1000000) {
-                $('.revenue').html('Revenue: ' + '$' + Math.round(data.revenue/1000) + 'k'); 
-            }
-            else {
-	        	$('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
-            }
-            
-            // find trailer and append link to div
-	        if (data.videos.results[0] == undefined) {
-		        $('.trailer').hide();
-		    } else {
-	        	var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;	
-	        	$('.trailer').attr('href', trailer);
-		    }
-			
-			// find links to trivia and award pages on imdb
-            var imdb = data.imdb_id,
-            	awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1",
-            	trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
-            
-            $('.awards-trivia a:nth-child(1)').attr('href', awards);
-            $('.awards-trivia a:nth-child(2)').attr('href', trivia); 
-		});  
-	   
-		// toggle pop up display
-		// change background opacity and hide mouseover elements
-	    popUp.toggle();
-        if (popUp.css('display') === 'block') {
-            $('#hover-event').removeClass('open').addClass('close');
-            $('#current-year').hide();
-            $('#line').hide();
-            $('canvas').removeClass('add-opacity').addClass('min-opacity');
-        } else {
-            $('#hover-event').removeClass('close').addClass('open');
-            $('#current-year').show();
-            $('#line').show();
-            $('canvas').addClass('add-opacity').removeClass('min-opacity');
-        }
-        
-        // --- OFFSET LEFT IF POP UP IS CLOSE TO RIGHT SIDE --- 
-	    // find position of right side
-	    var popUpRight = $(popUp).offset().left + 400; 
-	    
-	    // find difference between right position and window width
-	    var popUpDif = (popUpRight - ($(window).width())); 	    
-	    
-	    // set offset as original position minus half of difference
-	    var popUpOffset = (popUpX + 180 - (popUpDif/2));
-	    
-	    // if right position of pop up is greater than window width
-		if (popUpRight > $(window).width()) {
-
-			// set left position as offset
-			popUp.css('left', popUpOffset + 'px');
-	    }
-	    
-	    // --- OFFSET RIGHT IF POP UP IS CLOSE TO LEFT SIDE --- 
-	    // find position of left side
-	    var popUpLeft = $(popUp).offset().left - 220; 
-	    
-	    // find difference between left position and left of window 
-        var popUpDif2 = (0 - popUpLeft);
-        
-		// set offset as original position plus difference
-	    var popUpOffset2 = popUpX + 180 + popUpDif2;
-	    
-	    // if left position of pop up is less than 0
-		if (popUpLeft < 0) {
-
-			// set left position as offset
-			popUp.css('left', popUpOffset2 + 'px');
-	    }
-
-        // --- OFFSET UP IF POP UP OVERFLOWS ON BOTTOM SIDE --- 
-	    // the setTimeout delays the offset by 1.2s(animation duration for pop up div)
-	    setTimeout(function() {
-		    if ($('.detail-image').is(':visible')) {
+		    $.getJSON(url, function(data) {    
 			    
-			    // find position of bottom side
-				var popUpBase = $(popUp).offset().top + $(popUp).outerHeight();
+			    // find top 4 actors and append to div
+	            for (var i = 0; i < 4; i++) {
+	                castList.push(data.credits.cast[i].name);
+	            }
 				
-				// find difference between bottom position and window height
-				var popUpDif3 = (popUpBase - $(window).height());
+				$('.actors').html('<p>' + castList[0] + '<br>' + castList[1] + '<br>' + castList[2] + '<br>' + castList[3] + '</p>');
+	        
+				// find directors and append to div
+			    var directors = new Array();  
+			     
+			    data.credits.crew.forEach(function(entry) {
+				    if (entry.job === 'Director') {
+				        directors.push(entry.name);
+				    }
+				})
 				
-				// set offset as original position minus difference minus 60px (for footer)
-				var popUpOffset3 = ((popUpY - popUpDif3) - 60); 
-								    
-			    // if bottom position of pop up is greater than window height
-		        if (popUpBase > $(window).height()) {
-			        
-			        // set top position as offset
-			        popUp.css('top', popUpOffset3 + 'px');
-			        
-			        // if this makes top position go off screen
-			        if ($(popUp).offset().top < 0) {
+		        $('.director').html("Director: " + directors);
+		        $('.run-time').html(' ' + data.runtime + ' ' + 'min');
+	            
+	            // if budget or revenue is $0, display nothing
+				// else round to nearest million
+		        // if less than 1m round to the nearest thousand
+	            if (data.budget === 0) {
+	                $('.budget').html(' ');
+	            } else if (data.budget < 1000000) {
+	                $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000) + 'k');
+	            }
+	            else {
+	                $('.budget').html('Budget: ' + '$' + Math.round(data.budget/1000000) + 'm');
+	            }
+	            
+	            if (data.revenue === 0) {
+	                $('.revenue').html(' ');
+	            } else if (data.revenue < 1000000) {
+	                $('.revenue').html('Revenue: ' + '$' + Math.round(data.revenue/1000) + 'k'); 
+	            }
+	            else {
+		        	$('.revenue').html('Revenue:  ' + '$' + Math.round(data.revenue/1000000) + 'm');
+	            }
+	            
+	            // find trailer and append link to div
+		        if (data.videos.results[0] == undefined) {
+			        $('.trailer').hide();
+			    } else {
+		        	var trailer = "https://www.youtube.com/watch?v=" + data.videos.results[0].key;	
+		        	$('.trailer').attr('href', trailer);
+			    }
+				
+				// find links to trivia and award pages on imdb
+	            var imdb = data.imdb_id,
+	            	awards = "http://www.imdb.com/title/" + imdb + "/awards?ref_=tt_ql_op_1",
+	            	trivia = "http://www.imdb.com/title/"+ imdb + "/trivia?ref_=tt_trv_trv"; 
+	            
+	            $('.awards-trivia a:nth-child(1)').attr('href', awards);
+	            $('.awards-trivia a:nth-child(2)').attr('href', trivia); 
+			});  
+
+			// show pop up 
+		    popUp.show();
+
+			// change background opacity and hide mouseover elements		    
+	        if (popUp.css('display') === 'block') {
+	            $('#hover-event').removeClass('open').addClass('close');
+	            $('#current-year').hide();
+	            $('#line').hide();
+	            $('canvas').removeClass('add-opacity').addClass('min-opacity');
+			}
+				                
+	        // --- OFFSET LEFT IF POP UP IS CLOSE TO RIGHT SIDE --- 
+		    // find position of right side
+		    var popUpRight = $(popUp).offset().left + 400; 
+		    
+		    // find difference between right position and window width
+		    var popUpDif = (popUpRight - ($(window).width())); 	    
+		    
+		    // set offset as original position minus half of difference
+		    var popUpOffset = (popUpX + 180 + offsetX - (popUpDif/2));
+		    
+		    // if right position of pop up is greater than window width
+			if (popUpRight > $(window).width()) {
+	
+				// set left position as offset
+				popUp.css('left', popUpOffset + 'px');
+		    }
+		    
+		    // --- OFFSET RIGHT IF POP UP IS CLOSE TO LEFT SIDE --- 
+		    // find position of left side
+		    var popUpLeft = $(popUp).offset().left - 220; 
+		    
+		    // find difference between left position and left of window 
+	        var popUpDif2 = (0 - popUpLeft);
+	        
+			// set offset as original position plus difference
+		    var popUpOffset2 = popUpX + 180 + offsetX + popUpDif2;
+		    
+		    // if left position of pop up is less than 0
+			if (popUpLeft < 0) {
+	
+				// set left position as offset
+				popUp.css('left', popUpOffset2 + 'px');
+		    }
+	
+	        // --- OFFSET UP IF POP UP OVERFLOWS ON BOTTOM SIDE --- 
+		    // the setTimeout delays the offset by 1.2s(animation duration for pop up div)
+		    setTimeout(function() {
+			    if ($('.detail-image').is(':visible')) {
+				    
+				    // find position of bottom side
+					var popUpBase = $(popUp).offset().top + $(popUp).outerHeight();
+					
+					// find difference between bottom position and window height
+					var popUpDif3 = (popUpBase - $(window).height());
+					
+					// set offset as original position minus difference minus 60px (for footer)
+					var popUpOffset3 = ((popUpY - popUpDif3) - 60); 
+									    
+				    // if bottom position of pop up is greater than window height
+			        if (popUpBase > $(window).height()) {
 				        
-				        // find difference between top of window and top position 
-				        var topDif = (0 - $(popUp).offset().top);
+				        // set top position as offset
+				        popUp.css('top', popUpOffset3 + 'px');
 				        
-				        // set offset as first offset plus difference plus 10px
-				        var topOffset = popUpOffset3 + topDif + 10 + 'px';
-						
-						// set top position as new offset
-				        popUp.css('top', topOffset);
+				        // if this makes top position go off screen
+				        if ($(popUp).offset().top < 0) {
+					        
+					        // find difference between top of window and top position 
+					        var topDif = (0 - $(popUp).offset().top);
+					        
+					        // set offset as first offset plus difference plus 10px
+					        var topOffset = popUpOffset3 + topDif + 10 + 'px';
+							
+							// set top position as new offset
+					        popUp.css('top', topOffset);
+				        }
 			        }
-		        }
-		    } 
-		}, 1200);
-        
-        // how to make pop up div close on canvas click?
-/*
-            $('canvas').on('click', function() {
-	    		popUp.hide();
-			})
-*/
-        	   
+			    } 
+			}, 1200);
+		} // close if (dotClickCount == 1)
+		
+		// else if dotClickCount == 2
+		else if (dotClickCount == 2) {
+			
+			// --- HIDE POP UP ---
+			popUp.hide();
+	        if (popUp.css('display') === 'none') {
+	            $('#hover-event').removeClass('close').addClass('open');
+	            $('#current-year').show();
+	            $('#line').show();
+	            $('canvas').addClass('add-opacity').removeClass('min-opacity');
+	        }
+	        dotClickCount = 0;
+		}
     } // close dotClick
+
+	// --- HIDE POP UP WHEN CANVAS IS CLICKED ---
+    $('canvas').on('click', function() {
+        clickCount = clickCount + 1;
+	    var popUp = $('.detail');
+	    
+		if (clickCount == 2) {
+			popUp.hide();
+			
+			if (popUp.css('display') === 'none') {
+	            $('#hover-event').removeClass('close').addClass('open');
+	            $('#current-year').show();
+	            $('#line').show();
+	            $('canvas').addClass('add-opacity').removeClass('min-opacity');
+	        }
+	        
+	        // clear counts
+	        dotClickCount = 0;
+	        clickCount = 0;
+		}
+    });
 
 } // close movieController();

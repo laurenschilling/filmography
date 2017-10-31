@@ -28,7 +28,7 @@ if(sUsrAg.indexOf("Chrome") > -1) {
 
 // if browser window is too small, show warning screen, if not, show splash screen
 $(document).ready(function() {
-    if ($(window).width() < 900 && $(window).height() < 425) {
+    if ($(window).width() < 900 || $(window).height() < 500) {
         $('#small').show();
         $('#splash').hide();
     } else {

@@ -918,23 +918,23 @@ function movieController($scope, $http) {
 					$hoverDiv.addClass('open');
 		        }, 120);
 		    }
+		    
+	        // if hover div is close to the window's right edge, move div to the left	
+		    if (e.pageX > ($(window).width() - 150)) {
+				hoverDiv.style.left = dotPosX + 45 + offsetX + 'px';
+	        }
+	        
+	        // if current year is close to the window's right edge, move to the left	
+	        if (e.pageX > ($(window).width() - 65)) {
+				$('#current-year').css('margin-left', '-45px');
+	        } else {
+		        $('#current-year').css('margin-left', '0px');
+	        }
 		})
 		
 		// pink glow on cursor
         $('#cursor').addClass('pink-glow');
-        
-		// if hover div is close to the window's right edge, move div to the left	
-	    if (dotPosX > ($(window).width() - 220 - 150)) {
-			hoverDiv.style.left = dotPosX + 45 + 'px';
-        } 
-        
-        // if current year is close to the window's right edge, move to the left	
-        if (dotPosX > ($(window).width() - 220 - 65)) {
-			$('#current-year').css('margin-left', '-45px');
-        } else {
-	        $('#current-year').css('margin-left', '0px');
-        }
-		
+        		
 		// if hover div is close to the window's bottom edge, move div up	
         if (dotPosY > ($(window).height() - 150)) {
 			hoverDiv.style.top = dotPosY - 120 + 'px';	

@@ -1,3 +1,4 @@
+// ---- CHECK BROWSER ----
 // checking if browser is safari
 // if not, hide page and show wrong browser screen
 var sBrowser, sUsrAg = navigator.userAgent;
@@ -26,6 +27,8 @@ if(sUsrAg.indexOf("Chrome") > -1) {
     $("#canvas").hide();
 }
 
+    
+// ---- CHECK SCREEN SIZE ----
 // if browser window is too small, show warning screen, if not, show splash screen
 $(document).ready(function() {
     if ($(window).width() < 900 || $(window).height() < 450) {
@@ -37,8 +40,8 @@ $(document).ready(function() {
     }
 });
 
-
-// this is our controller - basically a function 
+    
+// ---- MOVIE CONTROLLER ----
 function movieController($scope, $http) {
   
 	    var clickCount = 0;
@@ -80,7 +83,6 @@ function movieController($scope, $http) {
     
     // ---- SPLASH SCREEN ----
     $('#hover-event').addClass('close');
-    
     $('.button').click(function() {
         $('#splash').fadeOut('slow');
         $('#hover-event').removeClass('close').addClass('open');
@@ -94,27 +96,15 @@ function movieController($scope, $http) {
 	}
 	
 	// ----- VARIABLES -----
-	
-	// aliases
+	// pixi aliases
 	var Container = PIXI.Container,
-		autoDetectRenderer = PIXI.autoDetectRenderer,
 		loader = PIXI.loader,
-		resources = PIXI.loader.resources,
-		TextureCache = PIXI.utils.TextureCache,
 		Texture = PIXI.Texture,
 		Sprite = PIXI.Sprite,
-		Rectangle = PIXI.Rectangle,
-		ParticleContainer = PIXI.particles.ParticleContainer,
-		Graphics = PIXI.Graphics,
-		Text = PIXI.Text;
-	
-	// change the texture a sprite is displaying
-	// use this to interactively change a sprite's appearance
-    // anySprite.texture = TextureCache["anyTexture.png"];
-	
-	
+		Rectangle = PIXI.Rectangle;
+		
+			
 	// ----- SET UP THE CANVAS ----- 
-	
 	var canvasSize = {
 	    height: window.innerHeight - 60 - 30, /* subtract the height of the footer 60px and 15px * 2 for top and bottom margins */
 	    width: window.innerWidth - 220 - 15 /* subtract the width of left sidebar 220px and 15px right margin */
@@ -140,7 +130,6 @@ function movieController($scope, $http) {
     var offsetX = 0; // need to initialise this variable outside of setup() so the hover and click events recognise the x axis offset globally (for stage horizontal scroll)    
     
 	// ----- FUNCTION SET UP ----- 
-	
 	function setup() {
 		
 		var texture = Texture.fromImage("images/dots-15.svg"),
@@ -768,9 +757,8 @@ function movieController($scope, $http) {
                 for (var z = 0; z < allYears.length; z++) {
 
                     for (var a = 0; a < allYears[z].length; a++) {
-
-                    allYears[z][a].match = false;
-                    allYears[z][a].visible = true;
+	                    allYears[z][a].match = false;
+	                    allYears[z][a].visible = true;
                     }
                 }
             } else {
@@ -825,17 +813,9 @@ function movieController($scope, $http) {
 		// start the game loop
 		gameLoop();
 	}
-	
-    function adjustStage(newSliderPosLeft, origSliderPosLeft, increment, movement, stageX) {
-        
-        if (newSliderPosLeft < origSliderPosLeft) {
-            stageX = increment * movement; }
-        return stageX;
-    }
     
 	
 	// ----- FUNCTION GAME LOOP -----
-	
 	function gameLoop() {
 		
 		// loop this function at 60 frames per second
@@ -849,12 +829,8 @@ function movieController($scope, $http) {
 	}
 	
 	// ----- FUNCTION PLAY -----
-	// all of the animations and changes to the canvas elements go here
-
 	function play() {			
 	
-		// meant to help with lagging frame rate
-		// it's probably not meant to be this high, but thought I'd try it 
 		PIXI.INTERACTION_FREQUENCY = 600;
 	
 		// year marker moves with cursor within canvas
@@ -884,6 +860,13 @@ function movieController($scope, $http) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
+	// ADJUST STAGE X AXIS BASED ON SLIDER MOVE
+    function adjustStage(newSliderPosLeft, origSliderPosLeft, increment, movement, stageX) {
+	    if (newSliderPosLeft < origSliderPosLeft) {
+	        stageX = increment * movement; }
+	    return stageX;
+    }
+
     
 	// ----- MOUSEOVER AND CLICK EVENTS -----
 
@@ -908,8 +891,10 @@ function movieController($scope, $http) {
         hoverDiv.style.left = dotPosX + 180 + offsetX + 'px';
         hoverDiv.style.top = dotPosY + 'px';
 
-		// prevent hover events from showing when hovering over the genre filter
+		// on mousemove
         $(window).on('mousemove', function(e) {
+	        
+	        // prevent hover events from showing when hovering over the genre filter
 	        if (e.pageX <= 220) {
 		        $hoverDiv.removeClass('open');
 		    } else {
@@ -943,7 +928,6 @@ function movieController($scope, $http) {
         } else if (dotPosY < ($(window).height() - 160)) {
 	        hoverDiv.style.top = dotPosY - 20 + 'px';
         }
-	
 	} // close dotHover function
 	
 	// MOUSEOUT
@@ -1132,7 +1116,6 @@ function movieController($scope, $http) {
 		    
 		    // if right position of pop up is greater than window width
 			if (popUpRight > $(window).width()) {
-	
 				// set left position as offset
 				popUp.css('left', popUpOffset + 'px');
 		    }
@@ -1155,7 +1138,7 @@ function movieController($scope, $http) {
 		    }
 	
 	        // --- OFFSET UP IF POP UP OVERFLOWS ON BOTTOM SIDE --- 
-		    // the setTimeout delays the offset by 1.2s(animation duration for pop up div)
+		    // the setTimeout delays the offset by 1.2s (animation duration for pop up div)
 		    setTimeout(function() {
 			    if ($('.detail-image').is(':visible')) {
 				    
@@ -1189,9 +1172,8 @@ function movieController($scope, $http) {
 			        }
 			    } 
 			}, 1200);
-		} // close if (dotClickCount == 1)
+		} 
 		
-		// else if dotClickCount == 2
 		else if (dotClickCount == 2) {
 			
 			// --- HIDE POP UP ---
@@ -1204,7 +1186,7 @@ function movieController($scope, $http) {
 	        }
 	        dotClickCount = 0;
 		}
-    } // close dotClick
+    } 
 
 	// --- HIDE POP UP WHEN CANVAS IS CLICKED ---
     $('canvas').on('click', function() {
@@ -1226,5 +1208,4 @@ function movieController($scope, $http) {
 	        clickCount = 0;
 		}
     });
-
 } // close movieController();
